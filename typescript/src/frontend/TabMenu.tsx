@@ -76,7 +76,7 @@ export function TabMenu(props: TabMenu) {
         switch (tabIndex) {
         case 0:
             return <Rds uploadedDataType={uploadedDataType} uploadedDataSource={uploadedDataSource} uploadedDataId={uploadedDataId}
-                downloadedDataId={downloadedDataId} downloadTargetPath={downloadTargetPath}               
+                downloadedDataId={downloadedDataId} downloadTargetPath={downloadTargetPath} accessToken={props.accessToken}                
                 onUploadedDataTypeChange={onUploadedDataTypeChange} onUploadedDataSourceChange={onUploadedDataSourceChange} 
                 onUploadedDataIdChange={onUploadedDataIdChange} onDownloadedIdChange={onDownloadedIdChange} onDownloadTargetPathChange={onDownloadTargetPathChange}/>;
         case 1:

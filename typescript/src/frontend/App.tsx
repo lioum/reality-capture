@@ -46,6 +46,7 @@ export function App() {
             await authClient.signIn();           
         }
         setAccessToken(await authClient.getAccessToken());
+        console.log(await authClient.getAccessToken());
     }, [authClient]);
     
     useEffect(() => {
