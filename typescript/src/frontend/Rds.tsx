@@ -41,7 +41,7 @@ const localPathToRdId: Map<string, string> = new Map();
 
 export function Rds(props: RdsProps) {
 
-    const [uploadProgress, setUploadProgress] = React.useState<string>("");
+    const [uploadProgress, setUploadProgress] = React.useState<string>("N/A%");
     const [uploadedDataName, setUploadedDataName] = React.useState<string>("");
     const ref = React.useRef<HTMLInputElement>(null);
 

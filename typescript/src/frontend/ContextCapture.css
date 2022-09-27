@@ -4,17 +4,30 @@
 *--------------------------------------------------------------------------------------------*/
 
 .ccs-controls-group {
-    display: flex;
-    align-items: center;
+    text-align: left;
+    align-items: left;
     margin-left: 10px;
     margin-top: 10px;
+    max-width: 500px;
+}
+
+.cccs-check {
+    display: flex;
+    margin: 10px;
+    max-width: 500px;
 }
 
 .ccs-control {
     margin-left: 10px;
+    margin-top: 10px;
 }
 
 .ccs-progress {
     margin-left: 10px;
     width: 600px;
+}
+
+h1 {
+    text-align: left;
+    margin-left: 20px;
 }

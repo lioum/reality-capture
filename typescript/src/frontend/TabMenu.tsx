@@ -82,7 +82,7 @@ export function TabMenu(props: TabMenu) {
         case 1:
             return <Rdas/>;
         case 2:
-            return <ContextCapture/>;
+            return <ContextCapture accessToken={props.accessToken} />;
         case 3:
             return <Viewer2D imageIndex={imageIndex} zoomLevel={zoomLevel} idToDisplay={idViewer2D}
                 onIdChange={onDisplay2DIdChange} onZoomChange={onZoomChange} onImageIndexChange={onImageIndexChange}/>;

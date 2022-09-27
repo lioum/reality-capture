@@ -7,7 +7,14 @@
       {
         "name": "Debug Chrome",
         "request": "launch",
-        "type": "pwa-chrome",
+        "type": "chrome",
+        "url": "http://localhost:3000",
+        "webRoot": "${workspaceFolder}/src"
+      },
+      {
+        "name": "Debug Firefox",
+        "request": "launch",
+        "type": "firefox",
         "url": "http://localhost:3000",
         "webRoot": "${workspaceFolder}/src"
       },
