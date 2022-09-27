@@ -18,7 +18,7 @@ function delay(s: number) {
 
 export function ContextCapture(props: CccsProps) {
 
-    const OUTPUTS = ["Cesium", "OPC", "3SM", "CCOrientation"];
+    const OUTPUTS = ["Cesium 3D Tiles", "OPC", "WebReady ScalableMesh", "CCOrientations"];
 
     const [inputs, setInputs] = React.useState<Map<string, string>>(new Map());
     const [outputIds, setOutputIds] = React.useState<Map<string, string>>(new Map());
@@ -67,6 +67,9 @@ export function ContextCapture(props: CccsProps) {
             description: "My inputs"
         }));
         const cccsOutputs = [...outputs.keys()].filter(out => outputs.get(out) ?? false);
+        if (cccsOutputs.includes("WebReady ScalableMesh")) {
+            cccsOutputs.push("3SM");
+        }
         const createJob = await fetch(baseUrl + "/jobs", {
             method: "POST",
             headers: {
@@ -126,10 +129,11 @@ export function ContextCapture(props: CccsProps) {
             setPercentage(progressJson.jobProgress.percentage);
             state = progressJson.jobProgress.state;
             setStep(progressJson.jobProgress.step);
-            //await delay(5);
+            await delay(5);
         }
 
         setStep(state);
+        setPercentage("100");
         const job = await fetch(baseUrl + "/jobs/" + jobId, {
             method: "GET",
             headers: {
@@ -138,7 +142,9 @@ export function ContextCapture(props: CccsProps) {
                 "Authorization": props.accessToken
             }
         });
-        const outIds = (await job.json()).job.jobSettings.outputs;
+        const jobJson = (await job.json()).job;
+        setStep(jobJson.state);
+        const outIds = jobJson.jobSettings.outputs;
         const m = new Map();
         outIds.forEach((element: { format: string; realityDataId: string; }) => {
             m.set(element.format, element.realityDataId);
