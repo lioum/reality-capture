@@ -7,12 +7,19 @@ import React from "react";
 import { Viewer2D } from "./Viewer2D";
 import { Viewer3D } from "./Viewer3D";
 import "./App.css";
-import { HorizontalTabs, Tab } from "@itwin/itwinui-react";
+import { Tab, VerticalTabs } from "@itwin/itwinui-react";
 import { Rds } from "./Rds";
 import { Rdas } from "./Rdas";
 import { BrowserAuthorizationClient } from "@itwin/browser-authorization";
 import { RealityDataAccessClient } from "@itwin/reality-data-client";
 import { ContextCapture } from "./ContextCapture";
+import FolderCopyIcon from "@mui/icons-material/FolderCopy";
+import PsychologyIcon from "@mui/icons-material/Psychology";
+import EngineeringIcon from "@mui/icons-material/Engineering";
+import ViewInArIcon from "@mui/icons-material/ViewInAr";
+import ImageSearchIcon from "@mui/icons-material/ImageSearch";
+import "./TabMenu.css";
+import { CCJobInformation, DataInformation, JobTracking } from "./Models";
 
 interface TabMenu {
     accessToken: string;
@@ -22,6 +29,11 @@ interface TabMenu {
 
 export function TabMenu(props: TabMenu) {
     const [tabIndex, setTabIndex] = React.useState(0);
+
+    // Complete state
+    const [linkedData, setLinkedData] = React.useState<DataInformation[]>([]);
+    const [cccsJobs, setCCCSJobs] = React.useState<CCJobInformation[]>([]);
+    const [jobsTracker, setJobsTracker] = React.useState<Map<string, JobTracking>>(new Map());
 
     // RDS
     const [uploadedDataType, setUploadedDataType] = React.useState<string>("");
@@ -37,7 +49,6 @@ export function TabMenu(props: TabMenu) {
     const [idViewer2D, setIdViewer2D] = React.useState<string>("");
 
     // 3D
-    
 
     /** Previous photo */
     const onImageIndexChange = (newImageIndex: number): void => {
@@ -82,7 +93,7 @@ export function TabMenu(props: TabMenu) {
         case 1:
             return <Rdas/>;
         case 2:
-            return <ContextCapture accessToken={props.accessToken} />;
+            return <ContextCapture accessToken={props.accessToken} jobs={cccsJobs} setJobs={setCCCSJobs} tracker={jobsTracker} setTracker={setJobsTracker} />;
         case 3:
             return <Viewer2D imageIndex={imageIndex} zoomLevel={zoomLevel} idToDisplay={idViewer2D}
                 onIdChange={onDisplay2DIdChange} onZoomChange={onZoomChange} onImageIndexChange={onImageIndexChange}/>;
@@ -95,17 +106,17 @@ export function TabMenu(props: TabMenu) {
     };
 
     return(
-        <HorizontalTabs
+        <VerticalTabs
             labels={[
-                <Tab key={0} label="RDS" />,
-                <Tab key={1} label="Reality Data Analysis" />,
-                <Tab key={2} label="ContextCapture" />,
-                <Tab key={3} label="Display 2D" />,
-                <Tab key={4} label="Display 3D" />,
+                <Tab className="tab-height" key={0} startIcon={<FolderCopyIcon />} />,
+                <Tab className="tab-height" key={1} startIcon={<PsychologyIcon />} />,
+                <Tab className="tab-height" key={2} startIcon={<EngineeringIcon />} />,
+                <Tab className="tab-height" key={3} startIcon={<ImageSearchIcon />} />,
+                <Tab className="tab-height" key={4} startIcon={<ViewInArIcon />} />
             ]}
             onTabSelected={setTabIndex}
             type="borderless">
             {getTabs()}
-        </HorizontalTabs> 
+        </VerticalTabs>
     );
 }

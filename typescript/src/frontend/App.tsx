@@ -33,7 +33,7 @@ export function App() {
             }),
         []
     );
-    
+
     const login = useCallback(async () => {
         authClient.onAccessTokenChanged.addListener(async (token) => {
             if(token) {
@@ -41,9 +41,9 @@ export function App() {
             }
         });
         try {
-            await authClient.signInSilent();            
+            await authClient.signInSilent();
         } catch {
-            await authClient.signIn();           
+            await authClient.signIn();
         }
         setAccessToken(await authClient.getAccessToken());
         console.log(await authClient.getAccessToken());

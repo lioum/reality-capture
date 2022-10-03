@@ -27,6 +27,8 @@
 	"dependencies": {
 		"@azure/storage-blob": "^12.8.0",
 		"@bentley/react-scripts": "^5.0.0-dev.3",
+		"@emotion/react": "^11.10.4",
+		"@emotion/styled": "^11.10.4",
 		"@itwin/appui-abstract": "^3.2.4",
 		"@itwin/appui-layout-react": "^3.2.2",
 		"@itwin/appui-react": "^3.2.2",
@@ -55,6 +57,8 @@
 		"@itwin/service-authorization": "^0.6.2",
 		"@itwin/web-viewer-react": "^3.0.0",
 		"@itwin/webgl-compatibility": "^3.2.4",
+		"@mui/icons-material": "^5.10.6",
+		"@mui/material": "^5.10.7",
 		"@types/chai": "^4.3.3",
 		"@types/chai-as-promised": "^7.1.5",
 		"@types/mocha": "^9.1.1",
