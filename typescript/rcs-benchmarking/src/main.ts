@@ -24,6 +24,7 @@ const authClient = new ServiceAuthorizationClient({
 });
 
 const INPUTS_FILE = "../data/inputs.json";
+const FAILED_INPUTS_FILE = "../data/failed_inputs.json";
 const JOBS_INFO_FILE = "../data/jobs_info.json";
 
 async function cancelJob(jobId: string) {
@@ -51,6 +52,7 @@ async function runRcsBenchmark() {
   const jobsInfo: any = JSON.parse(
     (await fs.readFile(JOBS_INFO_FILE)).toString()
   );
+  const failedInputs: any = {};
   const inputs = JSON.parse((await fs.readFile(INPUTS_FILE)).toString());
   const inputTypes = Object.keys(inputs);
 
@@ -60,20 +62,25 @@ async function runRcsBenchmark() {
     if (!jobsInfo[inputType]) jobsInfo[inputType] = [];
     console.log(`${inputType.toUpperCase()} jobs`);
 
-    try {
-      for (let inputId of inputs[inputType]) {
+    for (let inputId of inputs[inputType]) {
+      try {
         const jobId = await runJob(inputType, inputId);
         jobsInfo[inputType].push({ jobId, inputId });
         jobsInfo.jobIds.push(jobId);
+      } catch (error: any) {
+        console.log("Error occured for input:", inputId);
+        console.log(error);
+        if (!failedInputs[inputType]) failedInputs[inputType] = [inputId];
+        else failedInputs[inputType].push(inputId);
       }
-    } catch (error: any) {
-      console.log(JSON.stringify(error));
     }
 
   }
 
   await fs.writeFile(JOBS_INFO_FILE, JSON.stringify(jobsInfo));
+  await fs.writeFile(FAILED_INPUTS_FILE, JSON.stringify(failedInputs));
 }
 
 runRcsBenchmark();
-// cancelJob("7676245f-eb2a-4ded-8fae-1a695e8f2cac");
+// cancelJob("41f0e13a-273c-4bfd-914c-14868a910738");
+// runJob("laz", "759faeb9-0c15-4cd5-9f46-d2228943fa85");
