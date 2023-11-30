@@ -1,0 +1,24 @@
+{
+    "version" : "5.0",
+    "MeshCollection" : {
+      "Meshes" : {
+          "0" : {
+              "Name" : "",
+              "Path" : "0:Production_1.3mx",
+              "BoundingBox" : {
+                "xmin" : -100,
+                "ymin" : -120,
+                "zmin" : 10,
+                "xmax" : 100,
+                "ymax" : 80,
+                "zmax" : 35
+              }
+          }
+      }
+    },
+    "References" : {
+        "0" : {
+            "Path" : "Q:/Dataset/Bridge"
+        }
+    }
+}

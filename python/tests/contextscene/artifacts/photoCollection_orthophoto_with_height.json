@@ -1,0 +1,62 @@
+{
+    "version" : "5.0",
+    "SpatialReferenceSystems" : {
+        "0" : {
+            "Definition" : "EPSG:2193"
+        }
+    },
+    "PhotoCollection" : {
+        "SRSId" : 0,
+        "Devices" : {
+            "0" : {
+                "Type" : "orthotile",
+                "Dimensions" : {
+                    "width" : 4096,
+                    "height" : 4096
+                },
+                "PixelSize" : {
+                    "Width" : 0.072,
+                    "Height" : -0.072
+                },
+                "NoData" : -9999
+            }
+        },
+        "Photos" : {
+            "0" : {
+                "ImagePath" : "0:Production_39_ortho_part_1_1.tif",
+                "DeviceId" : 0,
+                "Location" : {
+                    "UlX" : 533418,
+                    "UlY" : 5212669.912
+                },
+                "DepthPath" : "1:Production_39_DSM_part_1_1.tif"
+            },
+            "1" : {
+                "ImagePath" : "0:Production_39_ortho_part_1_2.tif",
+                "DeviceId" : 0,
+                "Location" : {
+                    "UlX" : 533712.912,
+                    "UlY" : 5212669.912
+                },
+                "DepthPath" : "1:Production_39_DSM_part_1_2.tif"
+            },
+            "2" : {
+                "ImagePath" : "0:Production_39_ortho_part_2_1.tif",
+                "DeviceId" : 0,
+                "Location" : {
+                    "UlX" : 533418,
+                    "UlY" : 5212824.064
+                },
+                "DepthPath" : "1:Production_39_DSM_part_2_1.tif"
+            }
+        }
+    },
+    "References" : {
+        "0" : {
+            "Path" : "Q:/Analyze/TrainingScenes/Datasets/Example/S2D-Orthos/Graz/ortho"
+        },
+        "1" : {
+            "Path" : "Q:/Analyze/TrainingScenes/Datasets/Example/S2D-Orthos/Graz/dsm"
+        }
+    }
+}

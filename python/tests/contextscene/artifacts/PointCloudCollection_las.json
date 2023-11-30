@@ -1,0 +1,22 @@
+{
+    "version" : "5.0",
+    "SpatialReferenceSystems" : {
+        "0" : {
+            "Definition" : "EPSG:25829"
+        }
+    },
+    "PointCloudCollection" : {
+        "SRSId" : 0,
+        "PointClouds" : {
+            "0" : {
+                "Name" : "",
+                "Path" : "0:spain.las"
+            }
+        }
+    },
+    "References" : {
+        "0" : {
+            "Path" : "Q:/DataSets/Spain/LAS"
+        }
+    }
+}

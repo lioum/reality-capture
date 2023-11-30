@@ -1,0 +1,21 @@
+{
+    "version" : "5.0",
+    "PhotoCollection" : {
+        "Photos" : {
+            "0" : {
+                "ImagePath" : "0:IMAGE_1059.JPG"
+            },
+            "1" : {
+                "ImagePath" : "0:IMAGE_1060.JPG"
+            },
+            "2" : {
+                "ImagePath" : "0:IMAGE_1061.JPG"
+            }
+        }
+    },
+    "References" : {
+        "0" : {
+            "Path" : "Q:/DataSets/Motos/Images"
+        }
+    }
+}

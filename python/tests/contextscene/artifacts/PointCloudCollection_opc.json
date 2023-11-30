@@ -1,0 +1,30 @@
+{
+    "version" : "5.0",
+    "SpatialReferenceSystems" : {
+        "0" : {
+            "Definition" : "EPSG:25829"
+        }
+    },
+    "PointCloudCollection" : {
+        "SRSId" : 0,
+        "PointClouds" : {
+            "0" : {
+                "Name" : "",
+                "BoundingBox" : {
+                    "xmin" : 758968.81799577,
+                    "ymin" : 4066931.70199941,
+                    "zmin" : 25.9644992494779,
+                    "xmax" : 759084.955992652,
+                    "ymax" : 4067043.41599757,
+                    "zmax" : 50.4674979874532
+                },
+                "Path" : "0:point_cloud.opc"
+            }
+        }
+    },
+    "References" : {
+        "0" : {
+            "Path" : "Q:/DataSets/Spain/OPC"
+        }
+    }
+}

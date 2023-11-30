@@ -1,0 +1,22 @@
+{
+    "version" : "5.0",
+    "SpatialReferenceSystems" : {
+        "0" : {
+            "Definition" : "ENU:36.7127,-6.10034"
+        }
+    },
+    "PointCloudCollection" : {
+        "SRSId" : 0,
+        "PointClouds" : {
+            "0" : {
+                "Name" : "",
+                "Path" : "0:PointCloud.pod"
+            }
+        }
+    },
+    "References" : {
+        "0" : {
+            "Path" : "rds:7c00e184-5913-423b-8b4c-840ceb4bf616"
+        }
+    }
+}

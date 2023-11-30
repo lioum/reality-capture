@@ -1,0 +1,1542 @@
+{
+    "$defs": {
+        "AnnotationsModel": {
+            "additionalProperties": false,
+            "properties": {
+                "Labels": {
+                    "additionalProperties": {
+                        "$ref": "#/$defs/LabelsModel"
+                    },
+                    "title": "Labels",
+                    "type": "object"
+                },
+                "Objects2D": {
+                    "anyOf": [
+                        {
+                            "additionalProperties": {
+                                "additionalProperties": {
+                                    "$ref": "#/$defs/Object2DModel"
+                                },
+                                "type": "object"
+                            },
+                            "type": "object"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "title": "Objects2D"
+                },
+                "Objects3D": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/objects3DModel"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null
+                },
+                "Segmentation2D": {
+                    "anyOf": [
+                        {
+                            "additionalProperties": {
+                                "$ref": "#/$defs/Segmentation2DModel"
+                            },
+                            "type": "object"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "title": "Segmentation2D"
+                },
+                "Segmentation3D": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/Segmentation3DModel"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null
+                },
+                "Polygons2D": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/Polygons2DModel"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null
+                },
+                "Lines2D": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/Lines2DModel"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null
+                },
+                "Lines3D": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/Lines3DModel"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null
+                }
+            },
+            "required": [
+                "Labels"
+            ],
+            "title": "AnnotationsModel",
+            "type": "object"
+        },
+        "BoundaryModel": {
+            "additionalProperties": false,
+            "properties": {
+                "VertexIds": {
+                    "items": {
+                        "type": "integer"
+                    },
+                    "title": "Vertexids",
+                    "type": "array"
+                }
+            },
+            "required": [
+                "VertexIds"
+            ],
+            "title": "BoundaryModel",
+            "type": "object"
+        },
+        "Box2DModel": {
+            "additionalProperties": false,
+            "properties": {
+                "xmin": {
+                    "title": "Xmin",
+                    "type": "number"
+                },
+                "xmax": {
+                    "title": "Xmax",
+                    "type": "number"
+                },
+                "ymin": {
+                    "title": "Ymin",
+                    "type": "number"
+                },
+                "ymax": {
+                    "title": "Ymax",
+                    "type": "number"
+                }
+            },
+            "required": [
+                "xmin",
+                "xmax",
+                "ymin",
+                "ymax"
+            ],
+            "title": "Box2DModel",
+            "type": "object"
+        },
+        "Box3DModel": {
+            "additionalProperties": false,
+            "properties": {
+                "xmin": {
+                    "title": "Xmin",
+                    "type": "number"
+                },
+                "ymin": {
+                    "title": "Ymin",
+                    "type": "number"
+                },
+                "zmin": {
+                    "title": "Zmin",
+                    "type": "number"
+                },
+                "xmax": {
+                    "title": "Xmax",
+                    "type": "number"
+                },
+                "ymax": {
+                    "title": "Ymax",
+                    "type": "number"
+                },
+                "zmax": {
+                    "title": "Zmax",
+                    "type": "number"
+                }
+            },
+            "required": [
+                "xmin",
+                "ymin",
+                "zmin",
+                "xmax",
+                "ymax",
+                "zmax"
+            ],
+            "title": "Box3DModel",
+            "type": "object"
+        },
+        "CenterModel": {
+            "additionalProperties": false,
+            "properties": {
+                "x": {
+                    "title": "X",
+                    "type": "number"
+                },
+                "y": {
+                    "title": "Y",
+                    "type": "number"
+                },
+                "z": {
+                    "title": "Z",
+                    "type": "number"
+                }
+            },
+            "required": [
+                "x",
+                "y",
+                "z"
+            ],
+            "title": "CenterModel",
+            "type": "object"
+        },
+        "DevicesModel": {
+            "additionalProperties": false,
+            "properties": {
+                "Type": {
+                    "title": "Type",
+                    "type": "string"
+                },
+                "Dimensions": {
+                    "$ref": "#/$defs/DimensionsModel"
+                },
+                "PrincipalPoint": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/PrincipalPointModel"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null
+                },
+                "FocalLength": {
+                    "anyOf": [
+                        {
+                            "type": "number"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "title": "Focallength"
+                },
+                "RadialDistortion": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/RadialDistortionModel"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null
+                },
+                "TangentialDistortion": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/TangentialDistortionModel"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null
+                },
+                "AspectRatio": {
+                    "anyOf": [
+                        {
+                            "type": "number"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "title": "Aspectratio"
+                },
+                "Skew": {
+                    "anyOf": [
+                        {
+                            "type": "number"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "title": "Skew"
+                },
+                "PixelSize": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/PixelSizeModel"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null
+                },
+                "NoData": {
+                    "default": null,
+                    "title": "Nodata",
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "Type",
+                "Dimensions"
+            ],
+            "title": "DevicesModel",
+            "type": "object"
+        },
+        "DimensionsModel": {
+            "additionalProperties": false,
+            "properties": {
+                "width": {
+                    "title": "Width",
+                    "type": "integer"
+                },
+                "height": {
+                    "title": "Height",
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "width",
+                "height"
+            ],
+            "title": "DimensionsModel",
+            "type": "object"
+        },
+        "LabelsModel": {
+            "additionalProperties": false,
+            "properties": {
+                "Name": {
+                    "title": "Name",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "Name"
+            ],
+            "title": "LabelsModel",
+            "type": "object"
+        },
+        "Line2DModel": {
+            "additionalProperties": false,
+            "properties": {
+                "LabelInfo": {
+                    "$ref": "#/$defs/contextscene__contextscene__ContextSceneModel__AnnotationsModel__Lines2DModel__Line2DModel__LabelInfoModel"
+                },
+                "Length": {
+                    "title": "Length",
+                    "type": "number"
+                },
+                "MeanDiameter": {
+                    "title": "Meandiameter",
+                    "type": "number"
+                },
+                "MaxDiameter": {
+                    "title": "Maxdiameter",
+                    "type": "number"
+                },
+                "Vertices": {
+                    "additionalProperties": {
+                        "$ref": "#/$defs/contextscene__contextscene__ContextSceneModel__AnnotationsModel__Lines2DModel__Line2DModel__VerticeModel"
+                    },
+                    "title": "Vertices",
+                    "type": "object"
+                },
+                "Segments": {
+                    "items": {
+                        "$ref": "#/$defs/VertexModel"
+                    },
+                    "title": "Segments",
+                    "type": "array"
+                }
+            },
+            "required": [
+                "LabelInfo",
+                "Length",
+                "MeanDiameter",
+                "MaxDiameter",
+                "Vertices",
+                "Segments"
+            ],
+            "title": "Line2DModel",
+            "type": "object"
+        },
+        "Line3DModel": {
+            "additionalProperties": false,
+            "properties": {
+                "LabelInfo": {
+                    "$ref": "#/$defs/contextscene__contextscene__ContextSceneModel__AnnotationsModel__Lines3DModel__Line3DModel__LabelInfoModel"
+                },
+                "Length": {
+                    "title": "Length",
+                    "type": "number"
+                },
+                "MeanDiameter": {
+                    "title": "Meandiameter",
+                    "type": "number"
+                },
+                "MaxDiameter": {
+                    "title": "Maxdiameter",
+                    "type": "number"
+                },
+                "Vertices": {
+                    "additionalProperties": {
+                        "$ref": "#/$defs/contextscene__contextscene__ContextSceneModel__AnnotationsModel__Lines3DModel__Line3DModel__VerticeModel"
+                    },
+                    "title": "Vertices",
+                    "type": "object"
+                },
+                "Segments": {
+                    "items": {
+                        "$ref": "#/$defs/VertexModel"
+                    },
+                    "title": "Segments",
+                    "type": "array"
+                }
+            },
+            "required": [
+                "LabelInfo",
+                "Length",
+                "MeanDiameter",
+                "MaxDiameter",
+                "Vertices",
+                "Segments"
+            ],
+            "title": "Line3DModel",
+            "type": "object"
+        },
+        "Lines2DModel": {
+            "additionalProperties": false,
+            "properties": {
+                "SRSId": {
+                    "default": null,
+                    "title": "Srsid",
+                    "type": "integer"
+                },
+                "Lines": {
+                    "additionalProperties": {
+                        "$ref": "#/$defs/Line2DModel"
+                    },
+                    "title": "Lines",
+                    "type": "object"
+                }
+            },
+            "required": [
+                "Lines"
+            ],
+            "title": "Lines2DModel",
+            "type": "object"
+        },
+        "Lines3DModel": {
+            "additionalProperties": false,
+            "properties": {
+                "SRSId": {
+                    "default": null,
+                    "title": "Srsid",
+                    "type": "integer"
+                },
+                "Lines": {
+                    "additionalProperties": {
+                        "$ref": "#/$defs/Line3DModel"
+                    },
+                    "title": "Lines",
+                    "type": "object"
+                }
+            },
+            "required": [
+                "Lines"
+            ],
+            "title": "Lines3DModel",
+            "type": "object"
+        },
+        "LocationModel": {
+            "additionalProperties": false,
+            "properties": {
+                "UlX": {
+                    "title": "Ulx",
+                    "type": "number"
+                },
+                "UlY": {
+                    "title": "Uly",
+                    "type": "number"
+                }
+            },
+            "required": [
+                "UlX",
+                "UlY"
+            ],
+            "title": "LocationModel",
+            "type": "object"
+        },
+        "MeshCollectionModel": {
+            "additionalProperties": false,
+            "properties": {
+                "SRSId": {
+                    "default": null,
+                    "title": "Srsid",
+                    "type": "integer"
+                },
+                "Meshes": {
+                    "additionalProperties": {
+                        "$ref": "#/$defs/MeshModel"
+                    },
+                    "title": "Meshes",
+                    "type": "object"
+                }
+            },
+            "required": [
+                "Meshes"
+            ],
+            "title": "MeshCollectionModel",
+            "type": "object"
+        },
+        "MeshModel": {
+            "additionalProperties": false,
+            "properties": {
+                "Name": {
+                    "default": "",
+                    "title": "Name",
+                    "type": "string"
+                },
+                "Path": {
+                    "title": "Path",
+                    "type": "string"
+                },
+                "BoundingBox": {
+                    "allOf": [
+                        {
+                            "$ref": "#/$defs/Box3DModel"
+                        }
+                    ],
+                    "default": null
+                }
+            },
+            "required": [
+                "Path"
+            ],
+            "title": "MeshModel",
+            "type": "object"
+        },
+        "Object2DModel": {
+            "additionalProperties": false,
+            "properties": {
+                "LabelInfo": {
+                    "$ref": "#/$defs/contextscene__contextscene__ContextSceneModel__AnnotationsModel__Object2DModel__LabelInfoModel"
+                },
+                "Box2D": {
+                    "$ref": "#/$defs/Box2DModel"
+                },
+                "TextInfo": {
+                    "allOf": [
+                        {
+                            "$ref": "#/$defs/TextInfoModel"
+                        }
+                    ],
+                    "default": null
+                }
+            },
+            "required": [
+                "LabelInfo",
+                "Box2D"
+            ],
+            "title": "Object2DModel",
+            "type": "object"
+        },
+        "Object3DModel": {
+            "additionalProperties": false,
+            "properties": {
+                "LabelInfo": {
+                    "$ref": "#/$defs/contextscene__contextscene__ContextSceneModel__AnnotationsModel__objects3DModel__Object3DModel__LabelInfoModel"
+                },
+                "RotatedBox3D": {
+                    "$ref": "#/$defs/RotatedBox3DModel"
+                }
+            },
+            "required": [
+                "LabelInfo",
+                "RotatedBox3D"
+            ],
+            "title": "Object3DModel",
+            "type": "object"
+        },
+        "PhotoCollectionModel": {
+            "additionalProperties": false,
+            "properties": {
+                "SRSId": {
+                    "default": null,
+                    "title": "Srsid",
+                    "type": "integer"
+                },
+                "Photos": {
+                    "additionalProperties": {
+                        "$ref": "#/$defs/PhotosModel"
+                    },
+                    "title": "Photos",
+                    "type": "object"
+                },
+                "Devices": {
+                    "anyOf": [
+                        {
+                            "additionalProperties": {
+                                "$ref": "#/$defs/DevicesModel"
+                            },
+                            "type": "object"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "title": "Devices"
+                },
+                "Poses": {
+                    "anyOf": [
+                        {
+                            "additionalProperties": {
+                                "$ref": "#/$defs/PosesModel"
+                            },
+                            "type": "object"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "title": "Poses"
+                }
+            },
+            "required": [
+                "Photos"
+            ],
+            "title": "PhotoCollectionModel",
+            "type": "object"
+        },
+        "PhotosModel": {
+            "additionalProperties": false,
+            "properties": {
+                "ImagePath": {
+                    "title": "Imagepath",
+                    "type": "string"
+                },
+                "DeviceId": {
+                    "anyOf": [
+                        {
+                            "type": "integer"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "title": "Deviceid"
+                },
+                "PoseId": {
+                    "anyOf": [
+                        {
+                            "type": "integer"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "title": "Poseid"
+                },
+                "Location": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/LocationModel"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null
+                },
+                "DepthPath": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "title": "Depthpath"
+                }
+            },
+            "required": [
+                "ImagePath"
+            ],
+            "title": "PhotosModel",
+            "type": "object"
+        },
+        "PixelSizeModel": {
+            "additionalProperties": false,
+            "properties": {
+                "Width": {
+                    "title": "Width",
+                    "type": "number"
+                },
+                "Height": {
+                    "title": "Height",
+                    "type": "number"
+                }
+            },
+            "required": [
+                "Width",
+                "Height"
+            ],
+            "title": "PixelSizeModel",
+            "type": "object"
+        },
+        "PointCloudCollection": {
+            "additionalProperties": false,
+            "properties": {
+                "SRSId": {
+                    "default": null,
+                    "title": "Srsid",
+                    "type": "integer"
+                },
+                "PointClouds": {
+                    "additionalProperties": {
+                        "$ref": "#/$defs/PointCloudModel"
+                    },
+                    "title": "Pointclouds",
+                    "type": "object"
+                }
+            },
+            "required": [
+                "PointClouds"
+            ],
+            "title": "PointCloudCollection",
+            "type": "object"
+        },
+        "PointCloudModel": {
+            "additionalProperties": false,
+            "properties": {
+                "Name": {
+                    "default": "",
+                    "title": "Name",
+                    "type": "string"
+                },
+                "BoundingBox": {
+                    "allOf": [
+                        {
+                            "$ref": "#/$defs/Box3DModel"
+                        }
+                    ],
+                    "default": null
+                },
+                "Path": {
+                    "title": "Path",
+                    "type": "string"
+                },
+                "Type": {
+                    "default": null,
+                    "title": "Type",
+                    "type": "string"
+                },
+                "Location": {
+                    "default": null,
+                    "title": "Location",
+                    "type": "string"
+                },
+                "Center": {
+                    "allOf": [
+                        {
+                            "$ref": "#/$defs/CenterModel"
+                        }
+                    ],
+                    "default": null
+                },
+                "TrajectoryId": {
+                    "default": null,
+                    "title": "Trajectoryid",
+                    "type": "integer"
+                },
+                "SRSId": {
+                    "default": null,
+                    "title": "Srsid",
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "Path"
+            ],
+            "title": "PointCloudModel",
+            "type": "object"
+        },
+        "Polygon2DModel": {
+            "additionalProperties": false,
+            "properties": {
+                "LabelInfo": {
+                    "$ref": "#/$defs/contextscene__contextscene__ContextSceneModel__AnnotationsModel__Polygons2DModel__Polygon2DModel__LabelInfoModel"
+                },
+                "Area": {
+                    "title": "Area",
+                    "type": "number"
+                },
+                "Vertices": {
+                    "additionalProperties": {
+                        "$ref": "#/$defs/contextscene__contextscene__ContextSceneModel__AnnotationsModel__Polygons2DModel__Polygon2DModel__VerticeModel"
+                    },
+                    "title": "Vertices",
+                    "type": "object"
+                },
+                "OuterBoundary": {
+                    "$ref": "#/$defs/BoundaryModel"
+                },
+                "InnerBoundaries": {
+                    "default": null,
+                    "items": {
+                        "$ref": "#/$defs/BoundaryModel"
+                    },
+                    "title": "Innerboundaries",
+                    "type": "array"
+                }
+            },
+            "required": [
+                "LabelInfo",
+                "Area",
+                "Vertices",
+                "OuterBoundary"
+            ],
+            "title": "Polygon2DModel",
+            "type": "object"
+        },
+        "Polygons2DModel": {
+            "additionalProperties": false,
+            "properties": {
+                "SRSId": {
+                    "default": null,
+                    "title": "Srsid",
+                    "type": "integer"
+                },
+                "Polygons": {
+                    "anyOf": [
+                        {
+                            "additionalProperties": {
+                                "$ref": "#/$defs/Polygon2DModel"
+                            },
+                            "type": "object"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "title": "Polygons"
+                }
+            },
+            "required": [
+                "Polygons"
+            ],
+            "title": "Polygons2DModel",
+            "type": "object"
+        },
+        "PosesModel": {
+            "additionalProperties": false,
+            "properties": {
+                "Center": {
+                    "$ref": "#/$defs/CenterModel"
+                },
+                "Rotation": {
+                    "allOf": [
+                        {
+                            "$ref": "#/$defs/contextscene__contextscene__ContextSceneModel__PhotoCollectionModel__PosesModel__RotationModel"
+                        }
+                    ],
+                    "default": null
+                }
+            },
+            "required": [
+                "Center"
+            ],
+            "title": "PosesModel",
+            "type": "object"
+        },
+        "PrincipalPointModel": {
+            "additionalProperties": false,
+            "properties": {
+                "x": {
+                    "title": "X",
+                    "type": "number"
+                },
+                "y": {
+                    "title": "Y",
+                    "type": "number"
+                }
+            },
+            "required": [
+                "x",
+                "y"
+            ],
+            "title": "PrincipalPointModel",
+            "type": "object"
+        },
+        "RadialDistortionModel": {
+            "additionalProperties": false,
+            "properties": {
+                "k1": {
+                    "title": "K1",
+                    "type": "number"
+                },
+                "k2": {
+                    "title": "K2",
+                    "type": "number"
+                },
+                "k3": {
+                    "title": "K3",
+                    "type": "number"
+                }
+            },
+            "required": [
+                "k1",
+                "k2",
+                "k3"
+            ],
+            "title": "RadialDistortionModel",
+            "type": "object"
+        },
+        "RefPathModel": {
+            "additionalProperties": false,
+            "properties": {
+                "Path": {
+                    "title": "Path",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "Path"
+            ],
+            "title": "RefPathModel",
+            "type": "object"
+        },
+        "RotatedBox3DModel": {
+            "additionalProperties": false,
+            "properties": {
+                "Box3D": {
+                    "$ref": "#/$defs/Box3DModel"
+                },
+                "Rotation": {
+                    "$ref": "#/$defs/contextscene__contextscene__ContextSceneModel__AnnotationsModel__objects3DModel__Object3DModel__RotatedBox3DModel__RotationModel"
+                }
+            },
+            "required": [
+                "Box3D",
+                "Rotation"
+            ],
+            "title": "RotatedBox3DModel",
+            "type": "object"
+        },
+        "Segmentation2DModel": {
+            "additionalProperties": false,
+            "properties": {
+                "Path": {
+                    "title": "Path",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "Path"
+            ],
+            "title": "Segmentation2DModel",
+            "type": "object"
+        },
+        "Segmentation3DModel": {
+            "additionalProperties": false,
+            "properties": {
+                "SRSId": {
+                    "default": null,
+                    "title": "Srsid",
+                    "type": "integer"
+                },
+                "Path": {
+                    "title": "Path",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "Path"
+            ],
+            "title": "Segmentation3DModel",
+            "type": "object"
+        },
+        "SpatialReferenceSystemModel": {
+            "additionalProperties": false,
+            "properties": {
+                "Definition": {
+                    "title": "Definition",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "Definition"
+            ],
+            "title": "SpatialReferenceSystemModel",
+            "type": "object"
+        },
+        "TangentialDistortionModel": {
+            "additionalProperties": false,
+            "properties": {
+                "p1": {
+                    "title": "P1",
+                    "type": "number"
+                },
+                "p2": {
+                    "title": "P2",
+                    "type": "number"
+                }
+            },
+            "required": [
+                "p1",
+                "p2"
+            ],
+            "title": "TangentialDistortionModel",
+            "type": "object"
+        },
+        "TextInfoModel": {
+            "additionalProperties": false,
+            "properties": {
+                "Text": {
+                    "title": "Text",
+                    "type": "string"
+                },
+                "Orientation": {
+                    "title": "Orientation",
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "Text",
+                "Orientation"
+            ],
+            "title": "TextInfoModel",
+            "type": "object"
+        },
+        "TrajectoryCollection": {
+            "additionalProperties": false,
+            "properties": {
+                "Trajectories": {
+                    "additionalProperties": {
+                        "$ref": "#/$defs/TrajectoryModel"
+                    },
+                    "title": "Trajectories",
+                    "type": "object"
+                },
+                "SRSId": {
+                    "default": null,
+                    "title": "Srsid",
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "Trajectories"
+            ],
+            "title": "TrajectoryCollection",
+            "type": "object"
+        },
+        "TrajectoryModel": {
+            "additionalProperties": false,
+            "properties": {
+                "Paths": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "minItems": 1,
+                    "title": "Paths",
+                    "type": "array"
+                },
+                "Delimiters": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "title": "Delimiters",
+                    "type": "array"
+                },
+                "CombineConsecutiveDelimiters": {
+                    "title": "Combineconsecutivedelimiters",
+                    "type": "boolean"
+                },
+                "DecimalSeparator": {
+                    "title": "Decimalseparator",
+                    "type": "string"
+                },
+                "LinesToIgnore": {
+                    "title": "Linestoignore",
+                    "type": "integer"
+                },
+                "TimeColumnId": {
+                    "title": "Timecolumnid",
+                    "type": "integer"
+                },
+                "XColumnId": {
+                    "title": "Xcolumnid",
+                    "type": "integer"
+                },
+                "YColumnId": {
+                    "title": "Ycolumnid",
+                    "type": "integer"
+                },
+                "ZColumnId": {
+                    "title": "Zcolumnid",
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "Paths",
+                "Delimiters",
+                "CombineConsecutiveDelimiters",
+                "DecimalSeparator",
+                "LinesToIgnore",
+                "TimeColumnId",
+                "XColumnId",
+                "YColumnId",
+                "ZColumnId"
+            ],
+            "title": "TrajectoryModel",
+            "type": "object"
+        },
+        "VertexModel": {
+            "additionalProperties": false,
+            "properties": {
+                "VertexId1": {
+                    "title": "Vertexid1",
+                    "type": "integer"
+                },
+                "VertexId2": {
+                    "title": "Vertexid2",
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "VertexId1",
+                "VertexId2"
+            ],
+            "title": "VertexModel",
+            "type": "object"
+        },
+        "contextscene__contextscene__ContextSceneModel__AnnotationsModel__Lines2DModel__Line2DModel__LabelInfoModel": {
+            "additionalProperties": false,
+            "properties": {
+                "LabelId": {
+                    "title": "Labelid",
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "LabelId"
+            ],
+            "title": "LabelInfoModel",
+            "type": "object"
+        },
+        "contextscene__contextscene__ContextSceneModel__AnnotationsModel__Lines2DModel__Line2DModel__VerticeModel": {
+            "additionalProperties": false,
+            "properties": {
+                "Position": {
+                    "$ref": "#/$defs/contextscene__contextscene__ContextSceneModel__AnnotationsModel__Lines2DModel__Line2DModel__VerticeModel__PositionModel"
+                },
+                "Diameter": {
+                    "title": "Diameter",
+                    "type": "number"
+                }
+            },
+            "required": [
+                "Position",
+                "Diameter"
+            ],
+            "title": "VerticeModel",
+            "type": "object"
+        },
+        "contextscene__contextscene__ContextSceneModel__AnnotationsModel__Lines2DModel__Line2DModel__VerticeModel__PositionModel": {
+            "additionalProperties": false,
+            "properties": {
+                "x": {
+                    "title": "X",
+                    "type": "number"
+                },
+                "y": {
+                    "title": "Y",
+                    "type": "number"
+                }
+            },
+            "required": [
+                "x",
+                "y"
+            ],
+            "title": "PositionModel",
+            "type": "object"
+        },
+        "contextscene__contextscene__ContextSceneModel__AnnotationsModel__Lines3DModel__Line3DModel__LabelInfoModel": {
+            "additionalProperties": false,
+            "properties": {
+                "LabelId": {
+                    "title": "Labelid",
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "LabelId"
+            ],
+            "title": "LabelInfoModel",
+            "type": "object"
+        },
+        "contextscene__contextscene__ContextSceneModel__AnnotationsModel__Lines3DModel__Line3DModel__VerticeModel": {
+            "additionalProperties": false,
+            "properties": {
+                "Position": {
+                    "$ref": "#/$defs/contextscene__contextscene__ContextSceneModel__AnnotationsModel__Lines3DModel__Line3DModel__VerticeModel__PositionModel"
+                },
+                "Diameter": {
+                    "title": "Diameter",
+                    "type": "number"
+                }
+            },
+            "required": [
+                "Position",
+                "Diameter"
+            ],
+            "title": "VerticeModel",
+            "type": "object"
+        },
+        "contextscene__contextscene__ContextSceneModel__AnnotationsModel__Lines3DModel__Line3DModel__VerticeModel__PositionModel": {
+            "additionalProperties": false,
+            "properties": {
+                "x": {
+                    "title": "X",
+                    "type": "number"
+                },
+                "y": {
+                    "title": "Y",
+                    "type": "number"
+                },
+                "z": {
+                    "title": "Z",
+                    "type": "number"
+                }
+            },
+            "required": [
+                "x",
+                "y",
+                "z"
+            ],
+            "title": "PositionModel",
+            "type": "object"
+        },
+        "contextscene__contextscene__ContextSceneModel__AnnotationsModel__Object2DModel__LabelInfoModel": {
+            "additionalProperties": false,
+            "properties": {
+                "LabelId": {
+                    "title": "Labelid",
+                    "type": "integer"
+                },
+                "Confidence": {
+                    "anyOf": [
+                        {
+                            "type": "number"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "title": "Confidence"
+                }
+            },
+            "required": [
+                "LabelId"
+            ],
+            "title": "LabelInfoModel",
+            "type": "object"
+        },
+        "contextscene__contextscene__ContextSceneModel__AnnotationsModel__Polygons2DModel__Polygon2DModel__LabelInfoModel": {
+            "additionalProperties": false,
+            "properties": {
+                "LabelId": {
+                    "title": "Labelid",
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "LabelId"
+            ],
+            "title": "LabelInfoModel",
+            "type": "object"
+        },
+        "contextscene__contextscene__ContextSceneModel__AnnotationsModel__Polygons2DModel__Polygon2DModel__VerticeModel": {
+            "additionalProperties": false,
+            "properties": {
+                "Position": {
+                    "$ref": "#/$defs/contextscene__contextscene__ContextSceneModel__AnnotationsModel__Polygons2DModel__Polygon2DModel__VerticeModel__PositionModel"
+                }
+            },
+            "required": [
+                "Position"
+            ],
+            "title": "VerticeModel",
+            "type": "object"
+        },
+        "contextscene__contextscene__ContextSceneModel__AnnotationsModel__Polygons2DModel__Polygon2DModel__VerticeModel__PositionModel": {
+            "additionalProperties": false,
+            "properties": {
+                "x": {
+                    "title": "X",
+                    "type": "number"
+                },
+                "y": {
+                    "title": "Y",
+                    "type": "number"
+                }
+            },
+            "required": [
+                "x",
+                "y"
+            ],
+            "title": "PositionModel",
+            "type": "object"
+        },
+        "contextscene__contextscene__ContextSceneModel__AnnotationsModel__objects3DModel__Object3DModel__LabelInfoModel": {
+            "additionalProperties": false,
+            "properties": {
+                "LabelId": {
+                    "title": "Labelid",
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "LabelId"
+            ],
+            "title": "LabelInfoModel",
+            "type": "object"
+        },
+        "contextscene__contextscene__ContextSceneModel__AnnotationsModel__objects3DModel__Object3DModel__RotatedBox3DModel__RotationModel": {
+            "additionalProperties": false,
+            "properties": {
+                "M_00": {
+                    "title": "M 00",
+                    "type": "number"
+                },
+                "M_01": {
+                    "title": "M 01",
+                    "type": "number"
+                },
+                "M_02": {
+                    "title": "M 02",
+                    "type": "number"
+                },
+                "M_10": {
+                    "title": "M 10",
+                    "type": "number"
+                },
+                "M_11": {
+                    "title": "M 11",
+                    "type": "number"
+                },
+                "M_12": {
+                    "title": "M 12",
+                    "type": "number"
+                },
+                "M_20": {
+                    "title": "M 20",
+                    "type": "number"
+                },
+                "M_21": {
+                    "title": "M 21",
+                    "type": "number"
+                },
+                "M_22": {
+                    "title": "M 22",
+                    "type": "number"
+                }
+            },
+            "required": [
+                "M_00",
+                "M_01",
+                "M_02",
+                "M_10",
+                "M_11",
+                "M_12",
+                "M_20",
+                "M_21",
+                "M_22"
+            ],
+            "title": "RotationModel",
+            "type": "object"
+        },
+        "contextscene__contextscene__ContextSceneModel__PhotoCollectionModel__PosesModel__RotationModel": {
+            "additionalProperties": false,
+            "properties": {
+                "omega": {
+                    "title": "Omega",
+                    "type": "number"
+                },
+                "phi": {
+                    "title": "Phi",
+                    "type": "number"
+                },
+                "kappa": {
+                    "title": "Kappa",
+                    "type": "number"
+                }
+            },
+            "required": [
+                "omega",
+                "phi",
+                "kappa"
+            ],
+            "title": "RotationModel",
+            "type": "object"
+        },
+        "objects3DModel": {
+            "additionalProperties": false,
+            "properties": {
+                "Objects": {
+                    "additionalProperties": {
+                        "$ref": "#/$defs/Object3DModel"
+                    },
+                    "title": "Objects",
+                    "type": "object"
+                },
+                "SRSId": {
+                    "default": null,
+                    "title": "Srsid",
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "Objects"
+            ],
+            "title": "objects3DModel",
+            "type": "object"
+        }
+    },
+    "additionalProperties": false,
+    "properties": {
+        "version": {
+            "default": "5.0",
+            "title": "Version",
+            "type": "string"
+        },
+        "SpatialReferenceSystems": {
+            "anyOf": [
+                {
+                    "additionalProperties": {
+                        "$ref": "#/$defs/SpatialReferenceSystemModel"
+                    },
+                    "type": "object"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "Spatialreferencesystems"
+        },
+        "PhotoCollection": {
+            "anyOf": [
+                {
+                    "$ref": "#/$defs/PhotoCollectionModel"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null
+        },
+        "MeshCollection": {
+            "anyOf": [
+                {
+                    "$ref": "#/$defs/MeshCollectionModel"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null
+        },
+        "PointCloudCollection": {
+            "anyOf": [
+                {
+                    "$ref": "#/$defs/PointCloudCollection"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null
+        },
+        "TrajectoryCollection": {
+            "anyOf": [
+                {
+                    "$ref": "#/$defs/TrajectoryCollection"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null
+        },
+        "Annotations": {
+            "anyOf": [
+                {
+                    "$ref": "#/$defs/AnnotationsModel"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null
+        },
+        "References": {
+            "anyOf": [
+                {
+                    "additionalProperties": {
+                        "$ref": "#/$defs/RefPathModel"
+                    },
+                    "type": "object"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "default": null,
+            "title": "References"
+        }
+    },
+    "title": "ContextSceneModel",
+    "type": "object"
+}

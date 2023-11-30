@@ -1,0 +1,51 @@
+{
+    "version" : "5.0",
+    "PhotoCollection" : {
+        "Photos" : {
+            "0" : {
+                "ImagePath" : "0:img_1059.JPG"
+            },
+            "1" : {
+                "ImagePath" : "0:img_1060.JPG"
+            },
+            "2" : {
+                "ImagePath" : "0:img_1061.JPG"
+            }
+        }
+    },
+    "Annotations" : {
+        "Labels" : {
+            "0" : {
+                "Name" : "background"
+            },
+            "2" : {
+                "Name" : "bicycle"
+            },
+            "6" : {
+                "Name" : "bus"
+            },
+            "7" : {
+                "Name" : "car"
+            }
+        },
+        "Segmentation2D" : {
+            "0" : {
+                "Path" : "1:0.png"
+            },
+            "1" : {
+                "Path" : "1:1.png"
+            },
+            "2" : {
+                "Path" : "1:2.png"
+            }
+        }
+    },
+    "References" : {
+        "0" : {
+            "Path" : "Q:/Analyze/DataSets/Motos/images"
+        },
+        "1" : {
+            "Path" : "Q:/Analyze/DataSets/Motos/segmentedPhotos"
+        }
+    }
+}

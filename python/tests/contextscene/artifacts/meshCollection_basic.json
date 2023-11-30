@@ -1,0 +1,22 @@
+{
+    "version" : "5.0",
+    "SpatialReferenceSystems" : {
+        "0" : {
+            "Definition" : "EPSG:25829"
+        }
+    },
+    "MeshCollection" : {
+        "SRSId" : 0,
+        "Meshes" : {
+            "0" : {
+                "Name" : "",
+                "Path" : "0:Production_1_3SM.3sm"
+            }
+        }
+    },
+    "References" : {
+        "0" : {
+            "Path" : "Q:/Dataset/Bridge"
+        }
+    }
+}

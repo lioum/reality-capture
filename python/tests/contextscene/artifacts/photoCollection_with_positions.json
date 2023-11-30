@@ -1,0 +1,54 @@
+{
+    "version" : "5.0",
+    "SpatialReferenceSystems" : {
+        "1" : {
+            "Definition" : "EPSG:32635"
+        }
+    },
+    "PhotoCollection" : {
+        "SRSId" : 1,
+        "Poses" : {
+            "3" : {
+                "Center" : {
+                    "x" : 388620.561400515,
+                    "y" : 6059714.92091526,
+                    "z" : 252.657253024168
+                    }
+                  },
+            "4" : {
+                "Center" : {
+                    "x" : 388624.256090598,
+                    "y" : 6059693.61938892,
+                    "z" : 253.549586427398
+                    }
+                  },
+            "5" : {
+                "Center" : {
+                    "x" : 388614.899373967,
+                    "y" : 6059749.28043899,
+                    "z" : 252.456919016317
+                    }
+                  }
+                },
+        "Photos" : {
+            "3" : {
+                "ImagePath" : "0:image_1.JPG",
+                "PoseId" : 3
+            },
+            "4" : {
+                "ImagePath" : "0:image_2.JPG",
+                "PoseId" : 4
+            },
+            "5" : {
+                "ImagePath" : "0:image_3.JPG",
+                "PoseId" : 5
+            }
+        }
+
+    },
+    "References" : {
+        "0" : {
+            "Path" : "Q:/Analyze/TrainingScenes/Datasets/Example/city"
+        }
+    }
+}

@@ -1,0 +1,55 @@
+{
+    "version" : "5.0",
+    "SpatialReferenceSystems" : {
+        "0" : {
+            "Definition" : "EPSG:2193"
+        }
+    },
+    "PhotoCollection" : {
+        "SRSId" : 0,
+        "Devices" : {
+            "0" : {
+                "Type" : "orthotile",
+                "Dimensions" : {
+                    "width" : 3200,
+                    "height" : 4800
+                },
+                "PixelSize" : {
+                    "Width" : 0.075,
+                    "Height" : -0.075
+                }
+            }
+        },
+        "Photos" : {
+            "0" : {
+                "ImagePath" : "0:Production_39_ortho_part_1_1.tif",
+                "DeviceId" : 0,
+                "Location" : {
+                    "UlX" : 533418,
+                    "UlY" : 5212669.912
+                }
+            },
+            "1" : {
+                "ImagePath" : "0:Production_39_ortho_part_1_2.tif",
+                "DeviceId" : 0,
+                "Location" : {
+                    "UlX" : 533712.912,
+                    "UlY" : 5212669.912
+                }
+            },
+            "2" : {
+                "ImagePath" : "0:Production_39_ortho_part_2_1.tif",
+                "DeviceId" : 0,
+                "Location" : {
+                    "UlX" : 533418,
+                    "UlY" : 5212824.064
+                }
+            }
+        }
+    },
+    "References" : {
+        "0" : {
+            "Path" : "Q:/Datasets/Graz/ortho"
+        }
+    }
+}

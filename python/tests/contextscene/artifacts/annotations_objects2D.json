@@ -1,0 +1,99 @@
+{
+    "version" : "5.0",
+    "PhotoCollection" : {
+        "Photos" : {
+            "0" : {
+                "ImagePath" : "0:img_1059.JPG"
+            },
+            "1" : {
+                "ImagePath" : "0:img_1060.JPG"
+            },
+            "2" : {
+                "ImagePath" : "0:img_1061.JPG"
+            }
+        }
+    },
+    "Annotations" : {
+        "Labels" : {
+            "3" : {
+                "Name" : "car"
+            },
+            "4" : {
+                "Name" : "motorcycle"
+            }
+        },
+        "Objects2D" : {
+            "0" : {
+                "e256276a-d478-476d-a654-195dbc23d1d9" : {
+                    "LabelInfo" : {
+                        "Confidence" : 0.998534977436066,
+                        "LabelId" : 3
+                    },
+                    "Box2D" : {
+                        "xmin" : 0.0319100245833397,
+                        "ymin" : 0.537032723426819,
+                        "xmax" : 0.374318659305573,
+                        "ymax" : 0.66499537229538
+                    }
+                },
+                "03f2b2e5-5df5-49a0-8515-62d6df7739bd" : {
+                    "LabelInfo" : {
+                        "Confidence" : 0.996562480926514,
+                        "LabelId" : 3
+                    },
+                    "Box2D" : {
+                        "xmin" : 0.877566039562225,
+                        "ymin" : 0.4940065741539,
+                        "xmax" : 1,
+                        "ymax" : 0.62068098783493
+                    }
+                }
+            },
+            "1" : {
+                "b61c36dd-98d2-4a2a-902e-9d12d9472f15" : {
+                    "LabelInfo" : {
+                        "Confidence" : 0.983914494514465,
+                        "LabelId" : 3
+                    },
+                    "Box2D" : {
+                        "xmin" : 0.854629874229431,
+                        "ymin" : 0.483299434185028,
+                        "xmax" : 0.938638925552368,
+                        "ymax" : 0.547508895397186
+                    }
+                },
+                "71eab044-afc0-45e3-a9bf-d9c96689db58" : {
+                    "LabelInfo" : {
+                        "Confidence" : 0.924463272094727,
+                        "LabelId" : 3
+                    },
+                    "Box2D" : {
+                        "xmin" : 0.98187381029129,
+                        "ymin" : 0.479612439870834,
+                        "xmax" : 1,
+                        "ymax" : 0.551942944526672
+                    }
+                }
+            },
+            "2" : {
+                "fbd8a303-06de-4368-910d-080c8a9024fc" : {
+                    "LabelInfo" : {
+                        "Confidence" : 0.983137726783752,
+                        "LabelId" : 3
+                    },
+                    "Box2D" : {
+                        "xmin" : 0.943033456802368,
+                        "ymin" : 0.504623711109161,
+                        "xmax" : 0.998084306716919,
+                        "ymax" : 0.579438984394073
+                    }
+                }
+            }
+        }
+    },
+    "References" : {
+        "0" : {
+            "Path" : "Q:/Analyze/DataSets/Images"
+        }
+    }
+}

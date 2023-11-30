@@ -1,0 +1,30 @@
+{
+    "version" : "5.0",
+    "SpatialReferenceSystems" : {
+        "0" : {
+            "Definition" : "EPSG:26910"
+        }
+    },
+    "Annotations" : {
+        "Labels" : {
+            "21" : {
+                "Name" : "Vehicle"
+            },
+            "6" : {
+                "Name" : "Roof"
+            },
+            "5" : {
+                "Name" : "Tree"
+            }
+        },
+        "Segmentation3D" : {
+            "SRSId" : 0,
+            "Path" : "0:PointCloud.opc"
+        }
+    },
+    "References" : {
+        "0" : {
+            "Path" : "E:/Dataset/Graz/segmentedPointCloud"
+        }
+    }
+}
