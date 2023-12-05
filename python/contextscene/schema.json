@@ -5,7 +5,7 @@
             "properties": {
                 "Labels": {
                     "additionalProperties": {
-                        "$ref": "#/$defs/LabelsModel"
+                        "$ref": "#/$defs/LabelModel"
                     },
                     "title": "Labels",
                     "type": "object"
@@ -336,7 +336,7 @@
             "title": "DimensionsModel",
             "type": "object"
         },
-        "LabelsModel": {
+        "LabelModel": {
             "additionalProperties": false,
             "properties": {
                 "Name": {
@@ -347,7 +347,7 @@
             "required": [
                 "Name"
             ],
-            "title": "LabelsModel",
+            "title": "LabelModel",
             "type": "object"
         },
         "Line2DModel": {
@@ -602,7 +602,7 @@
                 },
                 "Photos": {
                     "additionalProperties": {
-                        "$ref": "#/$defs/PhotosModel"
+                        "$ref": "#/$defs/PhotoModel"
                     },
                     "title": "Photos",
                     "type": "object"
@@ -644,7 +644,7 @@
             "title": "PhotoCollectionModel",
             "type": "object"
         },
-        "PhotosModel": {
+        "PhotoModel": {
             "additionalProperties": false,
             "properties": {
                 "ImagePath": {
@@ -702,7 +702,7 @@
             "required": [
                 "ImagePath"
             ],
-            "title": "PhotosModel",
+            "title": "PhotoModel",
             "type": "object"
         },
         "PixelSizeModel": {

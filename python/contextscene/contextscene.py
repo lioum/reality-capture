@@ -1,12 +1,15 @@
 # Copyright (c) Bentley Systems, Incorporated. All rights reserved.
 # See LICENSE.md in the project root for license terms and full copyright notice.
 
+import json
 import os
+from abc import ABC, abstractmethod
 from enum import Enum
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Union
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
+from typing_extensions import TypedDict
 
 NUM_DECIMALS = 50  # Round the bbox location to 'x' decimals as a percentage of the entire image len and width.
 # Note this is also used for the number of decimals for the confidence in the prediction.
@@ -41,25 +44,27 @@ def to_camel_specific(string: str) -> str:
 
 
 class FilePath:
-    def __init__(self, path: str) -> None:
-        self._str_path = path
-        self._reference_id, self._relative_path = self.parse_path_with_ref(
-            self._str_path
-        )
+    """
+    Helper class to manipulate a string path of this format <reference_id>:<file_path>
+    """
+
+    def __init__(self, reference_id: str, relative_path: str) -> None:
+        self._reference_id = reference_id
+        self._relative_path = relative_path
 
     def __str__(self) -> str:
         if self.reference_id is not None:
             return f"{self._reference_id}:{str(self._relative_path)}"
 
-    @staticmethod
-    def parse_path_with_ref(path_str: str):
+    @classmethod
+    def parse_path_str(cls, path_str: str) -> "FilePath":
         splits = path_str.split(":")
         if len(splits) != 2:
             raise InvalidPathFormat(
                 f"The path '{path_str}' is invalid. File path in a context scene must be of this format: <ref_id>:<file_path> ."
             )
         else:
-            return (splits[0], splits[1])
+            return cls(splits[0], splits[1])
 
     @property
     def reference_id(self):
@@ -79,18 +84,32 @@ class BaseConfigModel(BaseModel):
     )  # Forbid, ingore or allow? Allow would enable people to store custom information, but without validation
 
 
+# def _add_dict_item(field_name, function_name):
+#     """
+#     Decorator to add add_item method
+#     """
+#     def decorator(cls):
+#         def _add_item(self, item_value:any, id_:str) ->str:
+#             dict_field = getattr(self, field_name)
+#             if dict_field is None:
+#                 dict_field = {}
+#             dict_field[str(id_)] = item_value
+#             return id_
+
+#         setattr(cls, function_name, _add_item)
+#         return cls
+
+#     return decorator
+
+
 class ContextSceneModel(BaseConfigModel):
     class RefPathModel(BaseConfigModel):
         path: str
 
-        @field_validator("path")
-        @classmethod
-        def check_format(cls, v):
-            FilePath(v)
-
     class SpatialReferenceSystemModel(BaseConfigModel):
         definition: str
 
+    # @_add_dict_item(field_name='photos', function_name='add_photo')
     class PhotoCollectionModel(BaseConfigModel):
         class DevicesModel(BaseConfigModel):
             class DimensionsModel(BaseConfigModel):
@@ -139,7 +158,7 @@ class ContextSceneModel(BaseConfigModel):
             center: CenterModel
             rotation: RotationModel = None
 
-        class PhotosModel(BaseConfigModel):
+        class PhotoModel(BaseConfigModel):
             class LocationModel(BaseConfigModel):
                 ul_x: float
                 ul_y: float
@@ -153,10 +172,11 @@ class ContextSceneModel(BaseConfigModel):
             @field_validator("depth_path", "image_path")
             @classmethod
             def check_format(cls, v):
-                FilePath(v)
+                FilePath.parse_path_str(v)
+                return v
 
         srs_id: int = Field(None, alias="SRSId")
-        photos: Dict[str, PhotosModel]
+        photos: Dict[str, PhotoModel]
         devices: Optional[Dict[str, DevicesModel]] = None
         poses: Optional[Dict[str, PosesModel]] = None
 
@@ -166,8 +186,9 @@ class ContextSceneModel(BaseConfigModel):
             """
             We want to make sure that referenced ids exists in the contextScene.
             """
-            pass
+            return v
 
+    # @_add_dict_item(field_name='meshes',function_name='add_mesh')
     class MeshCollectionModel(BaseConfigModel):
         class MeshModel(BaseConfigModel):
             class Box3DModel(BaseConfigModel):  # TODO: duplicated model
@@ -185,11 +206,13 @@ class ContextSceneModel(BaseConfigModel):
             @field_validator("path")
             @classmethod
             def check_format(cls, v):
-                FilePath(v)
+                FilePath.parse_path_str(v)
+                return v
 
         srs_id: int = Field(None, alias="SRSId")
         meshes: Dict[str, MeshModel]
 
+    # @_add_dict_item(field_name='point_clouds',function_name='add_point_cloud')
     class PointCloudCollection(BaseConfigModel):
         class PointCloudModel(BaseConfigModel):
             class CenterModel(BaseConfigModel):  # Duplicated model
@@ -219,7 +242,8 @@ class ContextSceneModel(BaseConfigModel):
             @field_validator("path")
             @classmethod
             def check_format(cls, v):
-                FilePath(v)
+                FilePath.parse_path_str(v)
+                return v
 
             # TODO: Multiple validation to do depending of the type of file, or the value of location
 
@@ -228,6 +252,7 @@ class ContextSceneModel(BaseConfigModel):
         )  # TODO valid if present for certain type of files
         point_clouds: Dict[str, PointCloudModel]
 
+    # @_add_dict_item(field_name='trajectories',function_name='add_trajectorie')
     class TrajectoryCollection(BaseConfigModel):
         class TrajectoryModel(BaseConfigModel):
             paths: List[str] = Field(min_length=1)
@@ -243,8 +268,10 @@ class ContextSceneModel(BaseConfigModel):
         trajectories: dict[str, TrajectoryModel]
         srs_id: int = Field(None, alias="SRSId")
 
+    # @_add_dict_item(field_name='segmentations_2d', function_name='add_segmentation_2d')
+    # @_add_dict_item(field_name='objeects_2d', function_name='add_object_2d')
     class AnnotationsModel(BaseConfigModel):
-        class LabelsModel(BaseConfigModel):
+        class LabelModel(BaseConfigModel):
             name: str
 
         class Object2DModel(BaseConfigModel):
@@ -268,6 +295,7 @@ class ContextSceneModel(BaseConfigModel):
             box_2d: Box2DModel
             text_info: TextInfoModel = None
 
+        # @_add_dict_item(field_name='objects',function_name='object')
         class objects3DModel(BaseConfigModel):
             class Object3DModel(BaseConfigModel):
                 class LabelInfoModel(BaseConfigModel):
@@ -312,7 +340,9 @@ class ContextSceneModel(BaseConfigModel):
             @field_validator("path")
             @classmethod
             def check_format(cls, v):
-                FilePath(v)
+                file_path = FilePath.parse_path_str(v)
+
+                return v
 
         class Segmentation3DModel(BaseConfigModel):
             srs_id: int = Field(None, alias="SRSId")
@@ -321,9 +351,12 @@ class ContextSceneModel(BaseConfigModel):
             @field_validator("path")
             @classmethod
             def check_format(cls, v):
-                FilePath(v)
+                FilePath.parse_path_str(v)
+                return v
 
+        # @_add_dict_item(field_name='polygons', function_name='add_polygon')
         class Polygons2DModel(BaseConfigModel):
+            # @_add_dict_item(field_name='vertices', function_name='add_vertices')
             class Polygon2DModel(BaseConfigModel):
                 class LabelInfoModel(BaseConfigModel):
                     label_id: int
@@ -347,7 +380,9 @@ class ContextSceneModel(BaseConfigModel):
             srs_id: int = Field(None, alias="SRSId")
             polygons: Optional[Dict[str, Polygon2DModel]]
 
+        # @_add_dict_item(field_name='lines', function_name='add_line')
         class Lines2DModel(BaseConfigModel):
+            # @_add_dict_item(field_name='vertices', function_name='add_vertice')
             class Line2DModel(BaseConfigModel):
                 class LabelInfoModel(BaseConfigModel):
                     label_id: int
@@ -374,7 +409,9 @@ class ContextSceneModel(BaseConfigModel):
             srs_id: int = Field(None, alias="SRSId")
             lines: Dict[str, Line2DModel]
 
+        # @_add_dict_item(field_name='lines', function_name='add_line')
         class Lines3DModel(BaseConfigModel):
+            # @_add_dict_item(field_name='vertices', function_name='add_vertice')
             class Line3DModel(BaseConfigModel):
                 class LabelInfoModel(BaseConfigModel):
                     label_id: int
@@ -402,7 +439,7 @@ class ContextSceneModel(BaseConfigModel):
             srs_id: int = Field(None, alias="SRSId")
             lines: Dict[str, Line3DModel]
 
-        labels: Dict[str, LabelsModel]
+        labels: Dict[str, LabelModel]
         objects_2d: Optional[Dict[str, Dict[str, Object2DModel]]] = None
         objects_3d: Optional[objects3DModel] = None
         segmentation_2d: Optional[Dict[str, Segmentation2DModel]] = None
@@ -420,11 +457,84 @@ class ContextSceneModel(BaseConfigModel):
     annotations: Optional[AnnotationsModel] = None
     references: Optional[Dict[str, RefPathModel]] = None
 
-    def serialize(self):
+    @field_validator("references", "spatial_reference_systems")
+    @classmethod
+    def check_ids(cls, v, data):
+        # Value must be a int string
+        for k in v.keys():
+            try:
+                int(k)
+            except ValueError as e:
+                raise ValueError("reference keys must be an interger string.") from e
+        return v
+
+    def add_or_get_reference(self, path: str) -> str:
+        """
+        Add reference if doesn't exist.
+        """
+        if self.references is None:
+            self.references = {}
+
+        reverse_map = dict(
+            zip(
+                [x.path for x in self.references.values()], list(self.references.keys())
+            )
+        )
+        idx = reverse_map.get(path)
+        if idx is None:
+            idx = (
+                max([int(x) for x in self.references.keys()]) + 1
+                if len(self.references) > 0
+                else 0
+            )
+            idx = str(idx)
+            self.references.update({idx: self.RefPathModel(path=path)})
+        return idx
+
+    def add_or_get_spatial_reference(self, definition: str) -> str:
+        """
+        Add spatial reference if doesn't exist.
+        """
+        definition = definition.upper()
+        if self.spatial_reference_systems is None:
+            self.spatial_reference_systems = {}
+
+        reverse_map = dict(
+            zip(
+                [x.definition for x in self.spatial_reference_systems.values()],
+                list(self.spatial_reference_systems.keys()),
+            )
+        )
+        idx = reverse_map.get(definition)
+        if idx is None:
+            idx = (
+                max([int(x) for x in self.spatial_reference_systems.keys()]) + 1
+                if len(self.spatial_reference_systems) > 0
+                else 0
+            )
+            idx = str(idx)
+            self.spatial_reference_systems.update(
+                {idx: self.SpatialReferenceSystemModel(definition=definition)}
+            )
+        return idx
+
+    def serialize(self, validate: bool = True) -> str:
+        if validate:
+            self.model_validate(self.model_dump)
         return self.model_dump_json(by_alias=True, exclude_none=True)
 
-    def serialize_schema(self):
-        return self.model_json_schema(by_alias=True)
+    def serialize_schema(self) -> str:
+        return json.dumps(self.model_json_schema(by_alias=True))
 
-    def unserialize(self, s: str):
-        return self.model_validate_json(s)
+    @classmethod
+    def deserialize(cls, s: str, validate: bool = True) -> "ContextSceneModel":
+        return cls.model_validate_json(s, validate=validate)
+
+
+def resolve_file_path(
+    file_path: Union[str, FilePath],
+    references: Dict[str, ContextSceneModel.RefPathModel],
+):
+    if isinstance(file_path, str):
+        file_path = FilePath.parse_path_str(file_path)
+    return references[file_path.reference_id].path + file_path.relative_path

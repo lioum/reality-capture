@@ -3,16 +3,8 @@
 
 import os
 import json
-from contextscene.ContextScene import ContextScene
-from contextscene.ContextScene import ReferencesCS
-from contextscene.ContextScene import PhotosCS
-from contextscene.ContextScene import PhotoCollectionCS
-from contextscene.ContextScene import RefPath
-from contextscene.ContextScene import ImagePath
-from contextscene.ContextScene import Annotations
-from contextscene.ContextScene import Segmentation2D
-from contextscene.ContextScene import Labels
-
+from pathlib import Path
+from contextscene.contextscene import ContextSceneModel, FilePath
 '''
 Create a json Contextscene base on a folder with picture
 
@@ -32,71 +24,43 @@ Example of label file :
 }
 '''
 
-ANNOTATIONS = False
-SEGMENTED_CONTEXT_SCENE = False
 INPUT_FOLDER = "C:/Path/to/images/folder"
 SEGMENTATION_FOLDER = "C:/Path/to/masks"
-LABEL_FILE = "C:/Path/to/label_file"
-OUTPUT_FOLDER = "C:/Path/to/output"
-PICTURE_FORMAT = ["jpg", "JPG", "png", "PNG"]
+LABEL_FILE = "C:/Path/to/label_file.json"
+OUTPUT_FILE = "C:/Path/to/output/ContextScene.json"
+PICTURE_FORMAT = ["jpg", "png", "jpeg"]
 
 def main():
-    # Initialize empty ContextScene
-    context_scene = ContextScene()
-    # Initialize empty Reference dictionary
-    reference_dict = ReferencesCS()
-    photo_dict = PhotosCS()
-    photo_coll = PhotoCollectionCS()
-    segmented_dict = Segmentation2D()
-    annotations = Annotations()
-    labels = Labels()
 
-    # Create references dictionary
-    tmp_ref = dict()
-    for (root, dirs, files) in os.walk(INPUT_FOLDER, topdown=True):
-        if any(files) and (dirs not in list(reference_dict.ref.keys())):
-            tmp_ref[root] = len(reference_dict.ref.keys())
-            rp = RefPath(len(reference_dict.ref.keys()), root)
-            reference_dict.add_ref(rp)
-    # Add references of segmented pictures if needed
-    if SEGMENTED_CONTEXT_SCENE:
-        for (root, dirs, files) in os.walk(SEGMENTATION_FOLDER, topdown=True):
-            if any(files) and (dirs not in list(reference_dict.ref.keys())):
-                tmp_ref[root] = len(reference_dict.ref.keys())
-                rp = RefPath(len(reference_dict.ref.keys()), root)
-                reference_dict.add_ref(rp)
+ # Initialize empty ContextScene
+    context_scene = ContextSceneModel()
+    # Initialize empty meshes dictionnay
+    context_scene.mesh_collection.meshes = {}
 
-    # Create pictures dictionary
-    for (root, dirs, files) in os.walk(INPUT_FOLDER, topdown=True):
-        if any(files):
-            for _ in files:
-                if _[-3:] in PICTURE_FORMAT:
-                    photo_path = ImagePath(len(photo_dict.photo.keys()), f"{tmp_ref[root]}:{_}")
-                    photo_dict.add_photo(photo_path)
-    if ANNOTATIONS:
-        with open(LABEL_FILE) as json_file:
-            labels.labels = json.load(json_file)
+    # Create reference and add files
+    if INPUT_FOLDER:
+        for _path in Path(INPUT_FOLDER).rglob("*"):
+            if _path.is_file() and _path.suffix.lower() in PICTURE_FORMAT:
+                ref_id = context_scene.add_or_get_reference(_path.parent)
+                # We can use a helper method to add a new item in the dictionnary, or treat context_scene.photo_collection like a dictionnary.
+                photo_id = len(context_scene.photo_collection.photos)
+                context_scene.photo_collection.photos[photo_id] = ContextSceneModel.PhotoCollectionModel.PhotoModel(image_path=str(FilePath(ref_id,_path.name)))
+    
+    if LABEL_FILE:
+       # If the labels file is in this format Dict[str, ContextSceneModel.Annoation.LabelModel] 
+       context_scene.annotations.labels =  json.loads(Path(LABEL_FILE).read_text())
 
-    if SEGMENTED_CONTEXT_SCENE:
-        # Create segmented picture dictionary
-        for (root, dirs, files) in os.walk(SEGMENTATION_FOLDER, topdown=True):
-            if any(files):
-                for _ in files:
-                    if _[-3:] in PICTURE_FORMAT:
-                        segmented_path = RefPath(len(segmented_dict.segmentation2D.keys()), f"{tmp_ref[root]}:{_}")
-                        segmented_dict.add_photo(segmented_path)
+    if SEGMENTATION_FOLDER:
+        for _path in Path(SEGMENTATION_FOLDER).rglob("*"):
+            if _path.is_file() and _path.suffix.lower() in PICTURE_FORMAT:
+                ref_id = context_scene.add_or_get_reference(_path.parent)
+                # We can use a helper method to add a new item in the dictionnary, or treat context_scene.photo_collection like a dictionnary.
+                segmentation_2d_id = len(context_scene.annotations.segmentation_2d)
+                context_scene.annotations.segmentation_2d[segmentation_2d_id] = {"image_path":f"{ref_id}:{_path.name}"}
 
-    photo_coll.add_photo(photo_dict)
-
-    # Creation of the full context scene
-    context_scene.set_photo_collection(photo_coll)
-    if ANNOTATIONS:
-        annotations.set_labels(labels.labels)
-        annotations.set_segmentation2D(segmented_dict.segmentation2D)
-        context_scene.set_annotations(annotations.annotationCS)
-    context_scene.set_references(reference_dict)
-    context_scene.save_json_contextscene(OUTPUT_FOLDER)
-
+    # Save the context scene
+    Path(OUTPUT_FILE).write_text(context_scene.serialize())
+    
 
 if __name__ == '__main__':
     main()
