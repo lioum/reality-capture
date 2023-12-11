@@ -2,14 +2,9 @@
 # See LICENSE.md in the project root for license terms and full copyright notice.
 
 import json
-import os
-from abc import ABC, abstractmethod
-from enum import Enum
-from pathlib import Path
 from typing import Dict, List, Optional, Union
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
-from typing_extensions import TypedDict
 
 NUM_DECIMALS = 50  # Round the bbox location to 'x' decimals as a percentage of the entire image len and width.
 # Note this is also used for the number of decimals for the confidence in the prediction.
