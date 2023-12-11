@@ -456,11 +456,12 @@ class ContextSceneModel(BaseConfigModel):
     @classmethod
     def check_ids(cls, v, data):
         # Value must be a int string
-        for k in v.keys():
-            try:
-                int(k)
-            except ValueError as e:
-                raise ValueError("reference keys must be an interger string.") from e
+        if v is not None:
+            for k in v.keys():
+                try:
+                    int(k)
+                except ValueError as e:
+                    raise ValueError("reference keys must be an interger string.") from e
         return v
 
     def add_or_get_reference(self, path: str) -> str:
