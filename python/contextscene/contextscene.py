@@ -74,7 +74,7 @@ class BaseConfigModel(BaseModel):
     model_config = ConfigDict(
         alias_generator=to_camel_specific,
         populate_by_name=True,
-        extra="forbid",
+        extra="allow", # TODO: Add everything supported by the APIs, then turn this to 'forbid'.
         validate_assignment=True,
     )  # Forbid, ingore or allow? Allow would enable people to store custom information, but without validation
 
