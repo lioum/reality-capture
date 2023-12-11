@@ -167,7 +167,7 @@ class ContextSceneModel(BaseConfigModel):
             @field_validator("depth_path", "image_path")
             @classmethod
             def check_format(cls, v):
-                FilePath.parse_path_str(v)
+                FilePath.parse_path_str(v) if v is not None else None
                 return v
 
         srs_id: int = Field(None, alias="SRSId")
@@ -201,7 +201,7 @@ class ContextSceneModel(BaseConfigModel):
             @field_validator("path")
             @classmethod
             def check_format(cls, v):
-                FilePath.parse_path_str(v)
+                FilePath.parse_path_str(v) if v is not None else None
                 return v
 
         srs_id: int = Field(None, alias="SRSId")
@@ -237,7 +237,7 @@ class ContextSceneModel(BaseConfigModel):
             @field_validator("path")
             @classmethod
             def check_format(cls, v):
-                FilePath.parse_path_str(v)
+                FilePath.parse_path_str(v) if v is not None else None
                 return v
 
             # TODO: Multiple validation to do depending of the type of file, or the value of location
@@ -335,8 +335,7 @@ class ContextSceneModel(BaseConfigModel):
             @field_validator("path")
             @classmethod
             def check_format(cls, v):
-                file_path = FilePath.parse_path_str(v)
-
+                FilePath.parse_path_str(v) if v is not None else None
                 return v
 
         class Segmentation3DModel(BaseConfigModel):
@@ -346,7 +345,7 @@ class ContextSceneModel(BaseConfigModel):
             @field_validator("path")
             @classmethod
             def check_format(cls, v):
-                FilePath.parse_path_str(v)
+                FilePath.parse_path_str(v) if v is not None else None
                 return v
 
         # @_add_dict_item(field_name='polygons', function_name='add_polygon')
