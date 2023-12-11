@@ -170,7 +170,7 @@ class ContextSceneModel(BaseConfigModel):
                 FilePath.parse_path_str(v) if v is not None else None
                 return v
 
-        srs_id: int = Field(None, alias="SRSId")
+        srs_id: int = Field(default=None, alias="SRSId")
         photos: Dict[str, PhotoModel]
         devices: Optional[Dict[str, DevicesModel]] = None
         poses: Optional[Dict[str, PosesModel]] = None
@@ -515,7 +515,7 @@ class ContextSceneModel(BaseConfigModel):
 
     def serialize(self, validate: bool = True) -> str:
         if validate:
-            self.model_validate(self.model_dump())
+            self.model_validate(self.model_dump(exclude_none=True))
         return self.model_dump_json(by_alias=True, exclude_none=True)
 
     def serialize_schema(self) -> str:
