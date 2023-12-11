@@ -103,6 +103,7 @@ class ContextSceneModel(BaseConfigModel):
 
     class SpatialReferenceSystemModel(BaseConfigModel):
         definition: str
+        name: Optional[str] = None
 
     # @_add_dict_item(field_name='photos', function_name='add_photo')
     class PhotoCollectionModel(BaseConfigModel):
