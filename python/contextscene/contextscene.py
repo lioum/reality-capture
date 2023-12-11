@@ -523,7 +523,7 @@ class ContextSceneModel(BaseConfigModel):
 
     @classmethod
     def deserialize(cls, s: str, validate: bool = True) -> "ContextSceneModel":
-        return cls.model_validate_json(s, validate=validate)
+        return cls.model_validate_json(s)
 
 
 def resolve_file_path(
