@@ -515,7 +515,7 @@ class ContextSceneModel(BaseConfigModel):
 
     def serialize(self, validate: bool = True) -> str:
         if validate:
-            self.model_validate(self.model_dump)
+            self.model_validate(self.model_dump())
         return self.model_dump_json(by_alias=True, exclude_none=True)
 
     def serialize_schema(self) -> str:
