@@ -164,6 +164,9 @@ class ContextSceneModel(BaseConfigModel):
             pose_id: Optional[int] = None
             location: Optional[LocationModel] = None
             depth_path: Optional[str] = None
+            near_depth: Optional[float] = None
+            median_depth: Optional[float] = None
+            far_depth: Optional[float] = None
 
             @field_validator("depth_path", "image_path")
             @classmethod
@@ -276,6 +279,7 @@ class ContextSceneModel(BaseConfigModel):
                 confidence: Optional[
                     float
                 ] = None  # This identifies original annotations, not predictions.
+                object: bool = None
 
             class Box2DModel(BaseConfigModel):
                 xmin: float = Field(alias="xmin")
