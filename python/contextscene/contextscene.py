@@ -300,6 +300,7 @@ class ContextSceneModel(BaseConfigModel):
             class Object3DModel(BaseConfigModel):
                 class LabelInfoModel(BaseConfigModel):
                     label_id: int
+                    object: bool = None
 
                 class RotatedBox3DModel(BaseConfigModel):
                     class Box3DModel(BaseConfigModel):
