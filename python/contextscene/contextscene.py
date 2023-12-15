@@ -151,8 +151,8 @@ class ContextSceneModel(BaseConfigModel):
                 phi: float = Field(alias="phi")
                 kappa: float = Field(alias="kappa")
 
-            center: CenterModel
-            rotation: RotationModel = None
+            center: Optional[CenterModel] = None
+            rotation: Optional[RotationModel] = None
 
         class PhotoModel(BaseConfigModel):
             class LocationModel(BaseConfigModel):
