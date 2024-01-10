@@ -272,6 +272,7 @@ class ContextSceneModel(BaseConfigModel):
     class AnnotationsModel(BaseConfigModel):
         class LabelModel(BaseConfigModel):
             name: str
+            object: bool = None
 
         class Object2DModel(BaseConfigModel):
             class LabelInfoModel(BaseConfigModel):
@@ -279,7 +280,6 @@ class ContextSceneModel(BaseConfigModel):
                 confidence: Optional[
                     float
                 ] = None  # This identifies original annotations, not predictions.
-                object: bool = None
 
             class Box2DModel(BaseConfigModel):
                 xmin: float = Field(alias="xmin")
