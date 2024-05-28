@@ -1,6 +1,8 @@
 # Copyright (c) Bentley Systems, Incorporated. All rights reserved.
 # See LICENSE.md in the project root for license terms and full copyright notice.
 
+import json
+
 from __future__ import annotations
 from typing import TypeVar
 
@@ -147,6 +149,39 @@ class O2DJobSettings:
         except (KeyError, TypeError) as e:
             return ReturnValue(value=cls(), error=str(e))
         return ReturnValue(value=new_job_settings, error="")
+
+    @classmethod
+    def from_json_file(cls, json_file: str) -> ReturnValue[O2DJobSettings]:
+        if not os.path.isfile(json_file):
+            return ReturnValue(value=O2DJobSettings(), error="File not found: " + json_file)
+        try:
+            with open(json_file, encoding='utf-8') as f:
+                settings_json = json.load(f)
+        except Exception as e:
+            return ReturnValue(value=O2DJobSettings(), error=f"Failed to load settings {json_file}: {e}")
+
+        settings = O2DJobSettings()
+        try:
+            settings.inputs.photos = settings_json["Inputs"]["Photos"]
+            settings.inputs.photo_object_detector = settings_json["Inputs"].get("PhotoObjectDetector", None)
+            settings.inputs.objects2D = settings_json["Inputs"].get("Objects2D", None)
+            settings.inputs.point_clouds = settings_json["Inputs"].get("PointClouds", None)
+            settings.inputs.meshes = settings_json["Inputs"].get("Meshes", None)
+
+            settings.outputs.objects2D = settings_json["Outputs"].get("Objects2D", None)
+            settings.outputs.objects3D = settings_json["Outputs"].get("Objects3D", None)
+            settings.outputs.exported_objects3D_DGN = settings_json["Outputs"].get("ExportedObjects3DDGN", None)
+            settings.outputs.exported_objects3D_cesium = settings_json["Outputs"].get("ExportedObjects3DCesium", None)
+            settings.outputs.exported_locations3D_SHP = settings_json["Outputs"].get("ExportedLocations3DSHP", None)
+
+            settings.options.use_tie_points = settings_json["Options"].get("UseTiePoints", None)
+            settings.options.min_photos = settings_json["Options"].get("MinPhotos", None)
+            settings.options.max_dist = settings_json["Options"].get("MaxDist", None)
+            settings.options.export_srs = settings_json["Options"].get("ExportSrs", None)
+
+        except Exception as e:
+            return ReturnValue(value=settings, error=str(e))
+        return ReturnValue(value=settings, error="")
 
     class Inputs:
         """
@@ -365,6 +400,42 @@ class S2DJobSettings:
             return ReturnValue(value=cls(), error=str(e))
         return ReturnValue(value=new_job_settings, error="")
 
+    @classmethod
+    def from_json_file(cls, json_file: str) -> ReturnValue[S2DJobSettings]:
+        if not os.path.isfile(json_file):
+            return ReturnValue(value=S2DJobSettings(), error="File not found: " + json_file)
+        try:
+            with open(json_file, encoding='utf-8') as f:
+                settings_json = json.load(f)
+        except Exception as e:
+            return ReturnValue(value=S2DJobSettings(), error=f"Failed to load settings {json_file}: {e}")
+
+        settings = S2DJobSettings()
+        try:
+            settings.inputs.photos = settings_json["Inputs"].get("Photos", None)
+            settings.inputs.photo_segmentation_detector = settings_json["Inputs"].get("PhotoSegmentationDetector", None)
+            settings.inputs.point_clouds = settings_json["Inputs"].get("PointClouds", None)
+            settings.inputs.meshes = settings_json["Inputs"].get("Meshes", None)
+            settings.inputs.segmentation2D = settings_json["Inputs"].get("Segmentation2D", None)
+
+            settings.outputs.segmentation2D = settings_json["Outputs"].get("Segmentation2D", None)
+            settings.outputs.segmented_photos = settings_json["Outputs"].get("SegmentedPhotos", None)
+            settings.outputs.lines3D = settings_json["Outputs"].get("Lines3D", None)
+            settings.outputs.exported_lines3D_DGN = settings_json["Outputs"].get("ExportedLines3DDGN", None)
+            settings.outputs.exported_lines3D_cesium = settings_json["Outputs"].get("ExportedLines3DCesium", None)
+            settings.outputs.polygons3D = settings_json["Outputs"].get("Polygons3D", None)
+            settings.outputs.exported_polygons3D_DGN = settings_json["Outputs"].get("ExportedPolygons3DDGN", None)
+            settings.outputs.exported_polygons3D_cesium = settings_json["Outputs"].get("ExportedPolygons3DCesium", None)
+
+            settings.options.export_srs = settings_json["Options"].get("ExportSrs", None)
+            settings.options.compute_line_width = settings_json["Options"].get("ComputeLineWidth", None)
+            settings.options.remove_small_components = settings_json["Options"].get("RemoveSmallComponents", None)
+            settings.options.min_photos = settings_json["Options"].get("MinPhotos", None)
+
+        except Exception as e:
+            return ReturnValue(value=settings, error=str(e))
+        return ReturnValue(value=settings, error="")
+
     class Inputs:
         """
         Possible inputs for a Segmentation 2D job.
@@ -533,6 +604,33 @@ class SOrthoJobSettings:
         except (TypeError, KeyError) as e:
             return ReturnValue(value=cls(), error=str(e))
         return ReturnValue(value=new_job_settings, error="")
+
+    @classmethod
+    def from_json_file(cls, json_file: str) -> ReturnValue[SOrthoJobSettings]:
+        if not os.path.isfile(json_file):
+            return ReturnValue(value=SOrthoJobSettings(), error="File not found: " + json_file)
+        try:
+            with open(json_file, encoding='utf-8') as f:
+                settings_json = json.load(f)
+        except Exception as e:
+            return ReturnValue(value=SOrthoJobSettings(), error=f"Failed to load settings {json_file}: {e}")
+
+        settings = SOrthoJobSettings()
+        try:
+            settings.inputs.orthophoto = settings_json["Inputs"].get("Orthophoto", None)
+            settings.inputs.orthophoto_segmentation_detector = settings_json["Inputs"].get(
+                "OrthophotoSegmentationDetector", None)
+
+            settings.outputs.segmentation2D = settings_json["Outputs"].get("Segmentation2D", None)
+            settings.outputs.segmented_photos = settings_json["Outputs"].get("SegmentedPhotos", None)
+            settings.outputs.polygons2D = settings_json["Outputs"].get("Polygons2D", None)
+            settings.outputs.exported_polygons2D_SHP = settings_json["Outputs"].get("ExportedPolygons2DSHP", None)
+            settings.outputs.lines2D = settings_json["Outputs"].get("Lines2D", None)
+            settings.outputs.exported_lines2D_DGN = settings_json["Outputs"].get("ExportedLines2DDGN", None)
+            settings.outputs.exported_lines2D_SHP = settings_json["Outputs"].get("ExportedLines2DSHP", None)
+        except Exception as e:
+            return ReturnValue(value=settings, error=str(e))
+        return ReturnValue(value=settings, error="")
 
     class Inputs:
         """
@@ -780,6 +878,54 @@ class S3DJobSettings:
             return ReturnValue(value=cls(), error=str(e))
         return ReturnValue(value=new_job_settings, error="")
 
+    @classmethod
+    def from_json_file(cls, json_file: str) -> ReturnValue[S3DJobSettings]:
+        if not os.path.isfile(json_file):
+            return ReturnValue(value=S3DJobSettings(), error="File not found: " + json_file)
+        try:
+            with open(json_file, encoding='utf-8') as f:
+                settings_json = json.load(f)
+        except Exception as e:
+            return ReturnValue(value=S3DJobSettings(), error=f"Failed to load settings {json_file}: {e}")
+
+        settings = S3DJobSettings()
+        try:
+            settings.inputs.point_clouds = settings_json["Inputs"].get("PointClouds", None)
+            settings.inputs.meshes = settings_json["Inputs"].get("Meshes", None)
+            settings.inputs.point_cloud_segmentation_detector = settings_json["Inputs"].get(
+                "PointCloudSegmentationDetector", None)
+            settings.inputs.segmentation3D = settings_json["Inputs"].get("Segmentation3D", None)
+            settings.inputs.clip_polygon = settings_json["Inputs"].get("ClipPolygon", None)
+
+            settings.outputs.segmentation3D = settings_json["Outputs"].get("Segmentation3D", None)
+            settings.outputs.segmented_point_cloud = settings_json["Outputs"].get("SegmentedPointCloud", None)
+            settings.outputs.exported_segmentation3D_POD = settings_json["Outputs"].get("ExportedSegmentation3DPOD",
+                                                                                        None)
+            settings.outputs.exported_segmentation3D_LAS = settings_json["Outputs"].get("ExportedSegmentation3DLAS",
+                                                                                        None)
+            settings.outputs.exported_segmentation3D_LAZ = settings_json["Outputs"].get("ExportedSegmentation3DLAZ",
+                                                                                        None)
+            settings.outputs.exported_segmentation3D_PLY = settings_json["Outputs"].get("ExportedSegmentation3DPLY",
+                                                                                        None)
+            settings.outputs.objects3D = settings_json["Outputs"].get("Objects3D", None)
+            settings.outputs.exported_objects3D_DGN = settings_json["Outputs"].get("ExportedObjects3DDGN", None)
+            settings.outputs.exported_objects3D_cesium = settings_json["Outputs"].get("ExportedObjects3DCesium", None)
+            settings.outputs.exported_locations3D_SHP = settings_json["Outputs"].get("ExportedLocations3DSHP", None)
+            settings.outputs.lines3D = settings_json["Outputs"].get("Lines3D", None)
+            settings.outputs.exported_lines3D_DGN = settings_json["Outputs"].get("ExportedLines3DDGN", None)
+            settings.outputs.exported_lines3D_cesium = settings_json["Outputs"].get("ExportedLines3DCesium", None)
+            settings.outputs.polygons3D = settings_json["Outputs"].get("Polygons3D", None)
+            settings.outputs.exported_polygons3D_DGN = settings_json["Outputs"].get("ExportedPolygons3DDGN", None)
+            settings.outputs.exported_polygons3D_cesium = settings_json["Outputs"].get("ExportedPolygons3DCesium", None)
+
+            settings.options.export_srs = settings_json["Options"].get("ExportSrs", None)
+            settings.options.compute_line_width = settings_json["Options"].get("ComputeLineWidth", None)
+            settings.options.remove_small_components = settings_json["Options"].get("RemoveSmallComponents", None)
+            settings.options.save_confidence = settings_json["Options"].get("SaveConfidence", None)
+        except Exception as e:
+            return ReturnValue(value=settings, error=str(e))
+        return ReturnValue(value=settings, error="")
+
     class Inputs:
         """
         Possible inputs for a Segmentation 3D job.
@@ -989,6 +1135,37 @@ class ChangeDetectionJobSettings:
             return ReturnValue(value=cls(), error=str(e))
         return ReturnValue(value=new_job_settings, error="")
 
+    @classmethod
+    def from_json_file(cls, json_file: str) -> ReturnValue[ChangeDetectionJobSettings]:
+        if not os.path.isfile(json_file):
+            return ReturnValue(value=ChangeDetectionJobSettings(), error="File not found: " + json_file)
+        try:
+            with open(json_file, encoding='utf-8') as f:
+                settings_json = json.load(f)
+        except Exception as e:
+            return ReturnValue(value=ChangeDetectionJobSettings(), error=f"Failed to load settings {json_file}: {e}")
+
+        settings = ChangeDetectionJobSettings()
+        try:
+            settings.inputs.point_clouds1 = settings_json["Inputs"].get("PointClouds1", None)
+            settings.inputs.point_clouds2 = settings_json["Inputs"].get("PointClouds2", None)
+            settings.inputs.meshes1 = settings_json["Inputs"].get("Meshes1", None)
+            settings.inputs.meshes2 = settings_json["Inputs"].get("Meshes2", None)
+
+            settings.outputs.objects3D = settings_json["Outputs"].get("Objects3D", None)
+            settings.outputs.exported_locations3D_SHP = settings_json["Outputs"].get("ExportedLocations3DSHP", None)
+
+            settings.options.export_srs = settings_json["Options"].get("ExportSrs", None)
+            settings.options.color_threshold_low = settings_json["Options"].get("ColorThresholdLow", None)
+            settings.options.color_threshold_high = settings_json["Options"].get("ColorThresholdHigh", None)
+            settings.options.dist_threshold_low = settings_json["Options"].get("DistThresholdLow", None)
+            settings.options.dist_threshold_high = settings_json["Options"].get("DistThresholdHigh", None)
+            settings.options.resolution = settings_json["Options"].get("Resolution", None)
+            settings.options.min_points = settings_json["Options"].get("MinPoints", None)
+        except Exception as e:
+            return ReturnValue(value=settings, error=str(e))
+        return ReturnValue(value=settings, error="")
+
     class Inputs:
         """
         Possible inputs for a  Change Detection job.
@@ -1167,6 +1344,38 @@ class ExtractGroundJobSettings:
         except (KeyError, TypeError) as e:
             return ReturnValue(value=cls(), error=str(e))
         return ReturnValue(value=new_job_settings, error="")
+
+    @classmethod
+    def from_json_file(cls, json_file: str) -> ReturnValue[ExtractGroundJobSettings]:
+        if not os.path.isfile(json_file):
+            return ReturnValue(value=ExtractGroundJobSettings(), error="File not found: " + json_file)
+        try:
+            with open(json_file, encoding='utf-8') as f:
+                settings_json = json.load(f)
+        except Exception as e:
+            return ReturnValue(value=ExtractGroundJobSettings(), error=f"Failed to load settings {json_file}: {e}")
+
+        settings = ExtractGroundJobSettings()
+        try:
+            settings.inputs.point_clouds = settings_json["Inputs"].get("PointClouds", None)
+            settings.inputs.meshes = settings_json["Inputs"].get("Meshes", None)
+            settings.inputs.point_cloud_segmentation_detector = settings_json["Inputs"].get(
+                "PointCloudSegmentationDetector", None)
+            settings.inputs.clip_polygon = settings_json["Inputs"].get("ClipPolygon", None)
+
+            settings.outputs.segmentation3D = settings_json["Outputs"].get("Segmentation3D", None)
+            settings.outputs.segmented_point_cloud = settings_json["Outputs"].get("SegmentedPointCloud", None)
+            settings.outputs.exported_segmentation3D_POD = settings_json["Outputs"].get("ExportedSegmentation3DPOD",
+                                                                                        None)
+            settings.outputs.exported_segmentation3D_LAS = settings_json["Outputs"].get("ExportedSegmentation3DLAS",
+                                                                                        None)
+            settings.outputs.exported_segmentation3D_LAZ = settings_json["Outputs"].get("ExportedSegmentation3DLAZ",
+                                                                                        None)
+
+            settings.options.export_srs = settings_json["Options"].get("ExportSrs", None)
+        except Exception as e:
+            return ReturnValue(value=settings, error=str(e))
+        return ReturnValue(value=settings, error="")
 
     class Inputs:
         """
