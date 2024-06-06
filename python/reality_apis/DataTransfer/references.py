@@ -119,7 +119,7 @@ class ReferenceTable:
         return ReturnValue(value=True, error="")
 
     def _translate_input_path(self, path: str) -> ReturnValue[str]:
-        if len(path) == 0:
+        if path is None or len(path) == 0:
             return ReturnValue(value="", error="")
         return self.get_cloud_id_from_local_path(path)
 
