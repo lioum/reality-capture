@@ -174,11 +174,11 @@ class O2DJobSettings:
             settings.outputs.exported_objects3D_cesium = settings_json["outputs"].get("exportedObjects3DCesium", None)
             settings.outputs.exported_locations3D_SHP = settings_json["outputs"].get("exportedLocations3DSHP", None)
 
-            if "Options" in settings_json:
-                settings.options.use_tie_points = settings_json["Options"].get("UseTiePoints", None)
-                settings.options.min_photos = settings_json["Options"].get("MinPhotos", None)
-                settings.options.max_dist = settings_json["Options"].get("MaxDist", None)
-                settings.options.export_srs = settings_json["Options"].get("ExportSrs", None)
+            if "options" in settings_json:
+                settings.options.use_tie_points = settings_json["options"].get("useTiePoints", None)
+                settings.options.min_photos = settings_json["options"].get("minPhotos", None)
+                settings.options.max_dist = settings_json["options"].get("maxDist", None)
+                settings.options.export_srs = settings_json["options"].get("exportSrs", None)
 
         except Exception as e:
             return ReturnValue(value=settings, error=str(e))
@@ -428,11 +428,11 @@ class S2DJobSettings:
             settings.outputs.exported_polygons3D_DGN = settings_json["outputs"].get("exportedPolygons3DDGN", None)
             settings.outputs.exported_polygons3D_cesium = settings_json["outputs"].get("exportedPolygons3DCesium", None)
 
-            if "Options" in settings_json:
-                settings.options.export_srs = settings_json["Options"].get("ExportSrs", None)
-                settings.options.compute_line_width = settings_json["Options"].get("ComputeLineWidth", None)
-                settings.options.remove_small_components = settings_json["Options"].get("RemoveSmallComponents", None)
-                settings.options.min_photos = settings_json["Options"].get("MinPhotos", None)
+            if "options" in settings_json:
+                settings.options.export_srs = settings_json["options"].get("exportSrs", None)
+                settings.options.compute_line_width = settings_json["options"].get("computeLineWidth", None)
+                settings.options.remove_small_components = settings_json["options"].get("removeSmallComponents", None)
+                settings.options.min_photos = settings_json["options"].get("minPhotos", None)
 
         except Exception as e:
             return ReturnValue(value=settings, error=str(e))
@@ -920,11 +920,11 @@ class S3DJobSettings:
             settings.outputs.exported_polygons3D_DGN = settings_json["outputs"].get("exportedPolygons3DDGN", None)
             settings.outputs.exported_polygons3D_cesium = settings_json["outputs"].get("exportedPolygons3DCesium", None)
 
-            if "Options" in settings_json:
-                settings.options.export_srs = settings_json["Options"].get("ExportSrs", None)
-                settings.options.compute_line_width = settings_json["Options"].get("ComputeLineWidth", None)
-                settings.options.remove_small_components = settings_json["Options"].get("RemoveSmallComponents", None)
-                settings.options.save_confidence = settings_json["Options"].get("SaveConfidence", None)
+            if "options" in settings_json:
+                settings.options.export_srs = settings_json["options"].get("exportSrs", None)
+                settings.options.compute_line_width = settings_json["options"].get("computeLineWidth", None)
+                settings.options.remove_small_components = settings_json["options"].get("removeSmallComponents", None)
+                settings.options.save_confidence = settings_json["options"].get("saveConfidence", None)
         except Exception as e:
             return ReturnValue(value=settings, error=str(e))
         return ReturnValue(value=settings, error="")
@@ -1158,13 +1158,14 @@ class ChangeDetectionJobSettings:
             settings.outputs.objects3D = settings_json["outputs"].get("objects3D", None)
             settings.outputs.exported_locations3D_SHP = settings_json["outputs"].get("exportedLocations3DSHP", None)
 
-            settings.options.export_srs = settings_json["options"].get("exportSrs", None)
-            settings.options.color_threshold_low = settings_json["options"].get("colorThresholdLow", None)
-            settings.options.color_threshold_high = settings_json["options"].get("colorThresholdHigh", None)
-            settings.options.dist_threshold_low = settings_json["options"].get("distThresholdLow", None)
-            settings.options.dist_threshold_high = settings_json["options"].get("distThresholdHigh", None)
-            settings.options.resolution = settings_json["options"].get("resolution", None)
-            settings.options.min_points = settings_json["options"].get("minPoints", None)
+            if "options" in settings_json:
+                settings.options.export_srs = settings_json["options"].get("exportSrs", None)
+                settings.options.color_threshold_low = settings_json["options"].get("colorThresholdLow", None)
+                settings.options.color_threshold_high = settings_json["options"].get("colorThresholdHigh", None)
+                settings.options.dist_threshold_low = settings_json["options"].get("distThresholdLow", None)
+                settings.options.dist_threshold_high = settings_json["options"].get("distThresholdHigh", None)
+                settings.options.resolution = settings_json["options"].get("resolution", None)
+                settings.options.min_points = settings_json["options"].get("minPoints", None)
 
         except Exception as e:
             return ReturnValue(value=settings, error=str(e))
@@ -1375,8 +1376,8 @@ class ExtractGroundJobSettings:
                                                                                         None)
             settings.outputs.exported_segmentation3D_LAZ = settings_json["outputs"].get("exportedSegmentation3DLAZ",
                                                                                         None)
-            if "Options" in settings_json:
-                settings.options.export_srs = settings_json["Options"].get("ExportSrs", None)
+            if "options" in settings_json:
+                settings.options.export_srs = settings_json["options"].get("exportSrs", None)
         except Exception as e:
             return ReturnValue(value=settings, error=str(e))
         return ReturnValue(value=settings, error="")
