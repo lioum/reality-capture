@@ -9,13 +9,13 @@ from reality_apis.RDAS.rdas_utils import (
     RDAJobProperties,
 )
 from reality_apis.RDAS.rdas_enums import RDAJobType
-from reality_apis.RDAS.job_settings import (
-    JobSettings,
-    O2DJobSettings,
-    S2DJobSettings,
-    SOrthoJobSettings,
-    S3DJobSettings,
-    ChangeDetectionJobSettings,
+from reality_apis.RDAS.job_specifications import (
+    Specifications,
+    O2DSpecifications,
+    S2DSpecifications,
+    SOrthoSpecifications,
+    S3DSpecifications,
+    ChangeDetectionSpecifications,
 )
 from reality_apis.utils import ReturnValue, JobProgress, JobState, JobDateTime, iTwinCaptureError, iTwinCaptureWarning, __version__
 
@@ -53,32 +53,32 @@ class RealityDataAnalysisService:
         return f"code {status_code}: {code}, {message}"
 
     def create_job(
-            self, settings: JobSettings, job_name: str, iTwin_id: str
+            self, specifications: Specifications, job_name: str, iTwin_id: str
     ) -> ReturnValue[str]:
         """
-        Creates a job corresponding to the given settings.
+        Creates a job corresponding to the given specifications.
 
         Args:
-            settings: Settings for the job.
+            specifications: Specifications for the job.
             job_name: Name of the job.
             iTwin_id: ID of the project.
 
         Returns:
             The ID of the job, and a potential error message.
         """
-        # take job_settings and create the json settings we need to
-        settings_json = settings.to_json()
+        # take job_specifications and create the json specifications we need to
+        specifications_json = specifications.to_json()
         jc_dict = {
             "name": job_name,
             "iTwinId": iTwin_id,
-            "type": settings.type.value,
-            "inputs": settings_json["inputs"],
-            "outputs": settings_json["outputs"]
+            "type": specifications.type.value,
+            "inputs": specifications_json["inputs"],
+            "outputs": specifications_json["outputs"]
         }
-        if "options" in settings_json:
-            jc_dict["options"] = settings_json["options"]
+        if "options" in specifications_json:
+            jc_dict["options"] = specifications_json["options"]
         job_json = json.dumps(jc_dict)
-        # send the json settings
+        # send the json specifications
         response = self._session.post("https://" + self._service_url + "/realitydataanalysis/jobs", job_json,
                                       headers=self._get_header())
 
@@ -119,7 +119,7 @@ class RealityDataAnalysisService:
         """
         Get all properties of a given job.
         By default this function returns a placeholder empty RDAJobProperties if it hasn't succeeded in retrieving job
-        settings. Use is_error() to be sure the return value is valid.
+        specifications. Use is_error() to be sure the return value is valid.
 
         Args:
             job_id: The ID of the relevant job.
@@ -140,21 +140,21 @@ class RealityDataAnalysisService:
                 return ReturnValue(value=RDAJobProperties(), error="no Job type")
 
             if job_type_str == RDAJobType.O2D.value:
-                settings = O2DJobSettings.from_json(data_json["job"])
+                specifications = O2DSpecifications.from_json(data_json["job"])
             elif job_type_str == RDAJobType.S2D.value:
-                settings = S2DJobSettings.from_json(data_json["job"])
+                specifications = S2DSpecifications.from_json(data_json["job"])
             elif job_type_str == RDAJobType.SOrtho.value:
-                settings = SOrthoJobSettings.from_json(data_json["job"])
+                specifications = SOrthoSpecifications.from_json(data_json["job"])
             elif job_type_str == RDAJobType.S3D.value:
-                settings = S3DJobSettings.from_json(data_json["job"])
+                specifications = S3DSpecifications.from_json(data_json["job"])
             elif job_type_str == RDAJobType.ChangeDetection.value:
-                settings = ChangeDetectionJobSettings.from_json(data_json["job"])
+                specifications = ChangeDetectionSpecifications.from_json(data_json["job"])
             else:
                 return ReturnValue(
                     value=RDAJobProperties(), error="Job Type not recognized"
                 )
-            if settings.is_error():
-                return ReturnValue(value=RDAJobProperties(), error=settings.error)
+            if specifications.is_error():
+                return ReturnValue(value=RDAJobProperties(), error=specifications.error)
 
             cost_estimation = RDAJobCostParameters()
             estimate = data_json["job"].get("costEstimation", None)
@@ -209,7 +209,7 @@ class RealityDataAnalysisService:
             return ReturnValue(
                 value=RDAJobProperties(
                     job_type=RDAJobType(job_type_str),
-                    job_settings=settings.value,
+                    job_settings=specifications.value,
                     cost_estimation_parameters=cost_estimation,
                     job_date_time=job_date_time,
                     job_state=job_state,

@@ -5,7 +5,7 @@ import reality_apis.RC.reality_conversion_service
 import reality_apis.RC.rcs_utils
 import reality_apis.RDAS.rdas_enums
 import reality_apis.RDAS.rdas_utils
-import reality_apis.RDAS.job_settings
+import reality_apis.RDAS.job_specifications
 import reality_apis.RDAS.reality_data_analysis_service
 import reality_apis.DataTransfer.conversion
 import reality_apis.DataTransfer.reality_data_transfer

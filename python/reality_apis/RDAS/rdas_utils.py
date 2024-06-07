@@ -3,7 +3,7 @@
 
 from __future__ import annotations
 from typing import NamedTuple, List
-from reality_apis.RDAS.job_settings import JobSettings, O2DJobSettings
+from reality_apis.RDAS.job_specifications import Specifications, O2DSpecifications
 from reality_apis.RDAS.rdas_enums import RDAJobType
 from reality_apis.utils import ReturnValue, JobState, JobDateTime, iTwinCaptureWarning, iTwinCaptureError
 
@@ -115,7 +115,7 @@ class RDAJobProperties(NamedTuple):
     """
 
     job_type: RDAJobType = RDAJobType.NONE
-    job_settings: JobSettings = O2DJobSettings()
+    job_settings: Specifications = O2DSpecifications()
     cost_estimation_parameters: RDAJobCostParameters = RDAJobCostParameters()
     job_date_time: JobDateTime = JobDateTime()
     job_state: JobState = JobState.UNKNOWN

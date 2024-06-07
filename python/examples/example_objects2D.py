@@ -9,7 +9,7 @@ import reality_apis.RDAS.reality_data_analysis_service as RDAS
 import reality_apis.DataTransfer.reality_data_transfer as DataTransfer
 
 from reality_apis.DataTransfer.references import ReferenceTable
-from reality_apis.RDAS.job_settings import O2DJobSettings
+from reality_apis.RDAS.job_specifications import O2DSpecifications
 from reality_apis.utils import RealityDataType, JobState
 
 from token_factory.token_factory import ClientInfo, SpaDesktopMobileTokenFactory
@@ -123,19 +123,19 @@ def main():
         exit(1)
     print("Checked data upload")
 
-    # creating job settings
-    settings = O2DJobSettings()
-    settings.inputs.photos = references.get_cloud_id_from_local_path(
+    # creating job specifications
+    specifications = O2DSpecifications()
+    specifications.inputs.photos = references.get_cloud_id_from_local_path(
         photo_context_scene
     ).value
-    settings.inputs.photo_object_detector = references.get_cloud_id_from_local_path(
+    specifications.inputs.photo_object_detector = references.get_cloud_id_from_local_path(
         photo_object_detector
     ).value
-    settings.outputs.objects2D = "true"
-    print("Settings created")
+    specifications.outputs.objects2D = "true"
+    print("Specifications created")
 
     # creating and submitting job
-    ret = service_rda.create_job(settings, job_name, project_id)
+    ret = service_rda.create_job(specifications, job_name, project_id)
     if ret.is_error():
         print("Error in submit:", ret.error)
         exit(1)
@@ -179,12 +179,12 @@ def main():
     print("Retrieving outputs ids")
     ret = service_rda.get_job_properties(job_id)
     if ret.is_error():
-        print("Error while getting settings:", ret.error)
+        print("Error while getting specifications:", ret.error)
         exit(1)
-    final_settings = ret.value.job_settings
+    final_specifications = ret.value.job_specifications
     print("Downloading outputs")
 
-    objects2D_id = final_settings.outputs.objects2D
+    objects2D_id = final_specifications.outputs.objects2D
     ret = data_transfer.download_context_scene(objects2D_id, output_path, project_id, references)
     if ret.is_error():
         print("Error while downloading output:", ret.error)

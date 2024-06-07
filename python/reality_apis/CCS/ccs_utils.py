@@ -150,7 +150,7 @@ class CCJobSettings:
         new_job_settings = cls()
 
         try:
-            settings_json = settings_inputs_json.get("jobSettings", {})
+            settings_json = settings_inputs_json.get("JobSpecifications", {})
             inputs_json = settings_inputs_json.get("inputs", [])
 
             new_job_settings.inputs = [i["id"] for i in inputs_json]

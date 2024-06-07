@@ -9,7 +9,7 @@ import reality_apis.RDAS.reality_data_analysis_service as RDAS
 import reality_apis.DataTransfer.reality_data_transfer as DataTransfer
 
 from reality_apis.DataTransfer.references import ReferenceTable
-from reality_apis.RDAS.job_settings import S2DJobSettings
+from reality_apis.RDAS.job_specifications import S2DSpecifications
 from reality_apis.utils import RealityDataType, JobState
 
 from config import project_id, client_id
@@ -154,24 +154,24 @@ def main():
         exit(1)
     print("Checked data upload")
 
-    # creating job settings
-    settings = S2DJobSettings()
-    settings.inputs.photos = references.get_cloud_id_from_local_path(
+    # creating job specifications
+    specifications = S2DSpecifications()
+    specifications.inputs.photos = references.get_cloud_id_from_local_path(
         photos_context_scene
     ).value
-    settings.inputs.photo_segmentation_detector = (
+    specifications.inputs.photo_segmentation_detector = (
         references.get_cloud_id_from_local_path(photo_segmentation_detector).value
     )
-    settings.inputs.meshes = references.get_cloud_id_from_local_path(
+    specifications.inputs.meshes = references.get_cloud_id_from_local_path(
         mesh_context_scene
     ).value
 
-    settings.outputs.lines3D = "lines3D"
-    settings.outputs.segmentation2D = "segmentation2D"
-    print("Settings created")
+    specifications.outputs.lines3D = "lines3D"
+    specifications.outputs.segmentation2D = "segmentation2D"
+    print("Specifications created")
 
     # creating and submitting job
-    ret = service_rda.create_job(settings, job_name, project_id)
+    ret = service_rda.create_job(specifications, job_name, project_id)
     if ret.is_error():
         print("Error in submit:", ret.error)
         exit(1)
@@ -215,12 +215,12 @@ def main():
     print("Retrieving outputs ids")
     ret = service_rda.get_job_properties(job_id)
     if ret.is_error():
-        print("Error while getting settings:", ret.error)
+        print("Error while getting specifications:", ret.error)
         exit(1)
-    final_settings = ret.value.job_settings
+    final_specifications = ret.value.job_specifications
     print("Downloading outputs")
 
-    lines3D_id = final_settings.outputs.lines3D
+    lines3D_id = final_specifications.outputs.lines3D
     ret = data_transfer.download_context_scene(lines3D_id, output_path, project_id, references)
     if ret.is_error():
         print("Error while downloading output:", ret.error)
