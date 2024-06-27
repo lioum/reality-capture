@@ -538,12 +538,57 @@ class ReconstructionSpecifications:
 
 class CalibrationSpecifications:
     def __init__(self) -> None:
+        self.inputs = self.Inputs()
+        self.outputs = self.Outputs()
         self.options = self.Options()
+
+    def get_type(self) -> str:
+        return "Calibration"
+
+    class Inputs:
+        def __init__(self) -> None:
+            self.photos: str = None
+            self.point_clouds: str = None
+            #TODO : do other inputs
 
     class Outputs:
         def __init__(self) -> None:
-            self.place_holder: str
+            self.context_scene: str = None
+            self.orientations: str = None
             #TODO : do other outputs
+
+    class Options:
+        def __init__(self) -> None:
+            self.center_tolerance: float = None
+            #TODO : do other options
+
+    @classmethod
+    def from_json_file(cls, json_file: str) -> ReturnValue[CalibrationSpecifications]:
+        if not os.path.isfile(json_file):
+            return ReturnValue(value=CalibrationSpecifications(), error="File not found: " + json_file)
+        try:
+            with open(json_file, encoding='utf-8') as f:
+                specifications_json = json.load(f)
+        except Exception as e:
+            return ReturnValue(value=CalibrationSpecifications(),
+                               error=f"Failed to load specifications {json_file}: {e}")
+
+        specifications = CalibrationSpecifications()
+
+        try:
+            if "Photos" in specifications_json["Inputs"]:
+                specifications.inputs.photos = specifications_json["Inputs"]["Photos"]
+            if "Pointclouds" in specifications_json["Inputs"]:
+                specifications.inputs.point_clouds = specifications_json["Inputs"]["Pointclouds"]
+
+            if "ContextScene" in specifications_json["Outputs"]:
+                specifications.outputs.context_scene = specifications_json["Outputs"]["ContextScene"]
+            if "Orientations" in specifications_json["Outputs"]:
+                specifications.outputs.orientations = specifications_json["Outputs"]["Orientations"]
+
+        except Exception as e:
+            return ReturnValue(value=specifications, error=str(e))
+        return ReturnValue(value=specifications, error="")
 
 Specifications = TypeVar(
     "Specifications",
