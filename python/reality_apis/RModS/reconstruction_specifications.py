@@ -2,17 +2,13 @@
 # See LICENSE.md in the project root for license terms and full copyright notice.
 
 from __future__ import annotations
-from typing import TypeVar, NamedTuple, List
+from typing import NamedTuple, List
 from enum import Enum
 
 from reality_apis.utils import ReturnValue
 
 import json
 import os
-
-class JobType(Enum):
-    NONE = "not recognized"
-    Reconstruction = "Reconstruction"
 
 class Format(Enum):
     ThreeMX = 0
@@ -151,6 +147,10 @@ class TextureSource(Enum):
     PhotosFirst = 0
     PointCloudsFirst = 1
     Smart = 2
+
+class TouchupFormat(Enum):
+    OBJ = 0
+    DGN = 1
 
 class Point3d:
     def __init__(self, x = 0, y = 0, c = 0) -> None:
@@ -407,7 +407,7 @@ class OptionsOrthoDSM:
 
 class OptionsTouchup:
     def __init__(self) -> None:
-        self.srs: str = None
+        self.format: TouchupFormat = None
         self.texture_color_source: ColorSource = None
         self.maximum_texture_size: int = None
 
@@ -430,11 +430,14 @@ class Export:
         self.options_kml: OptionsKML = OptionsKML()
         self.options_dgn: OptionsDGN = OptionsDGN()
         self.options_supermap: OptionsSuperMap = OptionsSuperMap()
+
         self.options_las: OptionsLas = OptionsLas()
         self.options_pod: OptionsPod = OptionsPod()
         self.options_ply: OptionsPly = OptionsPly()
         self.options_opc: OptionsOpc = OptionsOpc()
+
         self.options_opc: OptionsOrthoDSM = OptionsOrthoDSM()
+
         self.options_touchup: OptionsTouchup = OptionsTouchup()
 
 class ReconstructionSpecifications:
@@ -450,7 +453,8 @@ class ReconstructionSpecifications:
         def __init__(self) -> None:
             self.oriented_photos: str = None
             self.reference_model: str = None
-            #TODO : other inputs
+            self.preset: str = None
+            self.touchup_data: str = None
 
     class Outputs:
         def __init__(self) -> None:
@@ -536,63 +540,4 @@ class ReconstructionSpecifications:
             return ReturnValue(value=specifications, error=str(e))
         return ReturnValue(value=specifications, error="")
 
-class CalibrationSpecifications:
-    def __init__(self) -> None:
-        self.inputs = self.Inputs()
-        self.outputs = self.Outputs()
-        self.options = self.Options()
-
-    def get_type(self) -> str:
-        return "Calibration"
-
-    class Inputs:
-        def __init__(self) -> None:
-            self.photos: str = None
-            self.point_clouds: str = None
-            #TODO : do other inputs
-
-    class Outputs:
-        def __init__(self) -> None:
-            self.context_scene: str = None
-            self.orientations: str = None
-            #TODO : do other outputs
-
-    class Options:
-        def __init__(self) -> None:
-            self.center_tolerance: float = None
-            #TODO : do other options
-
-    @classmethod
-    def from_json_file(cls, json_file: str) -> ReturnValue[CalibrationSpecifications]:
-        if not os.path.isfile(json_file):
-            return ReturnValue(value=CalibrationSpecifications(), error="File not found: " + json_file)
-        try:
-            with open(json_file, encoding='utf-8') as f:
-                specifications_json = json.load(f)
-        except Exception as e:
-            return ReturnValue(value=CalibrationSpecifications(),
-                               error=f"Failed to load specifications {json_file}: {e}")
-
-        specifications = CalibrationSpecifications()
-
-        try:
-            if "Photos" in specifications_json["Inputs"]:
-                specifications.inputs.photos = specifications_json["Inputs"]["Photos"]
-            if "Pointclouds" in specifications_json["Inputs"]:
-                specifications.inputs.point_clouds = specifications_json["Inputs"]["Pointclouds"]
-
-            if "ContextScene" in specifications_json["Outputs"]:
-                specifications.outputs.context_scene = specifications_json["Outputs"]["ContextScene"]
-            if "Orientations" in specifications_json["Outputs"]:
-                specifications.outputs.orientations = specifications_json["Outputs"]["Orientations"]
-
-        except Exception as e:
-            return ReturnValue(value=specifications, error=str(e))
-        return ReturnValue(value=specifications, error="")
-
-Specifications = TypeVar(
-    "Specifications",
-    ReconstructionSpecifications,
-    CalibrationSpecifications
-)
 
