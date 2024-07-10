@@ -367,6 +367,7 @@ class ProductionSpecifications:
         def __init__(self) -> None:
             self.scene: str = ""
             self.reference_model: str = ""
+            self.preset = None
 
     class Outputs:
         def __init__(self) -> None:
@@ -393,6 +394,8 @@ class ProductionSpecifications:
                 specifications.inputs.scene = specifications_json["Inputs"]["Scene"]
             if "ReferenceModel" in specifications_json["Inputs"]:
                 specifications.inputs.reference_model = specifications_json["Inputs"]["ReferenceModel"]
+            if "Preset" in specifications_json["Inputs"]:
+                specifications.inputs.preset = specifications_json["Inputs"]["Preset"]
 
             if "Exports" in specifications_json["Outputs"]:
                 exports = []
