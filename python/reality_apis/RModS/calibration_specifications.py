@@ -133,8 +133,7 @@ class CalibrationSpecifications:
 
     class Inputs:
         def __init__(self) -> None:
-            self.photos: str = None
-            self.point_clouds: str = None
+            self.scene: str = None
             self.preset: str = None
 
     class Outputs:
@@ -185,15 +184,17 @@ class CalibrationSpecifications:
         specifications = CalibrationSpecifications()
 
         try:
-            if "photos" in specifications_json["inputs"]:
-                specifications.inputs.photos = specifications_json["inputs"]["photos"]
-            if "pointclouds" in specifications_json["inputs"]:
-                specifications.inputs.point_clouds = specifications_json["inputs"]["pointclouds"]
+            if "scene" in specifications_json["inputs"]:
+                specifications.inputs.scene = specifications_json["inputs"]["scene"]
 
             if "contextScene" in specifications_json["outputs"]:
                 specifications.outputs.context_scene = specifications_json["outputs"]["contextScene"]
             if "orientations" in specifications_json["outputs"]:
                 specifications.outputs.orientations = specifications_json["outputs"]["orientations"]
+            if "report" in specifications_json["outputs"]:
+                specifications.outputs.report = specifications_json["outputs"]["report"]
+            if "splats" in specifications_json["outputs"]:
+                specifications.outputs.splats = specifications_json["outputs"]["splats"]
 
         except Exception as e:
             return ReturnValue(value=specifications, error=str(e))

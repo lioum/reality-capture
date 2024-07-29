@@ -131,8 +131,9 @@ class TilingSpecifications:
 
         specifications = TilingSpecifications()
         try:
-            if "scene" in specifications_json["inputs"]:
-                specifications.inputs.scene = specifications_json["inputs"]["scene"]
+            specifications.inputs.scene = specifications_json["inputs"]["scene"]
+            if "preset" in specifications_json["inputs"]:
+                specifications.inputs.preset = specifications_json["inputs"]["preset"]
 
             if "referenceModel" in specifications_json["outputs"]:
                 reference_model = ReferenceModel()
