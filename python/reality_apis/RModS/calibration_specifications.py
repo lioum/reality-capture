@@ -72,6 +72,10 @@ class PairSelection(Enum):
     Exhaustive = 3
     SimilarOnly = 4
 
+class KeypointsDensity(Enum):
+    Normal = 0
+    High = 1
+
 class TiepointsPolicy(Enum):
     Normal = 0
     High = 1
