@@ -69,7 +69,7 @@ class ReferenceModel:
         self.options: ReferenceModelOptions = None
 
 class Point3d:
-    def __init__(self, x=0, y=0, c=0) -> None:
+    def __init__(self, x=0, y=0, z=0) -> None:
         self.x = x
         self.y = y
         self.z = z
@@ -131,12 +131,12 @@ class TilingSpecifications:
 
         specifications = TilingSpecifications()
         try:
-            if "Scene" in specifications_json["Inputs"]:
-                specifications.inputs.scene = specifications_json["Inputs"]["Scene"]
+            if "scene" in specifications_json["inputs"]:
+                specifications.inputs.scene = specifications_json["inputs"]["scene"]
 
-            if "ReferenceModel" in specifications_json["Outputs"]:
+            if "referenceModel" in specifications_json["outputs"]:
                 reference_model = ReferenceModel()
-                reference_model.reference_model_path = specifications_json["Outputs"]["ReferenceModel"]["Path"]
+                reference_model.reference_model_path = specifications_json["outputs"]["referenceModel"]["path"]
                 specifications.outputs.reference_model = reference_model
 
         except Exception as e:

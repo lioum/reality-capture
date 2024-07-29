@@ -181,15 +181,15 @@ class CalibrationSpecifications:
         specifications = CalibrationSpecifications()
 
         try:
-            if "Photos" in specifications_json["Inputs"]:
-                specifications.inputs.photos = specifications_json["Inputs"]["Photos"]
-            if "Pointclouds" in specifications_json["Inputs"]:
-                specifications.inputs.point_clouds = specifications_json["Inputs"]["Pointclouds"]
+            if "photos" in specifications_json["inputs"]:
+                specifications.inputs.photos = specifications_json["inputs"]["photos"]
+            if "pointclouds" in specifications_json["inputs"]:
+                specifications.inputs.point_clouds = specifications_json["inputs"]["pointclouds"]
 
-            if "ContextScene" in specifications_json["Outputs"]:
-                specifications.outputs.context_scene = specifications_json["Outputs"]["ContextScene"]
-            if "Orientations" in specifications_json["Outputs"]:
-                specifications.outputs.orientations = specifications_json["Outputs"]["Orientations"]
+            if "contextScene" in specifications_json["outputs"]:
+                specifications.outputs.context_scene = specifications_json["outputs"]["contextScene"]
+            if "orientations" in specifications_json["outputs"]:
+                specifications.outputs.orientations = specifications_json["outputs"]["orientations"]
 
         except Exception as e:
             return ReturnValue(value=specifications, error=str(e))

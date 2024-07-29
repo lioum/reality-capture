@@ -49,64 +49,64 @@ class ReconstructionSpecifications:
 
         specifications = ReconstructionSpecifications()
         try:
-            if "Scene" in specifications_json["Inputs"]:
-                specifications.inputs.scene = specifications_json["Inputs"]["Scene"]
-            if "ReferenceModel" in specifications_json["Inputs"]:
-                specifications.inputs.reference_model = specifications_json["Inputs"]["ReferenceModel"]
-            if "Preset" in specifications_json["Inputs"]:
-                specifications.inputs.preset = specifications_json["Inputs"]["Preset"]
+            if "scene" in specifications_json["inputs"]:
+                specifications.inputs.scene = specifications_json["inputs"]["scene"]
+            if "referenceModel" in specifications_json["inputs"]:
+                specifications.inputs.reference_model = specifications_json["inputs"]["referenceModel"]
+            if "preset" in specifications_json["inputs"]:
+                specifications.inputs.preset = specifications_json["inputs"]["preset"]
 
-            if "Exports" in specifications_json["Outputs"]:
+            if "exports" in specifications_json["outputs"]:
                 exports = []
-                for exports_json in specifications_json["Outputs"]["Exports"]:
+                for exports_json in specifications_json["outputs"]["exports"]:
                     export = Export()
-                    export.export_path = exports_json["Path"]
-                    if exports_json["Format"] == "3MX":
+                    export.export_path = exports_json["path"]
+                    if exports_json["format"] == "3MX":
                         export.format = Format.ThreeMX
-                    if exports_json["Format"] == "3SM":
+                    if exports_json["format"] == "3SM":
                         export.format = Format.ThreeSM
-                    if exports_json["Format"] == "Cesium3DTiles":
+                    if exports_json["format"] == "Cesium3DTiles":
                         export.format = Format.Cesium3DTiles
-                    if exports_json["Format"] == "OSGB":
+                    if exports_json["format"] == "OSGB":
                         export.format = Format.OSGB
-                    if exports_json["Format"] == "SpacEyes":
+                    if exports_json["format"] == "SpacEyes":
                         export.format = Format.SpacEyes
-                    if exports_json["Format"] == "OBJ":
+                    if exports_json["format"] == "OBJ":
                         export.format = Format.OBJ
-                    if exports_json["Format"] == "S3C":
+                    if exports_json["format"] == "S3C":
                         export.format = Format.S3C
-                    if exports_json["Format"] == "I3S":
+                    if exports_json["format"] == "I3S":
                         export.format = Format.I3S
-                    if exports_json["Format"] == "LodTree":
+                    if exports_json["format"] == "LodTree":
                         export.format = Format.LodTree
-                    if exports_json["Format"] == "Collada":
+                    if exports_json["format"] == "Collada":
                         export.format = Format.Collada
-                    if exports_json["Format"] == "OCP":
+                    if exports_json["format"] == "OCP":
                         export.format = Format.OCP
-                    if exports_json["Format"] == "KML":
+                    if exports_json["format"] == "KML":
                         export.format = Format.KML
-                    if exports_json["Format"] == "DGN":
+                    if exports_json["format"] == "DGN":
                         export.format = Format.DGN
-                    if exports_json["Format"] == "SuperMap":
+                    if exports_json["format"] == "SuperMap":
                         export.format = Format.SuperMap
-                    if exports_json["Format"] == "Las":
+                    if exports_json["format"] == "Las":
                         export.format = Format.Las
-                    if exports_json["Format"] == "POD":
+                    if exports_json["format"] == "POD":
                         export.format = Format.POD
-                    if exports_json["Format"] == "Ply":
+                    if exports_json["format"] == "Ply":
                         export.format = Format.Ply
-                    if exports_json["Format"] == "OPC":
+                    if exports_json["format"] == "OPC":
                         export.format = Format.OPC
-                    if exports_json["Format"] == "OrthophotoDSM":
+                    if exports_json["format"] == "OrthophotoDSM":
                         export.format = Format.OrthophotoDSM
-                    if exports_json["Format"] == "Touchup":
+                    if exports_json["format"] == "Touchup":
                         export.format = Format.Touchup
                     exports.append(export)
                 specifications.outputs.exports = exports
 
-            if "ReferenceModel" in specifications_json["Outputs"]:
+            if "referenceModel" in specifications_json["outputs"]:
                 reference_model = ReferenceModel()
-                reference_model.reference_model_path = specifications_json["Outputs"]["ReferenceModel"]["Path"]
+                reference_model.reference_model_path = specifications_json["outputs"]["referenceModel"]["path"]
                 specifications.outputs.reference_model = reference_model
 
         except Exception as e:
