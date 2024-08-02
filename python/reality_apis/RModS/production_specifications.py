@@ -318,6 +318,7 @@ class OptionsOrthoDSM:
         self.color_source: OrthoColorSource = None
         self.dsm_format: DSMFormat = None
         self.no_data_value: float = None
+        self.no_data_transparency: bool = None
 
 class OptionsTouchup:
     def __init__(self) -> None:
