@@ -73,7 +73,6 @@ class FillImagePropertiesSpecifications:
                 specifications.options.recursive_image_collections = specifications_json["options"]["recursiveImageCollections"]
             if "altitudeReference" in specifications_json["options"]:
                 specifications.options.altitude_reference = AltitudeReference[specifications_json["options"]["altitudeReference"]]
-            print(specifications.options.altitude_reference)
 
         except Exception as e:
             return ReturnValue(value=specifications, error=str(e))
