@@ -79,7 +79,7 @@ class ReferenceModelOptions:
         self.ref_model_type: ReferenceModelType = None
         self.tiling_mode: TilingMode = None
         self.tiling_value: float = None
-        self.tilingOrigin: Point3d = None
+        self.tiling_origin: Point3d = None
         self.discard_empty_tiles: bool = None
         self.srs: str = None
         self.geometric_precision: GeometricPrecision = None
@@ -91,7 +91,7 @@ class ReferenceModelOptions:
         self.color_correction: ColorCorrection = None
         self.untextured_representation: UntexturedRepresentation = None
         self.untextured_color: str = None
-        self.texture_source = None #TextureSource
+        self.texture_source: TextureSource = None
         self.ortho_resolution: float = None
         self.geometry_resolution_limit: float = None
         self.texture_resolution_limit: float = None
@@ -137,8 +137,52 @@ class TilingSpecifications:
 
             if "referenceModel" in specifications_json["outputs"]:
                 reference_model = ReferenceModel()
-                reference_model.reference_model_path = specifications_json["outputs"]["referenceModel"]["path"]
+                reference_model.reference_model_path = specifications_json["outputs"]["referenceModel"]["referenceModelPath"]
+
+                reference_model.options = ReferenceModelOptions()
+                if "refModelType" in specifications_json["outputs"]["referenceModel"]["options"]:
+                    reference_model.options.ref_model_type = ReferenceModelType[specifications_json["outputs"]["referenceModel"]["options"]["refModelType"]]
+                if "tilingMode" in specifications_json["outputs"]["referenceModel"]["options"]:
+                    reference_model.options.tiling_mode = TilingMode[specifications_json["outputs"]["referenceModel"]["options"]["tilingMode"]]
+                if "tilingValue" in specifications_json["outputs"]["referenceModel"]["options"]:
+                    reference_model.options.tiling_value = specifications_json["outputs"]["referenceModel"]["options"]["tilingValue"]
+                if "tilingOrigin" in specifications_json["outputs"]["referenceModel"]["options"]:
+                    reference_model.options.tiling_origin = Point3d[specifications_json["outputs"]["referenceModel"]["options"]["tilingOrigin"]]
+                if "discardEmptyTiles" in specifications_json["outputs"]["referenceModel"]["options"]:
+                    reference_model.options.discard_empty_tiles = specifications_json["outputs"]["referenceModel"]["options"]["discardEmptyTiles"]
+                if "srs" in specifications_json["outputs"]["referenceModel"]["options"]:
+                    reference_model.options.srs = specifications_json["outputs"]["referenceModel"]["options"]["srs"]
+                if "geometricPrecision" in specifications_json["outputs"]["referenceModel"]["options"]:
+                    reference_model.options.geometric_precision = GeometricPrecision[specifications_json["outputs"]["referenceModel"]["options"]["geometricPrecision"]]
+                if "pairSelection" in specifications_json["outputs"]["referenceModel"]["options"]:
+                    reference_model.options.pair_selection = PairSelection[specifications_json["outputs"]["referenceModel"]["options"]["pairSelection"]]
+                if "photoUsedForGeometry" in specifications_json["outputs"]["referenceModel"]["options"]:
+                    reference_model.options.photo_used_for_geometry = PhotoUsedForGeometry[specifications_json["outputs"]["referenceModel"]["options"]["photoUsedForGeometry"]]
+                if "holeFilling" in specifications_json["outputs"]["referenceModel"]["options"]:
+                    reference_model.options.hole_filling = HoleFilling[specifications_json["outputs"]["referenceModel"]["options"]["holeFilling"]]
+                if "simplification" in specifications_json["outputs"]["referenceModel"]["options"]:
+                    reference_model.options.simplification = Simplification[specifications_json["outputs"]["referenceModel"]["options"]["simplification"]]
+                if "planarSimplificationTolerance" in specifications_json["outputs"]["referenceModel"]["options"]:
+                    reference_model.options.planar_simplification_tolerance = specifications_json["outputs"]["referenceModel"]["options"]["planarSimplificationTolerance"]
+                if "colorCorrection" in specifications_json["outputs"]["referenceModel"]["options"]:
+                    reference_model.options.color_correction = ColorCorrection[specifications_json["outputs"]["referenceModel"]["options"]["colorCorrection"]]
+                if "untexturedRepresentation" in specifications_json["outputs"]["referenceModel"]["options"]:
+                    reference_model.options.untextured_representation = UntexturedRepresentation[specifications_json["outputs"]["referenceModel"]["options"]["untexturedRepresentation"]]
+                if "untexturedColor" in specifications_json["outputs"]["referenceModel"]["options"]:
+                    reference_model.options.untextured_color = specifications_json["outputs"]["referenceModel"]["options"]["untexturedColor"]
+                if "textureSource" in specifications_json["outputs"]["referenceModel"]["options"]:
+                    reference_model.options.texture_source = TextureSource[specifications_json["outputs"]["referenceModel"]["options"]["textureSource"]]
+                if "orthoResolution" in specifications_json["outputs"]["referenceModel"]["options"]:
+                    reference_model.options.ortho_resolution = specifications_json["outputs"]["referenceModel"]["options"]["orthoResolution"]
+                if "geometryResolutionLimit" in specifications_json["outputs"]["referenceModel"]["options"]:
+                    reference_model.options.geometry_resolution_limit = specifications_json["outputs"]["referenceModel"]["options"]["geometryResolutionLimit"]
+                if "textureResolutionLimit" in specifications_json["outputs"]["referenceModel"]["options"]:
+                    reference_model.options.texture_resolution_limit = specifications_json["outputs"]["referenceModel"]["options"]["textureResolutionLimit"]
+
                 specifications.outputs.reference_model = reference_model
+
+            if "workspace" in specifications_json["options"]:
+                specifications.options.workspace = specifications_json["options"]["workspace"]
 
         except Exception as e:
             return ReturnValue(value=specifications, error=str(e))
