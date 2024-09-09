@@ -6,7 +6,7 @@ from typing import NamedTuple, List
 from enum import Enum
 
 from reality_apis.utils import ReturnValue
-from reality_apis.RModS.production_specifications import Export, Format
+from reality_apis.RModS.production_specifications import Export, Format, _export_options_from_json_file
 from reality_apis.RModS.tiling_specifications import ReferenceModel
 
 import json
@@ -57,57 +57,14 @@ class ReconstructionSpecifications:
                 specifications.inputs.preset = specifications_json["inputs"]["preset"]
 
             if "exports" in specifications_json["outputs"]:
-                exports = []
-                for exports_json in specifications_json["outputs"]["exports"]:
-                    export = Export()
-                    export.export_path = exports_json["path"]
-                    if exports_json["format"] == "3MX":
-                        export.format = Format.ThreeMX
-                    if exports_json["format"] == "3SM":
-                        export.format = Format.ThreeSM
-                    if exports_json["format"] == "Cesium3DTiles":
-                        export.format = Format.Cesium3DTiles
-                    if exports_json["format"] == "OSGB":
-                        export.format = Format.OSGB
-                    if exports_json["format"] == "SpacEyes":
-                        export.format = Format.SpacEyes
-                    if exports_json["format"] == "OBJ":
-                        export.format = Format.OBJ
-                    if exports_json["format"] == "S3C":
-                        export.format = Format.S3C
-                    if exports_json["format"] == "I3S":
-                        export.format = Format.I3S
-                    if exports_json["format"] == "LodTree":
-                        export.format = Format.LodTree
-                    if exports_json["format"] == "Collada":
-                        export.format = Format.Collada
-                    if exports_json["format"] == "OCP":
-                        export.format = Format.OCP
-                    if exports_json["format"] == "KML":
-                        export.format = Format.KML
-                    if exports_json["format"] == "DGN":
-                        export.format = Format.DGN
-                    if exports_json["format"] == "SuperMap":
-                        export.format = Format.SuperMap
-                    if exports_json["format"] == "Las":
-                        export.format = Format.Las
-                    if exports_json["format"] == "POD":
-                        export.format = Format.POD
-                    if exports_json["format"] == "Ply":
-                        export.format = Format.Ply
-                    if exports_json["format"] == "OPC":
-                        export.format = Format.OPC
-                    if exports_json["format"] == "OrthophotoDSM":
-                        export.format = Format.OrthophotoDSM
-                    if exports_json["format"] == "Touchup":
-                        export.format = Format.Touchup
-                    exports.append(export)
-                specifications.outputs.exports = exports
-
+                specifications.outputs.exports = _export_options_from_json_file(specifications_json)
             if "referenceModel" in specifications_json["outputs"]:
                 reference_model = ReferenceModel()
                 reference_model.reference_model_path = specifications_json["outputs"]["referenceModel"]["path"]
                 specifications.outputs.reference_model = reference_model
+
+            if "workspace" in specifications_json["options"]:
+                specifications.options.workspace = specifications_json["options"]["workspace"]
 
         except Exception as e:
             return ReturnValue(value=specifications, error=str(e))

@@ -111,6 +111,135 @@ def _texture_color_source_from_json(options, options_json):
     if "textureColorSourceThermalMax" in options_json:
         options.texture_color_source_thermal_max = options_json["textureColorSourceThermalMax"]
 
+def _export_options_from_json_file(specifications_json):
+    exports = []
+    for exports_json in specifications_json["outputs"]["exports"]:
+        export = Export()
+        export.export_path = exports_json["exportPath"]
+
+        if exports_json["format"] == "3MX":
+            export.format = Format.ThreeMX
+            if "options3MX" in exports_json:
+                options = Options3MX()
+                options.from_json(exports_json["options3MX"])
+                export.options_3mx = options
+        elif exports_json["format"] == "3SM":
+            export.format = Format.ThreeSM
+            if "options3SM" in exports_json:
+                options = Options3SM()
+                options.from_json(exports_json["options3SM"])
+                export.options_3sm = options
+        elif exports_json["format"] == "Cesium3DTiles":
+            export.format = Format.Cesium3DTiles
+            if "optionsCesium" in exports_json:
+                options = OptionsCesium()
+                options.from_json(exports_json["optionsCesium"])
+                export.options_cesium = options
+        elif exports_json["format"] == "OSGB":
+            export.format = Format.OSGB
+            if "optionsOSGB" in exports_json:
+                options = OptionsOSGB()
+                options.from_json(exports_json["optionsOSGB"])
+                export.options_osgb = options
+        elif exports_json["format"] == "SpacEyes":
+            export.format = Format.SpacEyes
+            if "optionsSpacEyes" in exports_json:
+                options = OptionsSpacEyes()
+                options.from_json(exports_json["optionsSpacEyes"])
+                export.options_spac_eyes = options
+        elif exports_json["format"] == "OBJ":
+            export.format = Format.OBJ
+            if "optionsObj" in exports_json:
+                options = OptionsObj()
+                options.from_json(exports_json["optionsObj"])
+                export.options_obj = options
+        elif exports_json["format"] == "S3C":
+            export.format = Format.S3C
+            if "optionsS3C" in exports_json:
+                options = OptionsS3C()
+                options.from_json(exports_json["optionsS3C"])
+                export.options_s3c = options
+        elif exports_json["format"] == "I3S":
+            export.format = Format.I3S
+            if "optionsI3S" in exports_json:
+                options = OptionsI3S()
+                options.from_json(exports_json["optionsI3S"])
+                export.options_i3s = options
+        elif exports_json["format"] == "LodTree":
+            export.format = Format.LodTree
+            if "optionsLodTree" in exports_json:
+                options = OptionsLodTreeExport()
+                options.from_json(exports_json["optionsLodTree"])
+                export.options_lod_tree = options
+        elif exports_json["format"] == "Collada":
+            export.format = Format.Collada
+            if "optionsCollada" in exports_json:
+                options = OptionsCollada()
+                options.from_json(exports_json["optionsCollada"])
+                export.options_collada = options
+        elif exports_json["format"] == "OCP":
+            export.format = Format.OCP
+            if "optionsOCP" in exports_json:
+                options = OptionsOCP()
+                options.from_json(exports_json["optionsOCP"])
+                export.options_ocp = options
+        elif exports_json["format"] == "KML":
+            export.format = Format.KML
+            if "optionsKML" in exports_json:
+                options = OptionsKML()
+                options.from_json(exports_json["optionsKML"])
+                export.options_kml = options
+        elif exports_json["format"] == "DGN":
+            export.format = Format.DGN
+            if "optionsDGN" in exports_json:
+                options = OptionsDGN()
+                options.from_json(exports_json["optionsDGN"])
+                export.options_dgn = options
+        elif exports_json["format"] == "SuperMap":
+            export.format = Format.SuperMap
+            if "optionsSuperMap" in exports_json:
+                options = OptionsSuperMap()
+                options.from_json(exports_json["optionsSuperMap"])
+                export.options_supermap = options
+        elif exports_json["format"] == "Las":
+            export.format = Format.Las
+            if "optionsLas" in exports_json:
+                options = OptionsLas()
+                options.from_json(exports_json["optionsLas"])
+                export.options_las = options
+        elif exports_json["format"] == "POD":
+            export.format = Format.POD
+            if "optionsPod" in exports_json:
+                options = OptionsPod()
+                options.from_json(exports_json["optionsPod"])
+                export.options_pod = options
+        elif exports_json["format"] == "Ply":
+            export.format = Format.Ply
+            if "optionsPly" in exports_json:
+                options = OptionsPly()
+                options.from_json(exports_json["optionsPly"])
+                export.options_ply = options
+        elif exports_json["format"] == "OPC":
+            export.format = Format.OPC
+            if "optionsOpc" in exports_json:
+                options = OptionsOpc()
+                options.from_json(exports_json["optionsOpc"])
+                export.options_opc = options
+        elif exports_json["format"] == "OrthophotoDSM":
+            export.format = Format.OrthophotoDSM
+            if "optionsOrthoDSM" in exports_json:
+                options = OptionsOrthoDSM()
+                options.from_json(exports_json["optionsOrthoDSM"])
+                export.options_orthodsm = options
+        elif exports_json["format"] == "Touchup":
+            export.format = Format.Touchup
+            if "optionsTouchup" in exports_json:
+                options = OptionsTouchup()
+                options.from_json(exports_json["optionsTouchup"])
+                export.options_touchup = options
+        exports.append(export)
+    return exports
+
 class Options3MX:
     def __init__(self) -> None:
         self.texture_color_source: ColorSource = None
@@ -630,133 +759,7 @@ class ProductionSpecifications:
                 specifications.inputs.preset = specifications_json["inputs"]["preset"]
 
             if "exports" in specifications_json["outputs"]:
-                exports = []
-                for exports_json in specifications_json["outputs"]["exports"]:
-                    export = Export()
-                    export.export_path = exports_json["exportPath"]
-
-                    if exports_json["format"] == "3MX":
-                        export.format = Format.ThreeMX
-                        if "options3MX" in exports_json:
-                            options = Options3MX()
-                            options.from_json(exports_json["options3MX"])
-                            export.options_3mx = options
-                    elif exports_json["format"] == "3SM":
-                        export.format = Format.ThreeSM
-                        if "options3SM" in exports_json:
-                            options = Options3SM()
-                            options.from_json(exports_json["options3SM"])
-                            export.options_3sm = options
-                    elif exports_json["format"] == "Cesium3DTiles":
-                        export.format = Format.Cesium3DTiles
-                        if "optionsCesium" in exports_json:
-                            options = OptionsCesium()
-                            options.from_json(exports_json["optionsCesium"])
-                            export.options_cesium = options
-                    elif exports_json["format"] == "OSGB":
-                        export.format = Format.OSGB
-                        if "optionsOSGB" in exports_json:
-                            options = OptionsOSGB()
-                            options.from_json(exports_json["optionsOSGB"])
-                            export.options_osgb = options
-                    elif exports_json["format"] == "SpacEyes":
-                        export.format = Format.SpacEyes
-                        if "optionsSpacEyes" in exports_json:
-                            options = OptionsSpacEyes()
-                            options.from_json(exports_json["optionsSpacEyes"])
-                            export.options_spac_eyes = options
-                    elif exports_json["format"] == "OBJ":
-                        export.format = Format.OBJ
-                        if "optionsObj" in exports_json:
-                            options = OptionsObj()
-                            options.from_json(exports_json["optionsObj"])
-                            export.options_obj = options
-                    elif exports_json["format"] == "S3C":
-                        export.format = Format.S3C
-                        if "optionsS3C" in exports_json:
-                            options = OptionsS3C()
-                            options.from_json(exports_json["optionsS3C"])
-                            export.options_s3c = options
-                    elif exports_json["format"] == "I3S":
-                        export.format = Format.I3S
-                        if "optionsI3S" in exports_json:
-                            options = OptionsI3S()
-                            options.from_json(exports_json["optionsI3S"])
-                            export.options_i3s = options
-                    elif exports_json["format"] == "LodTree":
-                        export.format = Format.LodTree
-                        if "optionsLodTree" in exports_json:
-                            options = OptionsLodTreeExport()
-                            options.from_json(exports_json["optionsLodTree"])
-                            export.options_lod_tree = options
-                    elif exports_json["format"] == "Collada":
-                        export.format = Format.Collada
-                        if "optionsCollada" in exports_json:
-                            options = OptionsCollada()
-                            options.from_json(exports_json["optionsCollada"])
-                            export.options_collada = options
-                    elif exports_json["format"] == "OCP":
-                        export.format = Format.OCP
-                        if "optionsOCP" in exports_json:
-                            options = OptionsOCP()
-                            options.from_json(exports_json["optionsOCP"])
-                            export.options_ocp = options
-                    elif exports_json["format"] == "KML":
-                        export.format = Format.KML
-                        if "optionsKML" in exports_json:
-                            options = OptionsKML()
-                            options.from_json(exports_json["optionsKML"])
-                            export.options_kml = options
-                    elif exports_json["format"] == "DGN":
-                        export.format = Format.DGN
-                        if "optionsDGN" in exports_json:
-                            options = OptionsDGN()
-                            options.from_json(exports_json["optionsDGN"])
-                            export.options_dgn = options
-                    elif exports_json["format"] == "SuperMap":
-                        export.format = Format.SuperMap
-                        if "optionsSuperMap" in exports_json:
-                            options = OptionsSuperMap()
-                            options.from_json(exports_json["optionsSuperMap"])
-                            export.options_supermap = options
-                    elif exports_json["format"] == "Las":
-                        export.format = Format.Las
-                        if "optionsLas" in exports_json:
-                            options = OptionsLas()
-                            options.from_json(exports_json["optionsLas"])
-                            export.options_las = options
-                    elif exports_json["format"] == "POD":
-                        export.format = Format.POD
-                        if "optionsPod" in exports_json:
-                            options = OptionsPod()
-                            options.from_json(exports_json["optionsPod"])
-                            export.options_pod = options
-                    elif exports_json["format"] == "Ply":
-                        export.format = Format.Ply
-                        if "optionsPly" in exports_json:
-                            options = OptionsPly()
-                            options.from_json(exports_json["optionsPly"])
-                            export.options_ply = options
-                    elif exports_json["format"] == "OPC":
-                        export.format = Format.OPC
-                        if "optionsOpc" in exports_json:
-                            options = OptionsOpc()
-                            options.from_json(exports_json["optionsOpc"])
-                            export.options_opc = options
-                    elif exports_json["format"] == "OrthophotoDSM":
-                        export.format = Format.OrthophotoDSM
-                        if "optionsOrthoDSM" in exports_json:
-                            options = OptionsOrthoDSM()
-                            options.from_json(exports_json["optionsOrthoDSM"])
-                            export.options_orthodsm = options
-                    elif exports_json["format"] == "Touchup":
-                        export.format = Format.Touchup
-                        if "optionsTouchup" in exports_json:
-                            options = OptionsTouchup()
-                            options.from_json(exports_json["optionsTouchup"])
-                            export.options_touchup = options
-                    exports.append(export)
-                specifications.outputs.exports = exports
+                specifications.outputs.exports = _export_options_from_json_file(specifications_json)
 
             if "workspace" in specifications_json["options"]:
                 specifications.options.workspace = specifications_json["options"]["workspace"]
