@@ -96,9 +96,20 @@ class TouchupFormat(Enum):
     OBJ = 0
     DGN = 1
 
-class TouchupFormat(Enum):
-    OBJ = 0
-    DGN = 1
+
+def _texture_color_source_from_json(options, options_json):
+    if "textureColorSource" in options_json:
+        options.texture_color_source = ColorSource[options_json["textureColorSource"]]
+    if "textureColorSourceResMin" in options_json:
+        options.texture_color_source_res_min = options_json["textureColorSourceResMin"]
+    if "textureColorSourceResMax" in options_json:
+        options.texture_color_source_res_max = options_json["textureColorSourceResMax"]
+    if "textureColorSourceThermalUnit" in options_json:
+        options.texture_color_source_thermal_unit = ThermalUnit[options_json["textureColorSourceThermalUnit"]]
+    if "textureColorSourceThermalMin" in options_json:
+        options.texture_color_source_thermal_min = options_json["textureColorSourceThermalMin"]
+    if "textureColorSourceThermalMax" in options_json:
+        options.texture_color_source_thermal_max = options_json["textureColorSourceThermalMax"]
 
 class Options3MX:
     def __init__(self) -> None:
@@ -113,6 +124,17 @@ class Options3MX:
         self.lod_scope: LODScope = None
         self.generate_web_app: bool = None
 
+    def from_json(self, options_json):
+        _texture_color_source_from_json(self, options_json)
+        if "srs" in options_json:
+            self.srs = options_json["srs"]
+        if "srsOrigin" in options_json:
+            self.srs_origin = options_json["srsOrigin"]
+        if "lodScope" in options_json:
+            self.lod_scope = LODScope[options_json["lodScope"]]
+        if "generateWebApp" in options_json:
+            self.generate_web_app = options_json["generateWebApp"]
+
 class Options3SM:
     def __init__(self) -> None:
         self.texture_color_source: ColorSource = None
@@ -123,6 +145,13 @@ class Options3SM:
         self.texture_color_source_thermal_max: float = None
         self.srs: str = None
         self.lod_scope: LODScope = None
+
+    def from_json(self, options_json):
+        _texture_color_source_from_json(self, options_json)
+        if "srs" in options_json:
+            self.srs = options_json["srs"]
+        if "lodScope" in options_json:
+            self.lod_scope = LODScope[options_json["lodScope"]]
 
 class OptionsCesium:
     def __init__(self) -> None:
@@ -135,6 +164,15 @@ class OptionsCesium:
         self.srs: str = None
         self.lod_scope: LODScope = None
         self.compress: CesiumCompression = None
+
+    def from_json(self, options_json):
+        _texture_color_source_from_json(self, options_json)
+        if "srs" in options_json:
+            self.srs = options_json["srs"]
+        if "lodScope" in options_json:
+            self.lod_scope = LODScope[options_json["lodScope"]]
+        if "compress" in options_json:
+            self.compress = CesiumCompression[options_json["compress"]]
 
 class OptionsOSGB:
     def __init__(self) -> None:
@@ -149,6 +187,17 @@ class OptionsOSGB:
         self.srs: str = None
         self.srs_origin: str = None
 
+    def from_json(self, options_json):
+        _texture_color_source_from_json(self, options_json)
+        if "lodScope" in options_json:
+            self.lod_scope = LODScope[options_json["lodScope"]]
+        if "lodType" in options_json:
+            self.lod_type = LODScope[options_json["lodType"]]
+        if "srs" in options_json:
+            self.srs = options_json["srs"]
+        if "srsOrigin" in options_json:
+            self.srs_origin = options_json["srsOrigin"]
+
 class OptionsSpacEyes:
     def __init__(self) -> None:
         self.texture_color_source: ColorSource = None
@@ -161,6 +210,17 @@ class OptionsSpacEyes:
         self.lod_type: LODType = None
         self.srs: str = None
         self.disable_lighting: bool = None
+
+    def from_json(self, options_json):
+        _texture_color_source_from_json(self, options_json)
+        if "lodScope" in options_json:
+            self.lod_scope = LODScope[options_json["lodScope"]]
+        if "lodType" in options_json:
+            self.lod_type = LODType[options_json["lodType"]]
+        if "srs" in options_json:
+            self.srs = options_json["srs"]
+        if "disableLighting" in options_json:
+            self.disable_lighting = options_json["disableLighting"]
 
 class OptionsObj:
     def __init__(self) -> None:
@@ -177,6 +237,22 @@ class OptionsObj:
         self.srs_origin: str = None
         self.double_precision: bool = None
 
+    def from_json(self, options_json):
+        _texture_color_source_from_json(self, options_json)
+        if "maximumTextureSize" in options_json:
+            self.maximum_texture_size = options_json["maximumTextureSize"]
+        if "lodScope" in options_json:
+            self.lod_scope = LODScope[options_json["lodScope"]]
+        if "lodType" in options_json:
+            self.lod_type = LODType[options_json["lodType"]]
+        if "srs" in options_json:
+            self.srs = options_json["srs"]
+        if "srsOrigin" in options_json:
+            self.srs_origin = options_json["srsOrigin"]
+        if "doublePrecision" in options_json:
+            self.double_precision = options_json["doublePrecision"]
+
+
 class OptionsS3C:
     def __init__(self) -> None:
         self.texture_color_source: ColorSource = None
@@ -188,6 +264,15 @@ class OptionsS3C:
         self.lod_scope: LODScope = None
         self.srs: str = None
         self.srs_origin: str = None
+
+    def from_json(self, options_json):
+        _texture_color_source_from_json(self, options_json)
+        if "lodScope" in options_json:
+            self.lod_scope = LODScope[options_json["lodScope"]]
+        if "srs" in options_json:
+            self.srs = options_json["srs"]
+        if "srsOrigin" in options_json:
+            self.srs_origin = options_json["srsOrigin"]
 
 class OptionsI3S:
     def __init__(self) -> None:
@@ -201,6 +286,15 @@ class OptionsI3S:
         self.srs: str = None
         self.version: I3SVersion = None
 
+    def from_json(self, options_json):
+        _texture_color_source_from_json(self, options_json)
+        if "lodScope" in options_json:
+            self.lod_scope = LODScope[options_json["lodScope"]]
+        if "srs" in options_json:
+            self.srs = options_json["srs"]
+        if "version" in options_json:
+            self.version = I3SVersion[options_json["version"]]
+
 class OptionsLodTreeExport:
     def __init__(self) -> None:
         self.texture_color_source: ColorSource = None
@@ -212,6 +306,15 @@ class OptionsLodTreeExport:
         self.lod_scope: LODScope = None
         self.lod_type: LODType = None
         self.srs: str = None
+
+    def from_json(self, options_json):
+        _texture_color_source_from_json(self, options_json)
+        if "lodScope" in options_json:
+            self.lod_scope = LODScope[options_json["lodScope"]]
+        if "lodType" in options_json:
+            self.lod_type = LODType[options_json["lodType"]]
+        if "srs" in options_json:
+            self.srs = options_json["srs"]
 
 class OptionsCollada:
     def __init__(self) -> None:
@@ -226,6 +329,17 @@ class OptionsCollada:
         self.srs: str = None
         self.srs_origin: str = None
 
+    def from_json(self, options_json):
+        _texture_color_source_from_json(self, options_json)
+        if "lodScope" in options_json:
+            self.lod_scope = LODScope[options_json["lodScope"]]
+        if "lodType" in options_json:
+            self.lod_type = LODType[options_json["lodType"]]
+        if "srs" in options_json:
+            self.srs = options_json["srs"]
+        if "srsOrigin" in options_json:
+            self.srs_origin = options_json["srsOrigin"]
+
 class OptionsOCP:
     def __init__(self) -> None:
         self.texture_color_source: ColorSource = None
@@ -236,6 +350,13 @@ class OptionsOCP:
         self.texture_color_source_thermal_max: float = None
         self.lod_scope: LODScope = None
         self.srs: str = None
+
+    def from_json(self, options_json):
+        _texture_color_source_from_json(self, options_json)
+        if "lodScope" in options_json:
+            self.lod_scope = LODScope[options_json["lodScope"]]
+        if "srs" in options_json:
+            self.srs = options_json["srs"]
 
 class OptionsKML:
     def __init__(self) -> None:
@@ -250,6 +371,17 @@ class OptionsKML:
         self.srs: str = None
         self.height_offset: float = None
 
+    def from_json(self, options_json):
+        _texture_color_source_from_json(self, options_json)
+        if "lodScope" in options_json:
+            self.lod_scope = LODScope[options_json["lodScope"]]
+        if "lodType" in options_json:
+            self.lod_type = LODType[options_json["lodType"]]
+        if "srs" in options_json:
+            self.srs = options_json["srs"]
+        if "heightOffset" in options_json:
+            self.height_offset = options_json["heightOffset"]
+
 class OptionsDGN:
     def __init__(self) -> None:
         self.texture_color_source: ColorSource = None
@@ -263,6 +395,17 @@ class OptionsDGN:
         self.srs: str = None
         self.srs_origin: str = None
 
+    def from_json(self, options_json):
+        _texture_color_source_from_json(self, options_json)
+        if "lodScope" in options_json:
+            self.lod_scope = LODScope[options_json["lodScope"]]
+        if "lodType" in options_json:
+            self.lod_type = LODType[options_json["lodType"]]
+        if "srs" in options_json:
+            self.srs = options_json["srs"]
+        if "srsOrigin" in options_json:
+            self.srs_origin = options_json["srsOrigin"]
+
 class OptionsSuperMap:
     def __init__(self) -> None:
         self.texture_color_source: ColorSource = None
@@ -274,6 +417,13 @@ class OptionsSuperMap:
         self.lod_scope: LODScope = None
         self.srs: str = None
 
+    def from_json(self, options_json):
+        _texture_color_source_from_json(self, options_json)
+        if "lodScope" in options_json:
+            self.lod_scope = LODScope[options_json["lodScope"]]
+        if "srs" in options_json:
+            self.srs = options_json["srs"]
+
 class OptionsLas:
     def __init__(self) -> None:
         self.srs: str = None
@@ -283,12 +433,36 @@ class OptionsLas:
         self.merge_point_clouds: bool = None
         self.texture_color_source: ColorSource = None
 
+    def from_json(self, options_json):
+        if "srs" in options_json:
+            self.srs = options_json["srs"]
+        if "samplingStrategy" in options_json:
+            self.sampling_strategy = SamplingStrategy[options_json["samplingStrategy"]]
+        if "samplingDistance" in options_json:
+            self.sampling_distance = options_json["samplingDistance"]
+        if "compress" in options_json:
+            self.compress = LasCompression[options_json["compress"]]
+        if "mergePointClouds" in options_json:
+            self.merge_point_clouds = options_json["mergePointClouds"]
+        if "textureColorSource" in options_json:
+            self.texture_color_source = ColorSource[options_json["textureColorSource"]]
+
 class OptionsPod:
     def __init__(self) -> None:
         self.srs: str = None
-        self.srs: SamplingStrategy = None
+        self.sampling_strategy: SamplingStrategy = None
         self.sampling_distance: float = None
         self.texture_color_source: ColorSource = None
+
+    def from_json(self, options_json):
+        if "srs" in options_json:
+            self.srs = options_json["srs"]
+        if "samplingStrategy" in options_json:
+            self.sampling_strategy = SamplingStrategy[options_json["samplingStrategy"]]
+        if "samplingDistance" in options_json:
+            self.sampling_distance = options_json["samplingDistance"]
+        if "textureColorSource" in options_json:
+            self.texture_color_source = ColorSource[options_json["textureColorSource"]]
 
 class OptionsPly:
     def __init__(self) -> None:
@@ -299,12 +473,36 @@ class OptionsPly:
         self.include_normals: bool = None
         self.texture_color_source: ColorSource = None
 
+    def from_json(self, options_json):
+        if "srs" in options_json:
+            self.srs = options_json["srs"]
+        if "samplingStrategy" in options_json:
+            self.sampling_strategy = SamplingStrategy[options_json["samplingStrategy"]]
+        if "samplingDistance" in options_json:
+            self.sampling_distance = options_json["samplingDistance"]
+        if "mergePointClouds" in options_json:
+            self.merge_point_clouds = options_json["mergePointClouds"]
+        if "includeNormals" in options_json:
+            self.include_normals = options_json["includeNormals"]
+        if "textureColorSource" in options_json:
+            self.texture_color_source = ColorSource[options_json["textureColorSource"]]
+
 class OptionsOpc:
     def __init__(self) -> None:
         self.srs: str = None
         self.sampling_strategy: SamplingStrategy = None
         self.sampling_distance: float = None
         self.texture_color_source: ColorSource = None
+
+    def from_json(self, options_json):
+        if "srs" in options_json:
+            self.srs = options_json["srs"]
+        if "samplingStrategy" in options_json:
+            self.sampling_strategy = SamplingStrategy[options_json["samplingStrategy"]]
+        if "samplingDistance" in options_json:
+            self.sampling_distance = options_json["samplingDistance"]
+        if "textureColorSource" in options_json:
+            self.texture_color_source = ColorSource[options_json["textureColorSource"]]
 
 class OptionsOrthoDSM:
     def __init__(self) -> None:
@@ -320,11 +518,44 @@ class OptionsOrthoDSM:
         self.no_data_value: float = None
         self.no_data_transparency: bool = None
 
+    def from_json(self, options_json):
+        if "srs" in options_json:
+            self.srs = options_json["srs"]
+        if "samplingStrategy" in options_json:
+            self.sampling_strategy = SamplingStrategy[options_json["samplingStrategy"]]
+        if "extentFile" in options_json:
+            self.extent_file = options_json["extentFile"]
+        if "projectionMode" in options_json:
+            self.projection_mode = ProjectionMode[options_json["projectionMode"]]
+        if "mergeParts" in options_json:
+            self.merge_parts = options_json["mergeParts"]
+        if "orthoFormat" in options_json:
+            self.ortho_format = OrthoFormat[options_json["orthoFormat"]]
+        if "noDataColor" in options_json:
+            self.no_data_color = options_json["noDataColor"]
+        if "colorSource" in options_json:
+            self.color_source = OrthoColorSource[options_json["colorSource"]]
+        if "dsmFormat" in options_json:
+            self.dsm_format = DSMFormat[options_json["dsmFormat"]]
+        if "noDataValue" in options_json:
+            self.no_data_value = options_json["noDataValue"]
+        if "noDataTransparency" in options_json:
+            self.no_data_transparency = options_json["noDataTransparency"]
+
+
 class OptionsTouchup:
     def __init__(self) -> None:
         self.format: TouchupFormat = None
         self.texture_color_source: ColorSource = None
         self.maximum_texture_size: int = None
+
+    def from_json(self, options_json):
+        if "format" in options_json:
+            self.format = TouchupFormat[options_json["format"]]
+        if "textureColorSource" in options_json:
+            self.texture_color_source = ColorSource[options_json["textureColorSource"]]
+        if "maximumTextureSize" in options_json:
+            self.maximum_texture_size = options_json["maximumTextureSize"]
 
 
 class Export:
@@ -351,7 +582,7 @@ class Export:
         self.options_ply: OptionsPly = OptionsPly()
         self.options_opc: OptionsOpc = OptionsOpc()
 
-        self.options_opc: OptionsOrthoDSM = OptionsOrthoDSM()
+        self.options_orthodsm: OptionsOrthoDSM = OptionsOrthoDSM()
 
         self.options_touchup: OptionsTouchup = OptionsTouchup()
 
@@ -402,49 +633,133 @@ class ProductionSpecifications:
                 exports = []
                 for exports_json in specifications_json["outputs"]["exports"]:
                     export = Export()
-                    export.export_path = exports_json["path"]
+                    export.export_path = exports_json["exportPath"]
+
                     if exports_json["format"] == "3MX":
                         export.format = Format.ThreeMX
-                    if exports_json["format"] == "3SM":
+                        if "options3MX" in exports_json:
+                            options = Options3MX()
+                            options.from_json(exports_json["options3MX"])
+                            export.options_3mx = options
+                    elif exports_json["format"] == "3SM":
                         export.format = Format.ThreeSM
-                    if exports_json["format"] == "Cesium3DTiles":
+                        if "options3SM" in exports_json:
+                            options = Options3SM()
+                            options.from_json(exports_json["options3SM"])
+                            export.options_3sm = options
+                    elif exports_json["format"] == "Cesium3DTiles":
                         export.format = Format.Cesium3DTiles
-                    if exports_json["format"] == "OSGB":
+                        if "optionsCesium" in exports_json:
+                            options = OptionsCesium()
+                            options.from_json(exports_json["optionsCesium"])
+                            export.options_cesium = options
+                    elif exports_json["format"] == "OSGB":
                         export.format = Format.OSGB
-                    if exports_json["format"] == "SpacEyes":
+                        if "optionsOSGB" in exports_json:
+                            options = OptionsOSGB()
+                            options.from_json(exports_json["optionsOSGB"])
+                            export.options_osgb = options
+                    elif exports_json["format"] == "SpacEyes":
                         export.format = Format.SpacEyes
-                    if exports_json["format"] == "OBJ":
+                        if "optionsSpacEyes" in exports_json:
+                            options = OptionsSpacEyes()
+                            options.from_json(exports_json["optionsSpacEyes"])
+                            export.options_spac_eyes = options
+                    elif exports_json["format"] == "OBJ":
                         export.format = Format.OBJ
-                    if exports_json["format"] == "S3C":
+                        if "optionsObj" in exports_json:
+                            options = OptionsObj()
+                            options.from_json(exports_json["optionsObj"])
+                            export.options_obj = options
+                    elif exports_json["format"] == "S3C":
                         export.format = Format.S3C
-                    if exports_json["format"] == "I3S":
+                        if "optionsS3C" in exports_json:
+                            options = OptionsS3C()
+                            options.from_json(exports_json["optionsS3C"])
+                            export.options_s3c = options
+                    elif exports_json["format"] == "I3S":
                         export.format = Format.I3S
-                    if exports_json["format"] == "LodTree":
+                        if "optionsI3S" in exports_json:
+                            options = OptionsI3S()
+                            options.from_json(exports_json["optionsI3S"])
+                            export.options_i3s = options
+                    elif exports_json["format"] == "LodTree":
                         export.format = Format.LodTree
-                    if exports_json["format"] == "Collada":
+                        if "optionsLodTree" in exports_json:
+                            options = OptionsLodTreeExport()
+                            options.from_json(exports_json["optionsLodTree"])
+                            export.options_lod_tree = options
+                    elif exports_json["format"] == "Collada":
                         export.format = Format.Collada
-                    if exports_json["format"] == "OCP":
+                        if "optionsCollada" in exports_json:
+                            options = OptionsCollada()
+                            options.from_json(exports_json["optionsCollada"])
+                            export.options_collada = options
+                    elif exports_json["format"] == "OCP":
                         export.format = Format.OCP
-                    if exports_json["format"] == "KML":
+                        if "optionsOCP" in exports_json:
+                            options = OptionsOCP()
+                            options.from_json(exports_json["optionsOCP"])
+                            export.options_ocp = options
+                    elif exports_json["format"] == "KML":
                         export.format = Format.KML
-                    if exports_json["format"] == "DGN":
+                        if "optionsKML" in exports_json:
+                            options = OptionsKML()
+                            options.from_json(exports_json["optionsKML"])
+                            export.options_kml = options
+                    elif exports_json["format"] == "DGN":
                         export.format = Format.DGN
-                    if exports_json["format"] == "SuperMap":
+                        if "optionsDGN" in exports_json:
+                            options = OptionsDGN()
+                            options.from_json(exports_json["optionsDGN"])
+                            export.options_dgn = options
+                    elif exports_json["format"] == "SuperMap":
                         export.format = Format.SuperMap
-                    if exports_json["format"] == "Las":
+                        if "optionsSuperMap" in exports_json:
+                            options = OptionsSuperMap()
+                            options.from_json(exports_json["optionsSuperMap"])
+                            export.options_supermap = options
+                    elif exports_json["format"] == "Las":
                         export.format = Format.Las
-                    if exports_json["format"] == "POD":
+                        if "optionsLas" in exports_json:
+                            options = OptionsLas()
+                            options.from_json(exports_json["optionsLas"])
+                            export.options_las = options
+                    elif exports_json["format"] == "POD":
                         export.format = Format.POD
-                    if exports_json["format"] == "Ply":
+                        if "optionsPod" in exports_json:
+                            options = OptionsPod()
+                            options.from_json(exports_json["optionsPod"])
+                            export.options_pod = options
+                    elif exports_json["format"] == "Ply":
                         export.format = Format.Ply
-                    if exports_json["format"] == "OPC":
+                        if "optionsPly" in exports_json:
+                            options = OptionsPly()
+                            options.from_json(exports_json["optionsPly"])
+                            export.options_ply = options
+                    elif exports_json["format"] == "OPC":
                         export.format = Format.OPC
-                    if exports_json["format"] == "OrthophotoDSM":
+                        if "optionsOpc" in exports_json:
+                            options = OptionsOpc()
+                            options.from_json(exports_json["optionsOpc"])
+                            export.options_opc = options
+                    elif exports_json["format"] == "OrthophotoDSM":
                         export.format = Format.OrthophotoDSM
-                    if exports_json["format"] == "Touchup":
+                        if "optionsOrthoDSM" in exports_json:
+                            options = OptionsOrthoDSM()
+                            options.from_json(exports_json["optionsOrthoDSM"])
+                            export.options_orthodsm = options
+                    elif exports_json["format"] == "Touchup":
                         export.format = Format.Touchup
+                        if "optionsTouchup" in exports_json:
+                            options = OptionsTouchup()
+                            options.from_json(exports_json["optionsTouchup"])
+                            export.options_touchup = options
                     exports.append(export)
                 specifications.outputs.exports = exports
+
+            if "workspace" in specifications_json["options"]:
+                specifications.options.workspace = specifications_json["options"]["workspace"]
 
         except Exception as e:
             return ReturnValue(value=specifications, error=str(e))
