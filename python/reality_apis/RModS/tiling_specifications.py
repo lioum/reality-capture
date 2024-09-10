@@ -108,6 +108,7 @@ class TilingSpecifications:
     class Inputs:
         def __init__(self) -> None:
             self.scene: str = ""
+            self.region_of_interest: str = None
             self.preset: str = None
 
     class Outputs:
@@ -132,6 +133,8 @@ class TilingSpecifications:
         specifications = TilingSpecifications()
         try:
             specifications.inputs.scene = specifications_json["inputs"]["scene"]
+            if "regionOfInterest" in specifications_json["inputs"]:
+                specifications.inputs.region_of_interest = specifications_json["inputs"]["regionOfInterest"]
             if "preset" in specifications_json["inputs"]:
                 specifications.inputs.preset = specifications_json["inputs"]["preset"]
 
