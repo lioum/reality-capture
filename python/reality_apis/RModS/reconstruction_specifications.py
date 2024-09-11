@@ -63,8 +63,9 @@ class ReconstructionSpecifications:
                 reference_model.reference_model_path = specifications_json["outputs"]["referenceModel"]["path"]
                 specifications.outputs.reference_model = reference_model
 
-            if "workspace" in specifications_json["options"]:
-                specifications.options.workspace = specifications_json["options"]["workspace"]
+            if "options" in specifications_json:
+                if "workspace" in specifications_json["options"]:
+                    specifications.options.workspace = specifications_json["options"]["workspace"]
 
         except Exception as e:
             return ReturnValue(value=specifications, error=str(e))

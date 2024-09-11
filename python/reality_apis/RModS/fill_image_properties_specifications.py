@@ -69,10 +69,11 @@ class FillImagePropertiesSpecifications:
             if "scene" in specifications_json["outputs"]:
                 specifications.outputs.scene = specifications_json["outputs"]["scene"]
 
-            if "recursiveImageCollections" in specifications_json["options"]:
-                specifications.options.recursive_image_collections = specifications_json["options"]["recursiveImageCollections"]
-            if "altitudeReference" in specifications_json["options"]:
-                specifications.options.altitude_reference = AltitudeReference[specifications_json["options"]["altitudeReference"]]
+            if "options" in specifications_json:
+                if "recursiveImageCollections" in specifications_json["options"]:
+                    specifications.options.recursive_image_collections = specifications_json["options"]["recursiveImageCollections"]
+                if "altitudeReference" in specifications_json["options"]:
+                    specifications.options.altitude_reference = AltitudeReference[specifications_json["options"]["altitudeReference"]]
 
         except Exception as e:
             return ReturnValue(value=specifications, error=str(e))

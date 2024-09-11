@@ -761,8 +761,9 @@ class ProductionSpecifications:
             if "exports" in specifications_json["outputs"]:
                 specifications.outputs.exports = _export_options_from_json_file(specifications_json)
 
-            if "workspace" in specifications_json["options"]:
-                specifications.options.workspace = specifications_json["options"]["workspace"]
+            if "options" in specifications_json:
+                if "workspace" in specifications_json["options"]:
+                    specifications.options.workspace = specifications_json["options"]["workspace"]
 
         except Exception as e:
             return ReturnValue(value=specifications, error=str(e))

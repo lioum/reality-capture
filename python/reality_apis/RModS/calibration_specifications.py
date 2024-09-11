@@ -196,60 +196,61 @@ class CalibrationSpecifications:
             if "splats" in specifications_json["outputs"]:
                 specifications.outputs.splats = specifications_json["outputs"]["splats"]
 
-            if "rigSynchro" in specifications_json["options"]:
-                specifications.options.rig_synchro = RigSynchro[specifications_json["options"]["rigSynchro"]]
-            if "rotationPolicy" in specifications_json["options"]:
-                specifications.options.rotation_policy = RotationPolicy[specifications_json["options"]["rotationPolicy"]]
-            if "centerPolicy" in specifications_json["options"]:
-                specifications.options.center_policy = CenterPolicy[specifications_json["options"]["centerPolicy"]]
-            if "centerTolerance" in specifications_json["options"]:
-                specifications.options.center_tolerance = specifications_json["options"]["centerTolerance"]
-            if "focalPolicy" in specifications_json["options"]:
-                specifications.options.focal_policy = FocalPolicy[specifications_json["options"]["focalPolicy"]]
-            if "principalPolicy" in specifications_json["options"]:
-                specifications.options.principal_policy = PrincipalPolicy[specifications_json["options"]["principalPolicy"]]
-            if "radialPolicy" in specifications_json["options"]:
-                specifications.options.radial_policy = RadialPolicy[specifications_json["options"]["radialPolicy"]]
-            if "tangentialPolicy" in specifications_json["options"]:
-                specifications.options.tangential_policy = TangentialPolicy[specifications_json["options"]["tangentialPolicy"]]
-            if "fisheyeFocalPolicy" in specifications_json["options"]:
-                specifications.options.fisheye_focal_policy = FisheyeFocalPolicy[specifications_json["options"]["fisheyeFocalPolicy"]]
-            if "fisheyeDistortionPolicy" in specifications_json["options"]:
-                specifications.options.fisheye_distortion_policy = FisheyeDistortionPolicy[specifications_json["options"]["fisheyeDistortionPolicy"]]
-            if "aspectRatioPolicy" in specifications_json["options"]:
-                specifications.options.aspect_ratio_policy = AspectRatioPolicy[specifications_json["options"]["aspectRatioPolicy"]]
-            if "skewPolicy" in specifications_json["options"]:
-                specifications.options.skew_policy = SkewPolicy[specifications_json["options"]["skewPolicy"]]
-            if "tiepointsPolicy" in specifications_json["options"]:
-                specifications.options.tiepoints_policy = TiepointsPolicy[specifications_json["options"]["tiepointsPolicy"]]
-            if "pairSelection" in specifications_json["options"]:
-                specifications.options.pair_selection = PairSelection[specifications_json["options"]["pairSelection"]]
-            if "pairSelectionDistance" in specifications_json["options"]:
-                specifications.options.pair_selection_distance = specifications_json["options"]["pairSelectionDistance"]
-            if "keypointsDensity" in specifications_json["options"]:
-                specifications.options.keypoints_density = KeypointsDensity[specifications_json["options"]["keypointsDensity"]]
-            if "precalibration" in specifications_json["options"]:
-                specifications.options.precalibration = specifications_json["options"]["precalibration"]
-            if "tagsExtraction" in specifications_json["options"]:
-                tag_list = []
-                for tag in specifications_json["options"]["tagsExtraction"]:
-                    tag_list.append(Tag[tag])
-                specifications.options.tags_extraction = tag_list
-            if "colorEqualization" in specifications_json["options"]:
-                specifications.options.color_equalization = ColorEqualization[specifications_json["options"]["colorEqualization"]]
-            if "adjustmentConstraints" in specifications_json["options"]:
-                adjustment_list = []
-                for adjustment in specifications_json["options"]["adjustmentConstraints"]:
-                    adjustment_list.append(AdjustmentConstraints[adjustment])
-                specifications.options.adjustment_constraints = adjustment_list
-            if "rigidRegistrationPosition" in specifications_json["options"]:
-                specifications.options.rigid_registration_position = RigidRegistrationPosition[specifications_json["options"]["rigidRegistrationPosition"]]
-            if "rigidRegistrationRotation" in specifications_json["options"]:
-                specifications.options.rigid_registration_rotation = RigidRegistrationRotation[specifications_json["options"]["rigidRegistrationRotation"]]
-            if "rigidRegistrationScale" in specifications_json["options"]:
-                specifications.options.rigid_registration_scale = RigidRegistrationScale[specifications_json["options"]["rigidRegistrationScale"]]
-            if "workspace" in specifications_json["options"]:
-                specifications.options.workspace = specifications_json["options"]["workspace"]
+            if "options" in specifications_json:
+                if "rigSynchro" in specifications_json["options"]:
+                    specifications.options.rig_synchro = RigSynchro[specifications_json["options"]["rigSynchro"]]
+                if "rotationPolicy" in specifications_json["options"]:
+                    specifications.options.rotation_policy = RotationPolicy[specifications_json["options"]["rotationPolicy"]]
+                if "centerPolicy" in specifications_json["options"]:
+                    specifications.options.center_policy = CenterPolicy[specifications_json["options"]["centerPolicy"]]
+                if "centerTolerance" in specifications_json["options"]:
+                    specifications.options.center_tolerance = specifications_json["options"]["centerTolerance"]
+                if "focalPolicy" in specifications_json["options"]:
+                    specifications.options.focal_policy = FocalPolicy[specifications_json["options"]["focalPolicy"]]
+                if "principalPolicy" in specifications_json["options"]:
+                    specifications.options.principal_policy = PrincipalPolicy[specifications_json["options"]["principalPolicy"]]
+                if "radialPolicy" in specifications_json["options"]:
+                    specifications.options.radial_policy = RadialPolicy[specifications_json["options"]["radialPolicy"]]
+                if "tangentialPolicy" in specifications_json["options"]:
+                    specifications.options.tangential_policy = TangentialPolicy[specifications_json["options"]["tangentialPolicy"]]
+                if "fisheyeFocalPolicy" in specifications_json["options"]:
+                    specifications.options.fisheye_focal_policy = FisheyeFocalPolicy[specifications_json["options"]["fisheyeFocalPolicy"]]
+                if "fisheyeDistortionPolicy" in specifications_json["options"]:
+                    specifications.options.fisheye_distortion_policy = FisheyeDistortionPolicy[specifications_json["options"]["fisheyeDistortionPolicy"]]
+                if "aspectRatioPolicy" in specifications_json["options"]:
+                    specifications.options.aspect_ratio_policy = AspectRatioPolicy[specifications_json["options"]["aspectRatioPolicy"]]
+                if "skewPolicy" in specifications_json["options"]:
+                    specifications.options.skew_policy = SkewPolicy[specifications_json["options"]["skewPolicy"]]
+                if "tiepointsPolicy" in specifications_json["options"]:
+                    specifications.options.tiepoints_policy = TiepointsPolicy[specifications_json["options"]["tiepointsPolicy"]]
+                if "pairSelection" in specifications_json["options"]:
+                    specifications.options.pair_selection = PairSelection[specifications_json["options"]["pairSelection"]]
+                if "pairSelectionDistance" in specifications_json["options"]:
+                    specifications.options.pair_selection_distance = specifications_json["options"]["pairSelectionDistance"]
+                if "keypointsDensity" in specifications_json["options"]:
+                    specifications.options.keypoints_density = KeypointsDensity[specifications_json["options"]["keypointsDensity"]]
+                if "precalibration" in specifications_json["options"]:
+                    specifications.options.precalibration = specifications_json["options"]["precalibration"]
+                if "tagsExtraction" in specifications_json["options"]:
+                    tag_list = []
+                    for tag in specifications_json["options"]["tagsExtraction"]:
+                        tag_list.append(Tag[tag])
+                    specifications.options.tags_extraction = tag_list
+                if "colorEqualization" in specifications_json["options"]:
+                    specifications.options.color_equalization = ColorEqualization[specifications_json["options"]["colorEqualization"]]
+                if "adjustmentConstraints" in specifications_json["options"]:
+                    adjustment_list = []
+                    for adjustment in specifications_json["options"]["adjustmentConstraints"]:
+                        adjustment_list.append(AdjustmentConstraints[adjustment])
+                    specifications.options.adjustment_constraints = adjustment_list
+                if "rigidRegistrationPosition" in specifications_json["options"]:
+                    specifications.options.rigid_registration_position = RigidRegistrationPosition[specifications_json["options"]["rigidRegistrationPosition"]]
+                if "rigidRegistrationRotation" in specifications_json["options"]:
+                    specifications.options.rigid_registration_rotation = RigidRegistrationRotation[specifications_json["options"]["rigidRegistrationRotation"]]
+                if "rigidRegistrationScale" in specifications_json["options"]:
+                    specifications.options.rigid_registration_scale = RigidRegistrationScale[specifications_json["options"]["rigidRegistrationScale"]]
+                if "workspace" in specifications_json["options"]:
+                    specifications.options.workspace = specifications_json["options"]["workspace"]
 
         except Exception as e:
             return ReturnValue(value=specifications, error=str(e))
