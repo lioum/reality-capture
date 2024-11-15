@@ -751,15 +751,12 @@ class ProductionSpecifications:
 
         specifications = ProductionSpecifications()
         try:
-            if "scene" in specifications_json["inputs"]:
-                specifications.inputs.scene = specifications_json["inputs"]["scene"]
-            if "referenceModel" in specifications_json["inputs"]:
-                specifications.inputs.reference_model = specifications_json["inputs"]["referenceModel"]
+            specifications.inputs.scene = specifications_json["inputs"]["scene"]
+            specifications.inputs.reference_model = specifications_json["inputs"]["referenceModel"]
             if "preset" in specifications_json["inputs"]:
                 specifications.inputs.preset = specifications_json["inputs"]["preset"]
 
-            if "exports" in specifications_json["outputs"]:
-                specifications.outputs.exports = _export_options_from_json_file(specifications_json)
+            specifications.outputs.exports = _export_options_from_json_file(specifications_json)
 
             if "options" in specifications_json:
                 if "workspace" in specifications_json["options"]:

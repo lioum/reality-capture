@@ -29,7 +29,7 @@ class ReconstructionSpecifications:
 
     class Outputs:
         def __init__(self) -> None:
-            self.exports: list[Export] = []
+            self.exports: list[Export] = None
             self.reference_model: ReferenceModel = None
 
     class Options:
@@ -49,10 +49,8 @@ class ReconstructionSpecifications:
 
         specifications = ReconstructionSpecifications()
         try:
-            if "scene" in specifications_json["inputs"]:
-                specifications.inputs.scene = specifications_json["inputs"]["scene"]
-            if "referenceModel" in specifications_json["inputs"]:
-                specifications.inputs.reference_model = specifications_json["inputs"]["referenceModel"]
+            specifications.inputs.scene = specifications_json["inputs"]["scene"]
+            specifications.inputs.reference_model = specifications_json["inputs"]["referenceModel"]
             if "preset" in specifications_json["inputs"]:
                 specifications.inputs.preset = specifications_json["inputs"]["preset"]
 

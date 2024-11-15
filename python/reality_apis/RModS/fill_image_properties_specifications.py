@@ -26,14 +26,14 @@ class FillImagePropertiesSpecifications:
 
     class Inputs:
         def __init__(self) -> None:
-            self.image_collections: [str] = []
+            self.image_collections: [str] = None
             self.scene_to_process: str = None
             self.scene_to_complete: str = None
             self.preset: str = None
 
     class Outputs:
         def __init__(self) -> None:
-            self.scene: str = None
+            self.scene: str = ""
 
     class Options:
         def __init__(self) -> None:
@@ -66,8 +66,7 @@ class FillImagePropertiesSpecifications:
             if "preset" in specifications_json["inputs"]:
                 specifications.inputs.preset = specifications_json["inputs"]["preset"]
 
-            if "scene" in specifications_json["outputs"]:
-                specifications.outputs.scene = specifications_json["outputs"]["scene"]
+            specifications.outputs.scene = specifications_json["outputs"]["scene"]
 
             if "options" in specifications_json:
                 if "recursiveImageCollections" in specifications_json["options"]:
