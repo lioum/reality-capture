@@ -2,6 +2,8 @@
 # See LICENSE.md in the project root for license terms and full copyright notice.
 
 from __future__ import annotations
+from typing import List
+from enum import Enum
 
 from reality_apis.utils import ReturnValue
 
@@ -16,7 +18,7 @@ class Level(Enum):
     Geometry = 0
     GeometryAndTexture = 1
 
-class TouchupExportSpecifications:
+class TouchUpExportSpecifications:
     def __init__(self) -> None:
         self.inputs = self.Inputs()
         self.outputs = self.Outputs()
@@ -41,17 +43,17 @@ class TouchupExportSpecifications:
             self.srs: str = None
 
     @classmethod
-    def from_json_file(cls, json_file: str) -> ReturnValue[TouchupExportSpecifications]:
+    def from_json_file(cls, json_file: str) -> ReturnValue[TouchUpExportSpecifications]:
         if not os.path.isfile(json_file):
-            return ReturnValue(value=TouchupExportSpecifications(), error="File not found: " + json_file)
+            return ReturnValue(value=TouchUpExportSpecifications(), error="File not found: " + json_file)
         try:
             with open(json_file, encoding='utf-8') as f:
                 specifications_json = json.load(f)
         except Exception as e:
-            return ReturnValue(value=TouchupExportSpecifications(),
+            return ReturnValue(value=TouchUpExportSpecifications(),
                                error=f"Failed to load specifications {json_file}: {e}")
 
-        specifications = TouchupExportSpecifications()
+        specifications = TouchUpExportSpecifications()
 
         try:
             specifications.inputs.reference_model = specifications_json["inputs"]["referenceModel"]

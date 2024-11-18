@@ -50,7 +50,8 @@ class ReconstructionSpecifications:
         specifications = ReconstructionSpecifications()
         try:
             specifications.inputs.scene = specifications_json["inputs"]["scene"]
-            specifications.inputs.reference_model = specifications_json["inputs"]["referenceModel"]
+            if "referenceModel" in specifications_json["inputs"]:
+                specifications.inputs.reference_model = specifications_json["inputs"]["referenceModel"]
             if "preset" in specifications_json["inputs"]:
                 specifications.inputs.preset = specifications_json["inputs"]["preset"]
 
