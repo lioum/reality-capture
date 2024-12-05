@@ -20,5 +20,6 @@ import reality_apis.RModS.fill_image_properties_specifications
 import reality_apis.RModS.import_pc_specifications
 import reality_apis.RModS.utils
 import reality_apis.RModS.touchup_export_specifications
+import reality_apis.RModS.touchup_import_specifications
 import reality_apis.utils
 import reality_apis.iTwins.itwins

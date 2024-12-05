@@ -2,7 +2,6 @@
 # See LICENSE.md in the project root for license terms and full copyright notice.
 
 from __future__ import annotations
-from typing import List
 from enum import Enum
 
 from reality_apis.utils import ReturnValue
@@ -58,7 +57,8 @@ class TouchUpExportSpecifications:
         try:
             specifications.inputs.reference_model = specifications_json["inputs"]["referenceModel"]
             if "tilesToTouchUp" in specifications_json["inputs"]:
-                specifications.inputs.tiles_to_touchup = specifications_json["inputs"]["tilesToTouchUp"]
+                for tile in specifications_json["inputs"]["tilesToTouchUp"]:
+                    specifications.inputs.tiles_to_touchup.append(tile)
 
             specifications.outputs.touchup_data = specifications_json["outputs"]["touchUpData"]
 
