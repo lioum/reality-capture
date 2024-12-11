@@ -23,6 +23,7 @@ class ImportPCSpecifications:
     class Outputs:
         def __init__(self) -> None:
             self.scan_collection: str = ""
+            self.scene: str = None
 
     @classmethod
     def from_json_file(cls, json_file: str) -> ReturnValue[ImportPCSpecifications]:
@@ -41,6 +42,8 @@ class ImportPCSpecifications:
             specifications.inputs.scene = specifications_json["inputs"]["scene"]
 
             specifications.outputs.scan_collection = specifications_json["outputs"]["scanCollection"]
+            if "scene" in specifications_json["outputs"]:
+                specifications.outputs.scene = specifications_json["outputs"]["scene"]
 
         except Exception as e:
             return ReturnValue(value=specifications, error=str(e))
