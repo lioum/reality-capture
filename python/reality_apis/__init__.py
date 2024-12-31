@@ -22,5 +22,6 @@ import reality_apis.RModS.utils
 import reality_apis.RModS.touchup_export_specifications
 import reality_apis.RModS.touchup_import_specifications
 import reality_apis.RModS.modify_constraints_specifications
+import reality_apis.RModS.water_constraints_specifications
 import reality_apis.utils
 import reality_apis.iTwins.itwins
