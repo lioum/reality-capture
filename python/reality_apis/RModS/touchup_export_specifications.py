@@ -64,9 +64,9 @@ class TouchUpExportSpecifications:
 
             if "options" in specifications_json:
                 if "format" in specifications_json["options"]:
-                    specifications.options.format = specifications_json["options"]["format"]
+                    specifications.options.format = TouchFormat[specifications_json["options"]["format"]]
                 if "level" in specifications_json["options"]:
-                    specifications.options.level = specifications_json["options"]["level"]
+                    specifications.options.level = Level[specifications_json["options"]["level"]]
                 if "srs" in specifications_json["options"]:
                     specifications.options.srs = specifications_json["options"]["srs"]
 

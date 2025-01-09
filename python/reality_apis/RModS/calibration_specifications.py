@@ -133,7 +133,7 @@ class CalibrationSpecifications:
 
     class Inputs:
         def __init__(self) -> None:
-            self.scene: str = None
+            self.scene: str = ""
             self.preset: str = None
 
     class Outputs:
