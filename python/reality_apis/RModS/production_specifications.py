@@ -30,7 +30,6 @@ class Format(Enum):
     Ply = 16
     OPC = 17
     OrthophotoDSM = 18
-    Touchup = 19
 
 class ColorSource(Enum):
     Visible = 0
@@ -91,10 +90,6 @@ class OrthoColorSource(Enum):
     OptimizedComputationVisible = 1
     Reference3dModelThermal = 2
     OptimizedComputationThermal = 3
-
-class TouchupFormat(Enum):
-    OBJ = 0
-    DGN = 1
 
 
 def _texture_color_source_from_json(options, options_json):
@@ -231,12 +226,6 @@ def _export_options_from_json_file(specifications_json):
                 options = OptionsOrthoDSM()
                 options.from_json(exports_json["optionsOrthoDSM"])
                 export.options_orthodsm = options
-        elif exports_json["format"] == "Touchup":
-            export.format = Format.Touchup
-            if "optionsTouchup" in exports_json:
-                options = OptionsTouchup()
-                options.from_json(exports_json["optionsTouchup"])
-                export.options_touchup = options
         exports.append(export)
     return exports
 
@@ -672,21 +661,6 @@ class OptionsOrthoDSM:
             self.no_data_transparency = options_json["noDataTransparency"]
 
 
-class OptionsTouchup:
-    def __init__(self) -> None:
-        self.format: TouchupFormat = None
-        self.texture_color_source: ColorSource = None
-        self.maximum_texture_size: int = None
-
-    def from_json(self, options_json):
-        if "format" in options_json:
-            self.format = TouchupFormat[options_json["format"]]
-        if "textureColorSource" in options_json:
-            self.texture_color_source = ColorSource[options_json["textureColorSource"]]
-        if "maximumTextureSize" in options_json:
-            self.maximum_texture_size = options_json["maximumTextureSize"]
-
-
 class Export:
     def __init__(self) -> None:
         self.format: Format = None
@@ -712,8 +686,6 @@ class Export:
         self.options_opc: OptionsOpc = OptionsOpc()
 
         self.options_orthodsm: OptionsOrthoDSM = OptionsOrthoDSM()
-
-        self.options_touchup: OptionsTouchup = OptionsTouchup()
 
 class ProductionSpecifications:
     def __init__(self) -> None:
