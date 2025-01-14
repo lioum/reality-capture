@@ -824,6 +824,8 @@ class S3DSpecifications:
             json_dict["options"]["saveConfidence"] = "true"
         if self.options.export_srs:
             json_dict["options"]["exportSrs"] = self.options.export_srs
+        if self.options.keep_input_resolution:
+            json_dict["options"]["keepInputResolution"] = "true"
 
         return json_dict
 
@@ -952,6 +954,8 @@ class S3DSpecifications:
                     )
                 if "exportSrs" in options:
                     new_job_specifications.options.export_srs = options["exportSrs"]
+                if "keepInputResolution" in options:
+                    new_job_specifications.options.keep_input_resolution = bool(options["keepInputResolution"])
         except (KeyError, TypeError) as e:
             return ReturnValue(value=cls(), error=str(e))
         return ReturnValue(value=new_job_specifications, error="")
@@ -1005,6 +1009,7 @@ class S3DSpecifications:
                 specifications.options.compute_line_width = specifications_json["options"].get("computeLineWidth", None)
                 specifications.options.remove_small_components = specifications_json["options"].get("removeSmallComponents", None)
                 specifications.options.save_confidence = specifications_json["options"].get("saveConfidence", None)
+                specifications.options.keep_input_resolution = specifications_json["options"].get("keepInputResolution", None)
         except Exception as e:
             return ReturnValue(value=specifications, error=str(e))
         return ReturnValue(value=specifications, error="")
@@ -1086,6 +1091,7 @@ class S3DSpecifications:
             compute_line_width: Estimation 3D line width at each vertex.
             remove_small_components: Remove 3D lines with total length smaller than this value.
             export_srs: SRS used by exports.
+            keep_input_resolution: To have the exact same points in segmentation result.
         """
 
         def __init__(self) -> None:
@@ -1093,6 +1099,7 @@ class S3DSpecifications:
             self.compute_line_width: bool = False
             self.remove_small_components: float = 0.0
             self.export_srs: str = ""
+            self.keep_input_resolution: bool = False
 
 
 class ChangeDetectionSpecifications:
