@@ -1534,15 +1534,15 @@ class ExtractGroundSpecifications:
         def __init__(self) -> None:
             self.srs: str = ""
 
-class EvalS2DJobSettings:
+class EvalS2DSpecifications:
     """
-    Settings for Segmentation 2D jobs.
+    Specifications for Eval Segmentation 2D jobs.
 
     Attributes:
-        type: Type of job settings.
+        type: Type of job specifications.
         inputs: Possible inputs for this job. Should be the ids of the inputs in the cloud.
         outputs: Possible outputs for this job. Fill the outputs you want for the job with a string (normally the name
-            of the output) before passing the settings to create_job.
+            of the output) before passing the specifications to create_job.
         options: Possible options for this job.
     """
 
@@ -1554,10 +1554,10 @@ class EvalS2DJobSettings:
 
     def to_json(self) -> dict:
         """
-        Transform settings into a dictionary compatible with json.
+        Transform specifications into a dictionary compatible with json.
 
         Returns:
-            Dictionary with settings values.
+            Dictionary with specifications values.
         """
         json_dict = dict()
         json_dict["inputs"] = list()
@@ -1579,7 +1579,7 @@ class EvalS2DJobSettings:
         )
         json_dict["outputs"].append(
             {
-                "segmentedPhotos": self.outputs.segmentedPhotos
+                "segmentedPhotos": self.outputs.segmented_photos
             }
         )
         json_dict["outputs"].append(
@@ -1590,37 +1590,33 @@ class EvalS2DJobSettings:
         return json_dict
 
     @classmethod
-    def from_json(cls, settings_json: dict) -> ReturnValue[EvalS2DJobSettings]:
+    def from_json(cls, specifications_json: dict) -> ReturnValue[EvalS2DSpecifications]:
         """
-        Transform json received from cloud service into settings.
+        Transform json received from cloud service into specifications.
 
         Args:
-            settings_json: Dictionary with settings received from cloud service.
+            specifications_json: Dictionary with specifications received from cloud service.
         Returns:
-            New settings.
+            New specifications.
         """
-        new_job_settings = cls()
+        new_job_specifications = cls()
         try:
-            new_job_settings.inputs.reference = settings_json["inputs"]["reference"]
-            new_job_settings.inputs.prediction = settings_json["inputs"]["prediction"]
-            new_job_settings.outputs.report = settings_json["outputs"]["report"]
-            new_job_settings.outputs.segmentedPhotos = settings_json["outputs"]["segmentedPhotos"]
-            new_job_settings.outputs.segmentation2d = settings_json["outputs"][
-                "segmentation2D"]
+            new_job_specifications.inputs.reference = specifications_json["inputs"]["reference"]
+            new_job_specifications.inputs.prediction = specifications_json["inputs"]["prediction"]
+            new_job_specifications.outputs.report = specifications_json["outputs"]["report"]
+            new_job_specifications.outputs.segmented_photos = specifications_json["outputs"]["segmentedPhotos"]
+            new_job_specifications.outputs.segmentation2d = specifications_json["outputs"]["segmentation2D"]
         except (TypeError, KeyError) as e:
             return ReturnValue(value=cls(), error=str(e))
-        return ReturnValue(value=new_job_settings, error="")
+        return ReturnValue(value=new_job_specifications, error="")
 
     class Inputs:
         """
-        Possible inputs for a Segmentation 2D job.
+        Possible inputs for an Eval Segmentation 2D job.
 
         Attributes:
-            photos: Path to ContextScene with photos to analyze.
-            photo_segmentation_detector: Path to photo segmentation detector to apply.
-            point_clouds: Collection of point clouds.
-            meshes: Collection of meshes.
-            segmentation2D: Given 2D segmentation.
+            prediction: TO DOCUMENT.
+            reference: TO DOCUMENT.
 
         """
 
@@ -1630,44 +1626,37 @@ class EvalS2DJobSettings:
 
     class Outputs:
         """
-        Possible outputs for a Segmentation 2D job.
+        Possible outputs for an EvalSegmentation 2D job.
 
         Attributes:
-            segmentation2D: Segmented photos.
-            segmented_photos: ContextScene pointing to segmented photos.
-            lines3D: Detected 3D lines.
-            lines3d_as_dgn: DGN file export with 3D lines.
-            lines3D_cesium: Cesium 3D Tiles file export with 3D lines.
-            polygons3D: Detected polygons.
-            polygons3d_as_dgn: DGN file export with polygons.
-            polygons3D_cesium: Cesium 3D Tiles file export with 3D polygons.
+            segmentation2d: TO DOCUMENT.
+            segmented_photos: TO DOCUMENT.
+            report: TO DOCUMENT.
 
         """
 
         def __init__(self) -> None:
             self.report: str = ""
-            self.segmentedPhotos: str = ""
+            self.segmented_photos: str = ""
             self.segmentation2d: str = ""
 
     class Options:
         """
-        Possible options for a Segmentation 2D job.
+        Possible options for an Eval Segmentation 2D job.
 
         Attributes:
-            compute_line_width: Estimation 3D line width at each vertex.
-            remove_small_components: Remove 3D lines with total length smaller than this value.
-            export_srs: SRS used by exports.
-            min_photos: minimum number of photos with a same class for a 3D point to have its class set
         """
-class EvalSOrthoJobSettings:
+        pass
+    
+class EvalSOrthoSpecifications:
     """
-    Settings for Segmentation 2D jobs.
+    Specifications for Eval Ortho Segmentation jobs.
 
     Attributes:
-        type: Type of job settings.
+        type: Type of job specifications.
         inputs: Possible inputs for this job. Should be the ids of the inputs in the cloud.
         outputs: Possible outputs for this job. Fill the outputs you want for the job with a string (normally the name
-            of the output) before passing the settings to create_job.
+            of the output) before passing the specifications to create_job.
         options: Possible options for this job.
     """
 
@@ -1679,10 +1668,10 @@ class EvalSOrthoJobSettings:
 
     def to_json(self) -> dict:
         """
-        Transform settings into a dictionary compatible with json.
+        Transform specifications into a dictionary compatible with json.
 
         Returns:
-            Dictionary with settings values.
+            Dictionary with specifications values.
         """
         json_dict = dict()
         json_dict["inputs"] = list()
@@ -1704,7 +1693,7 @@ class EvalSOrthoJobSettings:
         )
         json_dict["outputs"].append(
             {
-                "segmentedPhotos": self.outputs.segmentedPhotos
+                "segmentedPhotos": self.outputs.segmented_photos
             }
         )
         json_dict["outputs"].append(
@@ -1715,37 +1704,33 @@ class EvalSOrthoJobSettings:
         return json_dict
 
     @classmethod
-    def from_json(cls, settings_json: dict) -> ReturnValue[EvalSOrthoJobSettings]:
+    def from_json(cls, specifications_json: dict) -> ReturnValue[EvalSOrthoSpecifications]:
         """
-        Transform json received from cloud service into settings.
+        Transform json received from cloud service into specifications.
 
         Args:
-            settings_json: Dictionary with settings received from cloud service.
+            specifications_json: Dictionary with specifications received from cloud service.
         Returns:
-            New settings.
+            New specifications.
         """
-        new_job_settings = cls()
+        new_job_specifications = cls()
         try:
-            new_job_settings.inputs.reference = settings_json["inputs"]["reference"]
-            new_job_settings.inputs.prediction = settings_json["inputs"]["prediction"]
-            new_job_settings.outputs.report = settings_json["outputs"]["report"]
-            new_job_settings.outputs.segmentedPhotos = settings_json["outputs"]["segmentedPhotos"]
-            new_job_settings.outputs.segmentation2d = settings_json["outputs"][
-                "segmentation2D"]
+            new_job_specifications.inputs.reference = specifications_json["inputs"]["reference"]
+            new_job_specifications.inputs.prediction = specifications_json["inputs"]["prediction"]
+            new_job_specifications.outputs.report = specifications_json["outputs"]["report"]
+            new_job_specifications.outputs.segmented_photos = specifications_json["outputs"]["segmentedPhotos"]
+            new_job_specifications.outputs.segmentation2d = specifications_json["outputs"]["segmentation2D"]
         except (TypeError, KeyError) as e:
             return ReturnValue(value=cls(), error=str(e))
-        return ReturnValue(value=new_job_settings, error="")
+        return ReturnValue(value=new_job_specifications, error="")
 
     class Inputs:
         """
-        Possible inputs for a Segmentation 2D job.
+        Possible inputs for an Eval Ortho Segmentation job.
 
         Attributes:
-            photos: Path to ContextScene with photos to analyze.
-            photo_segmentation_detector: Path to photo segmentation detector to apply.
-            point_clouds: Collection of point clouds.
-            meshes: Collection of meshes.
-            segmentation2D: Given 2D segmentation.
+            prediction: TO DOCUMENT.
+            reference: TO DOCUMENT.
 
         """
 
@@ -1755,23 +1740,18 @@ class EvalSOrthoJobSettings:
 
     class Outputs:
         """
-        Possible outputs for a Segmentation 2D job.
+        Possible outputs for an Eval Ortho Segmentation 2D job.
 
         Attributes:
-            segmentation2D: Segmented photos.
-            segmented_photos: ContextScene pointing to segmented photos.
-            lines3D: Detected 3D lines.
-            lines3d_as_dgn: DGN file export with 3D lines.
-            lines3D_cesium: Cesium 3D Tiles file export with 3D lines.
-            polygons3D: Detected polygons.
-            polygons3d_as_dgn: DGN file export with polygons.
-            polygons3D_cesium: Cesium 3D Tiles file export with 3D polygons.
+            segmentation2d: TO DOCUMENT.
+            segmented_photos: TO DOCUMENT.
+            report: TO DOCUMENT.
 
         """
 
         def __init__(self) -> None:
             self.report: str = ""
-            self.segmentedPhotos: str = ""
+            self.segmented_photos: str = ""
             self.segmentation2d: str = ""
 
     class Options:
@@ -1779,22 +1759,19 @@ class EvalSOrthoJobSettings:
         Possible options for a Segmentation 2D job.
 
         Attributes:
-            compute_line_width: Estimation 3D line width at each vertex.
-            remove_small_components: Remove 3D lines with total length smaller than this value.
-            export_srs: SRS used by exports.
-            min_photos: minimum number of photos with a same class for a 3D point to have its class set
         """
+        pass
 
 
-class EvalO2DJobSettings:
+class EvalO2DSpecifications:
     """
-    Settings for Segmentation 2D jobs.
+    Specifications for Eval Objects 2D jobs.
 
     Attributes:
-        type: Type of job settings.
+        type: Type of job specifications.
         inputs: Possible inputs for this job. Should be the ids of the inputs in the cloud.
         outputs: Possible outputs for this job. Fill the outputs you want for the job with a string (normally the name
-            of the output) before passing the settings to create_job.
+            of the output) before passing the specifications to create_job.
         options: Possible options for this job.
     """
 
@@ -1806,10 +1783,10 @@ class EvalO2DJobSettings:
 
     def to_json(self) -> dict:
         """
-        Transform settings into a dictionary compatible with json.
+        Transform specifications into a dictionary compatible with json.
 
         Returns:
-            Dictionary with settings values.
+            Dictionary with specifications values.
         """
         json_dict = dict()
         json_dict["inputs"] = list()
@@ -1837,35 +1814,32 @@ class EvalO2DJobSettings:
         return json_dict
 
     @classmethod
-    def from_json(cls, settings_json: dict) -> ReturnValue[EvalO2DJobSettings]:
+    def from_json(cls, specifications_json: dict) -> ReturnValue[EvalO2DSpecifications]:
         """
-        Transform json received from cloud service into settings.
+        Transform json received from cloud service into specifications.
 
         Args:
-            settings_json: Dictionary with settings received from cloud service.
+            specifications_json: Dictionary with specifications received from cloud service.
         Returns:
-            New settings.
+            New specifications.
         """
-        new_job_settings = cls()
+        new_job_specifications = cls()
         try:
-            new_job_settings.inputs.reference = settings_json["inputs"]["reference"]
-            new_job_settings.inputs.prediction = settings_json["inputs"]["prediction"]
-            new_job_settings.outputs.report = settings_json["outputs"]["report"]
-            new_job_settings.outputs.segmentation2d = settings_json["outputs"]["objects2D"]
+            new_job_specifications.inputs.reference = specifications_json["inputs"]["reference"]
+            new_job_specifications.inputs.prediction = specifications_json["inputs"]["prediction"]
+            new_job_specifications.outputs.report = specifications_json["outputs"]["report"]
+            new_job_specifications.outputs.objects2D = specifications_json["outputs"]["objects2D"]
         except (TypeError, KeyError) as e:
             return ReturnValue(value=cls(), error=str(e))
-        return ReturnValue(value=new_job_settings, error="")
+        return ReturnValue(value=new_job_specifications, error="")
 
     class Inputs:
         """
-        Possible inputs for a Segmentation 2D job.
+        Possible inputs for an Eval Objects 2D job.
 
         Attributes:
-            photos: Path to ContextScene with photos to analyze.
-            photo_segmentation_detector: Path to photo segmentation detector to apply.
-            point_clouds: Collection of point clouds.
-            meshes: Collection of meshes.
-            segmentation2D: Given 2D segmentation.
+            prediction: TO DOCUMENT.
+            reference: TO DOCUMENT.
 
         """
 
@@ -1875,17 +1849,11 @@ class EvalO2DJobSettings:
 
     class Outputs:
         """
-        Possible outputs for a Segmentation 2D job.
+        Possible outputs for an Eval Objects 2D job.
 
         Attributes:
-            segmentation2D: Segmented photos.
-            segmented_photos: ContextScene pointing to segmented photos.
-            lines3D: Detected 3D lines.
-            lines3d_as_dgn: DGN file export with 3D lines.
-            lines3D_cesium: Cesium 3D Tiles file export with 3D lines.
-            polygons3D: Detected polygons.
-            polygons3d_as_dgn: DGN file export with polygons.
-            polygons3D_cesium: Cesium 3D Tiles file export with 3D polygons.
+            report: TO DOCUMENT.
+            objects2d: TO DOCUMENT.
 
         """
 
@@ -1895,26 +1863,23 @@ class EvalO2DJobSettings:
 
     class Options:
         """
-        Possible options for a Segmentation 2D job.
+        Possible options for an Eval Objects 2D job.
 
         Attributes:
-            compute_line_width: Estimation 3D line width at each vertex.
-            remove_small_components: Remove 3D lines with total length smaller than this value.
-            export_srs: SRS used by exports.
-            min_photos: minimum number of photos with a same class for a 3D point to have its class set
+            threshold_iou: TO DOCUMENT.
         """
         def __init__(self) -> None :
             self.threshold_iou : int = 0
 
-class EvalO3DJobSettings:
+class EvalO3DSpecifications:
     """
-    Settings for Segmentation 3D jobs.
+    Specifications for an Eval Objects 3D jobs.
 
     Attributes:
-        type: Type of job settings.
+        type: Type of job specifications.
         inputs: Possible inputs for this job. Should be the ids of the inputs in the cloud.
         outputs: Possible outputs for this job. Fill the outputs you want for the job with a string (normally the name
-            of the output) before passing the settings to create_job.
+            of the output) before passing the specifications to create_job.
         options: Possible options for this job.
     """
 
@@ -1926,10 +1891,10 @@ class EvalO3DJobSettings:
 
     def to_json(self) -> dict:
         """
-        Transform settings into a dictionary compatible with json.
+        Transform specifications into a dictionary compatible with json.
 
         Returns:
-            Dictionary with settings values.
+            Dictionary with specifications values.
         """
         json_dict = dict()
         json_dict["inputs"] = list()
@@ -1957,35 +1922,32 @@ class EvalO3DJobSettings:
         return json_dict
 
     @classmethod
-    def from_json(cls, settings_json: dict) -> ReturnValue[EvalO3DJobSettings]:
+    def from_json(cls, specifications_json: dict) -> ReturnValue[EvalO3DSpecifications]:
         """
-        Transform json received from cloud service into settings.
+        Transform json received from cloud service into specifications.
 
         Args:
-            settings_json: Dictionary with settings received from cloud service.
+            specifications_json: Dictionary with specifications received from cloud service.
         Returns:
-            New settings.
+            New specifications.
         """
-        new_job_settings = cls()
+        new_job_specifications = cls()
         try:
-            new_job_settings.inputs.reference = settings_json["inputs"]["reference"]
-            new_job_settings.inputs.prediction = settings_json["inputs"]["prediction"]
-            new_job_settings.outputs.report = settings_json["outputs"]["report"]
-            new_job_settings.outputs.segmentation3d = settings_json["outputs"]["objects3D"]
+            new_job_specifications.inputs.reference = specifications_json["inputs"]["reference"]
+            new_job_specifications.inputs.prediction = specifications_json["inputs"]["prediction"]
+            new_job_specifications.outputs.report = specifications_json["outputs"]["report"]
+            new_job_specifications.outputs.objects3D = specifications_json["outputs"]["objects3D"]
         except (TypeError, KeyError) as e:
             return ReturnValue(value=cls(), error=str(e))
-        return ReturnValue(value=new_job_settings, error="")
+        return ReturnValue(value=new_job_specifications, error="")
 
     class Inputs:
         """
-        Possible inputs for a Segmentation 3D job.
+        Possible inputs for an Eval Objects 3D job.
 
         Attributes:
-            photos: Path to ContextScene with photos to analyze.
-            photo_segmentation_detector: Path to photo segmentation detector to apply.
-            point_clouds: Collection of point clouds.
-            meshes: Collection of meshes.
-            segmentation3D: Given 3D segmentation.
+            prediction: TO DOCUMENT.
+            reference: TO DOCUMENT.
 
         """
 
@@ -1995,17 +1957,11 @@ class EvalO3DJobSettings:
 
     class Outputs:
         """
-        Possible outputs for a Segmentation 3D job.
+        Possible outputs for an Eval Objects 3D job.
 
         Attributes:
-            segmentation3D: Segmented photos.
-            segmented_photos: ContextScene pointing to segmented photos.
-            lines3D: Detected 3D lines.
-            lines3d_as_dgn: DGN file export with 3D lines.
-            lines3D_cesium: Cesium 3D Tiles file export with 3D lines.
-            polygons3D: Detected polygons.
-            polygons3d_as_dgn: DGN file export with polygons.
-            polygons3D_cesium: Cesium 3D Tiles file export with 3D polygons.
+            report: TO DOCUMENT.
+            objects3d: TO DOCUMENT.
 
         """
 
@@ -2018,10 +1974,7 @@ class EvalO3DJobSettings:
         Possible options for a Segmentation 3D job.
 
         Attributes:
-            compute_line_width: Estimation 3D line width at each vertex.
-            remove_small_components: Remove 3D lines with total length smaller than this value.
-            export_srs: SRS used by exports.
-            min_photos: minimum number of photos with a same class for a 3D point to have its class set
+            threshold_iou:TO DOCUMENT.
         """
         def __init__(self) -> None :
             self.threshold_iou : int = 0
