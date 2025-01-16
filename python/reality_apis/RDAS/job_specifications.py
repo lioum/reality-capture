@@ -1610,6 +1610,30 @@ class EvalS2DSpecifications:
             return ReturnValue(value=cls(), error=str(e))
         return ReturnValue(value=new_job_specifications, error="")
 
+    @classmethod
+    def from_json_file(cls, json_file: str) -> ReturnValue[EvalS2DSpecifications]:
+        if not os.path.isfile(json_file):
+            return ReturnValue(value=EvalS2DSpecifications(), error="File not found: " + json_file)
+        try:
+            with open(json_file, encoding='utf-8') as f:
+                specifications_json = json.load(f)
+        except Exception as e:
+            return ReturnValue(value=EvalS2DSpecifications(),
+                               error=f"Failed to load specifications {json_file}: {e}")
+
+        specifications = EvalS2DSpecifications()
+        try:
+            specifications.inputs.prediction = specifications_json["inputs"].get("prediction", None)
+            specifications.inputs.reference = specifications_json["inputs"].get("reference", None)
+
+            specifications.outputs.report = specifications_json["outputs"].get("report", None)
+            specifications.outputs.segmented_photos = specifications_json["outputs"].get("segmentedPhotos", None)
+            specifications.outputs.segmentation2d = specifications_json["outputs"].get("segmentation2D", None)
+
+        except Exception as e:
+            return ReturnValue(value=specifications, error=str(e))
+        return ReturnValue(value=specifications, error="")
+
     class Inputs:
         """
         Possible inputs for an Eval Segmentation 2D job.
@@ -1724,6 +1748,30 @@ class EvalSOrthoSpecifications:
             return ReturnValue(value=cls(), error=str(e))
         return ReturnValue(value=new_job_specifications, error="")
 
+    @classmethod
+    def from_json_file(cls, json_file: str) -> ReturnValue[EvalSOrthoSpecifications]:
+        if not os.path.isfile(json_file):
+            return ReturnValue(value=EvalSOrthoSpecifications(), error="File not found: " + json_file)
+        try:
+            with open(json_file, encoding='utf-8') as f:
+                specifications_json = json.load(f)
+        except Exception as e:
+            return ReturnValue(value=EvalSOrthoSpecifications(),
+                               error=f"Failed to load specifications {json_file}: {e}")
+
+        specifications = EvalSOrthoSpecifications()
+        try:
+            specifications.inputs.prediction = specifications_json["inputs"].get("prediction", None)
+            specifications.inputs.reference = specifications_json["inputs"].get("reference", None)
+
+            specifications.outputs.report = specifications_json["outputs"].get("report", None)
+            specifications.outputs.segmented_photos = specifications_json["outputs"].get("segmentedPhotos", None)
+            specifications.outputs.segmentation2d = specifications_json["outputs"].get("segmentation2D", None)
+
+        except Exception as e:
+            return ReturnValue(value=specifications, error=str(e))
+        return ReturnValue(value=specifications, error="")
+
     class Inputs:
         """
         Possible inputs for an Eval Ortho Segmentation job.
@@ -1833,6 +1881,32 @@ class EvalO2DSpecifications:
             return ReturnValue(value=cls(), error=str(e))
         return ReturnValue(value=new_job_specifications, error="")
 
+    @classmethod
+    def from_json_file(cls, json_file: str) -> ReturnValue[EvalO2DSpecifications]:
+        if not os.path.isfile(json_file):
+            return ReturnValue(value=EvalO2DSpecifications(), error="File not found: " + json_file)
+        try:
+            with open(json_file, encoding='utf-8') as f:
+                specifications_json = json.load(f)
+        except Exception as e:
+            return ReturnValue(value=EvalO2DSpecifications(),
+                               error=f"Failed to load specifications {json_file}: {e}")
+
+        specifications = EvalO2DSpecifications()
+        try:
+            specifications.inputs.prediction = specifications_json["inputs"].get("prediction", None)
+            specifications.inputs.reference = specifications_json["inputs"].get("reference", None)
+
+            specifications.outputs.report = specifications_json["outputs"].get("report", None)
+            specifications.outputs.objects2d = specifications_json["outputs"].get("objects2D", None)
+
+            if "options" in specifications_json:
+                specifications.options.threshold_iou = specifications_json["options"].get("thresholdIOU", None)
+
+        except Exception as e:
+            return ReturnValue(value=specifications, error=str(e))
+        return ReturnValue(value=specifications, error="")
+
     class Inputs:
         """
         Possible inputs for an Eval Objects 2D job.
@@ -1940,6 +2014,32 @@ class EvalO3DSpecifications:
         except (TypeError, KeyError) as e:
             return ReturnValue(value=cls(), error=str(e))
         return ReturnValue(value=new_job_specifications, error="")
+
+    @classmethod
+    def from_json_file(cls, json_file: str) -> ReturnValue[EvalO3DSpecifications]:
+        if not os.path.isfile(json_file):
+            return ReturnValue(value=EvalO3DSpecifications(), error="File not found: " + json_file)
+        try:
+            with open(json_file, encoding='utf-8') as f:
+                specifications_json = json.load(f)
+        except Exception as e:
+            return ReturnValue(value=EvalO3DSpecifications(),
+                               error=f"Failed to load specifications {json_file}: {e}")
+
+        specifications = EvalO3DSpecifications()
+        try:
+            specifications.inputs.prediction = specifications_json["inputs"].get("prediction", None)
+            specifications.inputs.reference = specifications_json["inputs"].get("reference", None)
+
+            specifications.outputs.report = specifications_json["outputs"].get("report", None)
+            specifications.outputs.objects3d = specifications_json["outputs"].get("objects3D", None)
+
+            if "options" in specifications_json:
+                specifications.options.threshold_iou = specifications_json["options"].get("thresholdIOU", None)
+
+        except Exception as e:
+            return ReturnValue(value=specifications, error=str(e))
+        return ReturnValue(value=specifications, error="")
 
     class Inputs:
         """
