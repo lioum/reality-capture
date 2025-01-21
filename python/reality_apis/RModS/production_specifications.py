@@ -700,7 +700,8 @@ class ProductionSpecifications:
         def __init__(self) -> None:
             self.scene: str = ""
             self.reference_model: str = ""
-            self.preset = None
+            self.preset: str = None
+            self.extent: str = None
 
     class Outputs:
         def __init__(self) -> None:
@@ -727,6 +728,8 @@ class ProductionSpecifications:
             specifications.inputs.reference_model = specifications_json["inputs"]["referenceModel"]
             if "preset" in specifications_json["inputs"]:
                 specifications.inputs.preset = specifications_json["inputs"]["preset"]
+            if "extent" in specifications_json["inputs"]:
+                specifications.inputs.extent = specifications_json["inputs"]["extent"]
 
             specifications.outputs.exports = _export_options_from_json_file(specifications_json)
 
