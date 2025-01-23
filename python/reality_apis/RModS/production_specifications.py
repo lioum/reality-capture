@@ -32,9 +32,10 @@ class Format(Enum):
     OrthophotoDSM = 18
 
 class ColorSource(Enum):
-    Visible = 0
-    Thermal = 1
-    Resolution = 2
+    No = 0
+    Visible = 1
+    Thermal = 2
+    Resolution = 3
 
 class ThermalUnit(Enum):
     Absolute = 0
